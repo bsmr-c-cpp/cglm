@@ -12,3 +12,6 @@ before_build:
 
 build:
     project: BUILD_ALL.vcxproj
+
+test_script:
+    - ctest --output-on-failure -C Release
