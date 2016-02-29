@@ -16,9 +16,9 @@
  */
 typedef struct Mat4 {
     float a0, a1, a2, a3,
-            b0 ,b1, b2, b3,
-            c0, c1, c2, c3,
-            d0, d1, d2, d3;
+          b0 ,b1, b2, b3,
+          c0, c1, c2, c3,
+          d0, d1, d2, d3;
 } Mat4;
 
 
@@ -29,15 +29,6 @@ typedef struct Mat4 {
 typedef struct Vec3 {
     float x, y, z;
 } Vec3;
-
-
-/**
- * @typedef Vec4 struct Vec4
- * @brief represent a 4 dimention vertex.
- */
-typedef struct Vec4 {
-    float x, y, z, w;
-} Vec4;
 
 
 Mat4 perspective(
