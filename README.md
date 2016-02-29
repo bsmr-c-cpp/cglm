@@ -1,4 +1,4 @@
-FGLM
+CGLM
 ====
 
-OpenGL math library written in C.
+Basic OpenGL math library written in C.
