@@ -10,7 +10,7 @@ Vec3 normalizeVec3(Vec3 vector)
     float x = vector.x * vector.x;
     float y = vector.y * vector.y;
     float z = vector.z * vector.z;
-    float all = sqrt(x + y + z);
+    float all = (float) sqrt(x + y + z);
 
     Vec3 result;
     result.x = vector.x / all;
@@ -166,7 +166,7 @@ Mat4 perspective(
     float zFar)
 {
 
-    float tanHalfFovy = tan(fovy / (float) 2);
+    float tanHalfFovy = (float) tan(fovy / (float) 2);
 
     Mat4 result = mat4(0);
     result.a0 = (float) 1 / (aspect * tanHalfFovy);
