@@ -1,25 +1,16 @@
 cmake_minimum_required (VERSION 2.6)
 project (CGLM)
-set (CGLM_VERSION_MAJOR 0)
-set (CGLM_VERSION_MINOR 1)
-
-add_library (cglm 
-    code/cglm.c
-    include/cglm.h)
 
 include_directories (include/)
+add_library (cglm code/cglm.c include/cglm.h)
 
-#
+
 # Tests
-#
-
 add_executable (test_cglm
   code/tests/test_cglm.c
   code/cglm.c
   include/cglm.h)
-target_link_libraries (test_cglm
-    cglm
-    -lm)
+target_link_libraries (test_cglm cglm -lm)
 
 enable_testing()
 add_test (NAME test_perspective   COMMAND test_cglm perspective)
