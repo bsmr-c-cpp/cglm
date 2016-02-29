@@ -4,4 +4,4 @@ sudo: false
 
 script: 
     - ./configure
-    - cd build && make && make test ARGS=-v
+    - cd build && make && make test ARGS=-V

@@ -14,4 +14,4 @@ build:
     project: ALL_BUILD.vcxproj
 
 test_script:
-    - ctest --output-on-failure -C Release
+    - ctest -V -C Release
