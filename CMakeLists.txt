@@ -10,7 +10,12 @@ add_executable (test_cglm
   code/tests/test_cglm.c
   code/cglm.c
   include/cglm.h)
-target_link_libraries (test_cglm cglm -lm)
+
+target_link_libraries (test_cglm cglm)
+
+if ("${CMAKE_SYSTEM}" MATCHES "Linux")
+    target_link_libraries (test_cglm -lm)
+endif()
 
 enable_testing()
 add_test (NAME test_perspective   COMMAND test_cglm perspective)

@@ -36,32 +36,38 @@ static char* test_mat4() {
     Mat4 mat_test1;
     Mat4 mat_test2;
 
+    float diag;
+    diag = (float) 1;
     mat_test1 = (Mat4) {
-        1,0,0,0,
-        0,1,0,0,
-        0,0,1,0,
-        0,0,0,1
+        diag,0,0,0,
+        0,diag,0,0,
+        0,0,diag,0,
+        0,0,0,diag
     };
 
-    mat_test2 = mat4(1);
+    mat_test2 = mat4(diag);
     compare_matrix(mat_test1, mat_test2);
 
+    diag = (float) 0;
     mat_test1 = (Mat4) {
-        0,0,0,0,
-        0,0,0,0,
-        0,0,0,0,
-        0,0,0,0
+        diag,0,0,0,
+        0,diag,0,0,
+        0,0,diag,0,
+        0,0,0,diag
     };
-    mat_test2 = mat4(0);
+
+    mat_test2 = mat4(diag);
     compare_matrix(mat_test1, mat_test2);
 
+    diag = (float) 0.4;
     mat_test1 = (Mat4) {
-        0.4, 0,   0,   0,
-        0,   0.4, 0,   0,
-        0,   0,   0.4, 0,
-        0,   0,   0,   0.4
+        diag,0,0,0,
+        0,diag,0,0,
+        0,0,diag,0,
+        0,0,0,diag
     };
-    mat_test2 = mat4(0.4);
+
+    mat_test2 = mat4(diag);
     compare_matrix(mat_test1, mat_test2);
 
     return NULL;
