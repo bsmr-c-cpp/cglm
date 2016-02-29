@@ -12,4 +12,3 @@ before_build:
 
 build:
     project: BUILD_ALL.vcxproj
-    project: RUN_TESTS.vcxproj
