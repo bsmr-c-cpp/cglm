@@ -43,6 +43,13 @@ Mat4 ortho(
     float top,
     float zNear,
     float zFar);
+Mat4 frustum(
+    float left,
+    float right,
+    float bottom,
+    float top,
+    float zNear,
+    float zFar);
 
 Mat4 mat4(float num);
 

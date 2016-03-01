@@ -175,8 +175,8 @@ Mat4 perspective(
     float tanHalfFovy = (float) tan(fovy / (float) 2);
 
     Mat4 result = mat4(0);
-    result.a0 = (float) 1 / (aspect * tanHalfFovy);
-    result.b1 = (float) 1 / (tanHalfFovy);
+    result.a0 =   (float) 1 / (aspect * tanHalfFovy);
+    result.b1 =   (float) 1 / (tanHalfFovy);
     result.c2 = - (zFar + zNear) / (zFar - zNear);
     result.c3 = - (float) 1;
     result.d2 = - ((float) 2 * zFar * zNear) / (zFar - zNear);
@@ -202,6 +202,28 @@ Mat4 ortho(
     result.d0 = - (right + left) / (right - left);
     result.d1 = - (top + bottom) / (top - bottom);
     result.d2 = - (zFar + zNear) / (zFar - zNear);
+
+    return result;
+
+}
+
+Mat4 frustum(
+    float left,
+    float right,
+    float bottom,
+    float top,
+    float zNear,
+    float zFar)
+{
+
+    Mat4 result = mat4(0);
+    result.a0 = ((float) 2 * zNear) / (right - left);
+    result.b1 = ((float) 2 * zNear)  / (top - bottom);
+    result.c0 = (right + left) / (right - left);
+    result.c1 = (top + bottom) / (top - bottom);
+    result.c2 = - (zFar + zNear) / (zFar - zNear);
+    result.c3 = (float) -1;
+    result.d2 = - ((float) 2 * zFar * zNear) / (zFar - zNear);
 
     return result;
 
