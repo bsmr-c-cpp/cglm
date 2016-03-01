@@ -112,7 +112,48 @@ static char* test_normalize() {
 
 
 static char* test_cross() {
-    mu_assert("no tests", 0 == 1);
+    Vec3 a;
+    Vec3 b;
+    Vec3 compare1;
+    Vec3 compare2;
+
+
+    // 
+    compare1 = (Vec3) {0,0,0};
+    a = (Vec3) {1,1,1};
+    b = (Vec3) {1,1,1};
+    compare2 = cross(a,b);
+    compare_vec3(a,b);
+
+    //
+    compare1 = (Vec3) {0,0,0};
+    a = (Vec3) {0,0,0};
+    b = (Vec3) {1,1,1};
+    compare2 = cross(a,b);
+    compare_vec3(a,b);
+
+    //
+    compare1 = (Vec3) {0,0,0};
+    a = (Vec3) {0,0,0};
+    b = (Vec3) {1,1,1};
+    compare2 = cross(a,b);
+    compare_vec3(a,b);
+
+    //
+    compare1 = (Vec3) {-2.5,-3,-3.5};
+    a = (Vec3) {-1,2,-1};
+    b = (Vec3) {1,1.5,-2};
+    compare2 = cross(a,b);
+    compare_vec3(a,b);
+
+    //
+    compare1 = (Vec3) {2.5,-0.7,-1.1};
+    a = (Vec3) {-1,-2,-1};
+    b = (Vec3) {-1.3,1.5,-2};
+    compare2 = cross(a,b);
+    compare_vec3(a,b);
+
+
     return NULL;
 }
 
