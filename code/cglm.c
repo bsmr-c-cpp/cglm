@@ -4,7 +4,7 @@
 #include <math.h>
 
 
-Vec3 normalizeVec3(Vec3 vector)
+Vec3 normalize(Vec3 vector)
 {
 
     float x = vector.x * vector.x;
@@ -22,7 +22,7 @@ Vec3 normalizeVec3(Vec3 vector)
 }
 
 
-Vec3 crossVec3(
+Vec3 cross(
     Vec3 x,
     Vec3 y)
 {
@@ -37,7 +37,7 @@ Vec3 crossVec3(
 }
 
 
-Vec3 minusVec3(
+Vec3 subsVec3(
     Vec3 a,
     Vec3 b)
 {
@@ -67,7 +67,7 @@ Vec3 addVec3(
 }
 
 
-float dotVec3(
+float dot(
     Vec3 a,
     Vec3 b)
 {
@@ -83,9 +83,9 @@ Mat4 lookAt(
     Vec3 up)
 {
 
-    const Vec3 f = normalizeVec3(minusVec3(center, eye));
-    const Vec3 s = normalizeVec3(crossVec3(f, up));
-    const Vec3 u = crossVec3(s, f);
+    const Vec3 f = normalize(subsVec3(center, eye));
+    const Vec3 s = normalize(cross(f, up));
+    const Vec3 u = cross(s, f);
 
     Mat4 result = mat4(1);
     result.a0 = s.x;
@@ -97,9 +97,9 @@ Mat4 lookAt(
                                     result.a2 = -f.x;
                                     result.b2 = -f.y;
                                     result.c2 = -f.z;
-    result.d0 = -dotVec3(s, eye);
-                    result.d1 = -dotVec3(u, eye);
-                                    result.d2 = dotVec3(f, eye);
+    result.d0 = -dot(s, eye);
+                    result.d1 = -dot(u, eye);
+                                    result.d2 = dot(f, eye);
 
     return result;
 
@@ -112,25 +112,25 @@ Mat4 multMat4(
 {
 
     Mat4 result = {
-        m1.a0*m2.a0 + m1.a1*m2.b0 + m1.a2*m2.c0 + m1.a3*m2.d0,
-        m1.a0*m2.a1 + m1.a1*m2.b1 + m1.a2*m2.c1 + m1.a3*m2.d1,
-        m1.a0*m2.a2 + m1.a1*m2.b2 + m1.a2*m2.c2 + m1.a3*m2.d2,
-        m1.a0*m2.a3 + m1.a1*m2.b3 + m1.a2*m2.c3 + m1.a3*m2.d3,
+        m1.a0*m2.a0 + m1.a1*m2.b0 + m1.a2*m2.c0 + m1.a3*m2.d0, // = a0
+        m1.a0*m2.a1 + m1.a1*m2.b1 + m1.a2*m2.c1 + m1.a3*m2.d1, // = a1
+        m1.a0*m2.a2 + m1.a1*m2.b2 + m1.a2*m2.c2 + m1.a3*m2.d2, // = a2
+        m1.a0*m2.a3 + m1.a1*m2.b3 + m1.a2*m2.c3 + m1.a3*m2.d3, // = a3
 
-        m1.b0*m2.a0 + m1.b1*m2.b0 + m1.b2*m2.c0 + m1.b3*m2.d0,
-        m1.b0*m2.a1 + m1.b1*m2.b1 + m1.b2*m2.c1 + m1.b3*m2.d1,
-        m1.b0*m2.a2 + m1.b1*m2.b2 + m1.b2*m2.c2 + m1.b3*m2.d2,
-        m1.b0*m2.a3 + m1.b1*m2.b3 + m1.b2*m2.c3 + m1.b3*m2.d3,
+        m1.b0*m2.a0 + m1.b1*m2.b0 + m1.b2*m2.c0 + m1.b3*m2.d0, // = b0
+        m1.b0*m2.a1 + m1.b1*m2.b1 + m1.b2*m2.c1 + m1.b3*m2.d1, // = b1
+        m1.b0*m2.a2 + m1.b1*m2.b2 + m1.b2*m2.c2 + m1.b3*m2.d2, // = b2
+        m1.b0*m2.a3 + m1.b1*m2.b3 + m1.b2*m2.c3 + m1.b3*m2.d3, // = b3
 
-        m1.c0*m2.a0 + m1.c1*m2.b0 + m1.c2*m2.c0 + m1.c3*m2.d0,
-        m1.c0*m2.a1 + m1.c1*m2.b1 + m1.c2*m2.c1 + m1.c3*m2.d1,
-        m1.c0*m2.a2 + m1.c1*m2.b2 + m1.c2*m2.c2 + m1.c3*m2.d2,
-        m1.c0*m2.a3 + m1.c1*m2.b3 + m1.c2*m2.c3 + m1.c3*m2.d3,
+        m1.c0*m2.a0 + m1.c1*m2.b0 + m1.c2*m2.c0 + m1.c3*m2.d0, // = c0
+        m1.c0*m2.a1 + m1.c1*m2.b1 + m1.c2*m2.c1 + m1.c3*m2.d1, // = c1
+        m1.c0*m2.a2 + m1.c1*m2.b2 + m1.c2*m2.c2 + m1.c3*m2.d2, // = c2
+        m1.c0*m2.a3 + m1.c1*m2.b3 + m1.c2*m2.c3 + m1.c3*m2.d3, // = c3
 
-        m1.d0*m2.a0 + m1.d1*m2.b0 + m1.d2*m2.c0 + m1.d3*m2.d0,
-        m1.d0*m2.a1 + m1.d1*m2.b1 + m1.d2*m2.c1 + m1.d3*m2.d1,
-        m1.d0*m2.a2 + m1.d1*m2.b2 + m1.d2*m2.c2 + m1.d3*m2.d2,
-        m1.d0*m2.a3 + m1.d1*m2.b3 + m1.d2*m2.c3 + m1.d3*m2.d3,
+        m1.d0*m2.a0 + m1.d1*m2.b0 + m1.d2*m2.c0 + m1.d3*m2.d0, // = d0
+        m1.d0*m2.a1 + m1.d1*m2.b1 + m1.d2*m2.c1 + m1.d3*m2.d1, // = d1
+        m1.d0*m2.a2 + m1.d1*m2.b2 + m1.d2*m2.c2 + m1.d3*m2.d2, // = d2
+        m1.d0*m2.a3 + m1.d1*m2.b3 + m1.d2*m2.c3 + m1.d3*m2.d3, // = d3
     };
 
     return result;

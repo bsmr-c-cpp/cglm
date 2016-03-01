@@ -73,18 +73,18 @@ static char* test_mat4() {
     return NULL;
 }
 
-static char* test_normalizeVec3() {
+static char* test_normalize() {
     mu_assert("no tests", 0 == 1);
     return NULL;
 }
 
 
-static char* test_crossVec3() {
+static char* test_cross() {
     mu_assert("no tests", 0 == 1);
     return NULL;
 }
 
-static char* test_minusVec3() {
+static char* test_subsVec3() {
     mu_assert("no tests", 0 == 1);
     return NULL;
 }
@@ -94,7 +94,7 @@ static char* test_addVec3() {
     return NULL;
 }
 
-static char* test_dotVec3() {
+static char* test_dot() {
     mu_assert("no tests", 0 == 1);
     return NULL;
 }
@@ -120,15 +120,15 @@ static char* cglm_test(char* test_name) {
     else if (strcmp(test_name, "mat4") == 0)
         mu_run_test(test_mat4);
     else if (strcmp(test_name, "normalizeVec3") == 0)
-        mu_run_test(test_normalizeVec3);
+        mu_run_test(test_normalize);
     else if (strcmp(test_name, "crossVec3") == 0)
-        mu_run_test(test_crossVec3);
+        mu_run_test(test_cross);
     else if (strcmp(test_name, "minusVec3") == 0)
-        mu_run_test(test_minusVec3);
+        mu_run_test(test_subsVec3);
     else if (strcmp(test_name, "addVec3") == 0)
         mu_run_test(test_addVec3);
     else if (strcmp(test_name, "dotVec3") == 0)
-        mu_run_test(test_dotVec3);
+        mu_run_test(test_dot);
     else if (strcmp(test_name, "lookAt") == 0)
         mu_run_test(test_lookAt);
     else if (strcmp(test_name, "multMat4") == 0)
@@ -143,7 +143,7 @@ int main(int argc, char* argv[])
 
     char* result = cglm_test(argv[1]);
 
-    if (result != 0) 
+    if (result != 0)
         printf("%s\n", result);
 
     return result != NULL;
