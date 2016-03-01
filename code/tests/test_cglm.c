@@ -5,39 +5,46 @@
 #include <cglm.h>
 #include <math.h>
 
+// vesult, mresult and fresult values have been computed the C++ glm library.
 int tests_run = 0;
+
+static const int ROUND = 10000;
+float roundFloat(float f)
+{
+    return round(f * ROUND) / ROUND;
+}
 
 static Vec3 roundVec3(Vec3 a)
 {
     Vec3 ret;
-    ret.x = round(a.x * 1000) / 1000;
-    ret.y = round(a.y * 1000) / 1000;
-    ret.z = round(a.z * 1000) / 1000;
+    ret.x = roundFloat(a.x);
+    ret.y = roundFloat(a.y);
+    ret.z = roundFloat(a.z);
     return ret;
 }
 
 static Mat4 roundMat4(Mat4 mat)
 {
     Mat4 ret;
-    ret.a0 = round(mat.a0 * 1000) / 1000;
-    ret.a1 = round(mat.a1 * 1000) / 1000;
-    ret.a2 = round(mat.a2 * 1000) / 1000;
-    ret.a3 = round(mat.a3 * 1000) / 1000;
+    ret.a0 = roundFloat(mat.a0);
+    ret.a1 = roundFloat(mat.a1);
+    ret.a2 = roundFloat(mat.a2);
+    ret.a3 = roundFloat(mat.a3);
 
-    ret.b0 = round(mat.b0 * 1000) / 1000;
-    ret.b1 = round(mat.b1 * 1000) / 1000;
-    ret.b2 = round(mat.b2 * 1000) / 1000;
-    ret.b3 = round(mat.b3 * 1000) / 1000;
+    ret.b0 = roundFloat(mat.b0);
+    ret.b1 = roundFloat(mat.b1);
+    ret.b2 = roundFloat(mat.b2);
+    ret.b3 = roundFloat(mat.b3);
 
-    ret.c0 = round(mat.c0 * 1000) / 1000;
-    ret.c1 = round(mat.c1 * 1000) / 1000;
-    ret.c2 = round(mat.c2 * 1000) / 1000;
-    ret.c3 = round(mat.c3 * 1000) / 1000;
+    ret.c0 = roundFloat(mat.c0);
+    ret.c1 = roundFloat(mat.c1);
+    ret.c2 = roundFloat(mat.c2);
+    ret.c3 = roundFloat(mat.c3);
 
-    ret.d0 = round(mat.d0 * 1000) / 1000;
-    ret.d1 = round(mat.d1 * 1000) / 1000;
-    ret.d2 = round(mat.d2 * 1000) / 1000;
-    ret.d3 = round(mat.d3 * 1000) / 1000;
+    ret.d0 = roundFloat(mat.d0);
+    ret.d1 = roundFloat(mat.d1);
+    ret.d2 = roundFloat(mat.d2);
+    ret.d3 = roundFloat(mat.d3);
     return ret;
 }
 
@@ -79,7 +86,15 @@ static char* compare_matrix()
 
 
 static char* test_perspective() {
-    mu_assert("no tests", 0 == 1);
+    mresult = (Mat4) {
+        1.344400, 0.000000,  0.000000,  0.000000,
+        0.000000, 1.792600,  0.000000,  0.000000,
+        0.000000, 0.000000, -1.002000, -1.000000,
+        0.000000, 0.000000, -0.200200,  0.000000
+    };
+    mcompare = perspective(45, (float) 4/3, 0.1, 100);
+    mu_run_test(compare_matrix);
+
     return NULL;
 }
 
@@ -145,8 +160,6 @@ static char* test_normalize() {
     a = (Vec3) {0,0,-2};
     vcompare = normalize(a);
     mu_run_test(compare_vec3);
-    /*
-    */
 
     return NULL;
 }
@@ -224,23 +237,128 @@ static char* test_subsVec3() {
 }
 
 static char* test_addVec3() {
-    mu_assert("no tests", 0 == 1);
+    Vec3 a;
+    Vec3 b;
+
+    //
+    vresult = (Vec3) {0,0,0};
+    a = (Vec3) {0,0,0};
+    b = (Vec3) {0,0,0};
+    vcompare = addVec3(a,b);
+    mu_run_test(compare_vec3);
+
+
+    //
+    vresult = (Vec3) {0,0,0};
+    a = (Vec3) {1,1,1};
+    b = (Vec3) {-1,-1,-1};
+    vcompare = addVec3(a,b);
+    mu_run_test(compare_vec3);
+
+    //
+    vresult = (Vec3) {0.5,-0.82,0.12};
+    a = (Vec3) {1.5,-1.32,1.32};
+    b = (Vec3) {-1,0.5,-1.2};
+    vcompare = addVec3(a,b);
+    mu_run_test(compare_vec3);
+
     return NULL;
 }
 
 static char* test_dot() {
-    mu_assert("no tests", 0 == 1);
+    Vec3 a;
+    Vec3 b;
+    float fresult;
+    float fcompare;
+
+    //
+    fresult = -3.744;
+    a = (Vec3) {1.5,-1.32,1.32};
+    b = (Vec3) {-1,0.5,-1.2};
+    fcompare = roundFloat(dot(a,b));
+    mu_assert("compare on dot float", fcompare == fresult);
+
+    //
+    fresult = 3;
+    a = (Vec3) {1,1,1};
+    b = (Vec3) {1,1,1};
+    fcompare = roundFloat(dot(a,b));
+    mu_assert("compare on dot float", fcompare == fresult);
+
+
+    //
+    fresult = 0;
+    a = (Vec3) {0,0,0};
+    b = (Vec3) {1,1,1};
+    fcompare = roundFloat(dot(a,b));
+    mu_assert("compare on dot float", fcompare == fresult);
+
+
+    //
+    fresult = -0.5;
+    a = (Vec3) {-1,1.5,-1};
+    b = (Vec3) {1,1,1};
+    fcompare = roundFloat(dot(a,b));
+    mu_assert("compare on dot float", fcompare == fresult);
+
+    //
+    fresult = -3.2;
+    a = (Vec3) {-1,1.5,-1};
+    b = (Vec3) {1,-0.8,1};
+    fcompare = roundFloat(dot(a,b));
+    mu_assert("compare on dot float", fcompare == fresult);
+
+    return NULL;
+}
+
+static char* test_multMat4() {
+    mresult = (Mat4) {
+        1.446000, -0.991900, -0.924100, -0.922300,
+        0.000000, 2.755500, -0.924100, -0.922300,
+        1.436900, 0.554500, -5.125900, -5.315500,
+        0.287100, 0.110800, 0.103200, 0.103000
+    };
+
+    Mat4 mult1 = (Mat4) {
+        1.792600, 0.000000,  0.000000,  0.000000,
+        0.000000, 1.792600,  0.000000,  0.000000,
+        0.000000, 0.000000, -1.002000, -1.000000,
+        0.000000, 0.000000, -0.200200,  0.000000};
+    Mat4 mult2 = (Mat4) {
+        0.600000, -0.411600,  0.686000, 0.000000,
+        0.000000,  0.857500,  0.514500, 0.000000,
+       -0.800000, -0.308700,  0.514500, 0.000000,
+       -0.000000, -0.000000, -5.831000, 1.000000};
+    Mat4 mult3 = (Mat4) {
+        1.344400, 0.000000,  0.000000,  0.000000,
+        0.000000, 1.792600,  0.000000,  0.000000,
+        0.000000, 0.000000, -1.002000, -1.000000,
+        0.000000, 0.000000, -0.200200,  0.000000};
+
+
+    mcompare = multMat4(multMat4(mult1, mult2), mult3);
+    mu_run_test(compare_matrix);
+
     return NULL;
 }
 
 static char* test_lookAt() {
-    mu_assert("no tests", 0 == 1);
-    return NULL;
-}
+    Vec3 a;
+    Vec3 b;
+    Vec3 c;
 
-
-static char* test_multMat4() {
-    mu_assert("no tests", 0 == 1);
+    mresult = (Mat4) {
+        0.600000, -0.411600,  0.686000, 0.000000,
+        0.000000,  0.857500,  0.514500, 0.000000,
+       -0.800000, -0.308700,  0.514500, 0.000000,
+       -0.000000, -0.000000, -5.831000, 1.000000
+    };
+    a = (Vec3) {4,3,3};
+    b = (Vec3) {0,0,0};
+    c = (Vec3) {0,1,0};
+    mcompare = lookAt(a,b,c);
+    mu_run_test(compare_matrix);
+    
     return NULL;
 }
 
@@ -250,18 +368,18 @@ static char* cglm_test(char* test_name) {
 
 
     if (strcmp(test_name, "perspective") == 0)
-        mu_run_test(test_lookAt);
+        mu_run_test(test_perspective);
     else if (strcmp(test_name, "mat4") == 0)
         mu_run_test(test_mat4);
-    else if (strcmp(test_name, "normalizeVec3") == 0)
+    else if (strcmp(test_name, "normalize") == 0)
         mu_run_test(test_normalize);
-    else if (strcmp(test_name, "crossVec3") == 0)
+    else if (strcmp(test_name, "cross") == 0)
         mu_run_test(test_cross);
-    else if (strcmp(test_name, "minusVec3") == 0)
+    else if (strcmp(test_name, "subsVec3") == 0)
         mu_run_test(test_subsVec3);
     else if (strcmp(test_name, "addVec3") == 0)
         mu_run_test(test_addVec3);
-    else if (strcmp(test_name, "dotVec3") == 0)
+    else if (strcmp(test_name, "dot") == 0)
         mu_run_test(test_dot);
     else if (strcmp(test_name, "lookAt") == 0)
         mu_run_test(test_lookAt);
