@@ -3,6 +3,12 @@
 #include <stdarg.h>
 #include <math.h>
 
+#ifdef CGLM_FAST
+#define SQRT f_sqrt
+#else
+#define SQRT sqrt
+#endif
+
 
 Vec3 normalize(Vec3 vector)
 {
@@ -10,7 +16,7 @@ Vec3 normalize(Vec3 vector)
     float x = vector.x * vector.x;
     float y = vector.y * vector.y;
     float z = vector.z * vector.z;
-    float all = (float) sqrt(x + y + z);
+    float all = (float) SQRT(x + y + z);
 
     Vec3 result;
     result.x = vector.x / all;
@@ -180,7 +186,7 @@ Mat4 perspective(
 }
 
 
-float f_squrt(float number)
+float f_sqrt(float number)
 {
 
     /*
