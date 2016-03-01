@@ -186,6 +186,27 @@ Mat4 perspective(
 }
 
 
+Mat4 ortho(
+    float left,
+    float right,
+    float bottom,
+    float top,
+    float zNear,
+    float zFar)
+{
+
+    Mat4 result = mat4(1);
+    result.a0 =   (float) 2 / (right - left);
+    result.b1 =   (float) 2 / (top - bottom);
+    result.c2 = - (float) 2 / (zFar - zNear);
+    result.d0 = - (right + left) / (right - left);
+    result.d1 = - (top + bottom) / (top - bottom);
+    result.d2 = - (zFar + zNear) / (zFar - zNear);
+
+    return result;
+
+}
+
 float f_sqrt(float number)
 {
 

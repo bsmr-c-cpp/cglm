@@ -36,6 +36,13 @@ Mat4 perspective(
     float aspect,
     float zNear,
     float zFar);
+Mat4 ortho(
+    float left,
+    float right,
+    float bottom,
+    float top,
+    float zNear,
+    float zFar);
 
 Mat4 mat4(float num);
 

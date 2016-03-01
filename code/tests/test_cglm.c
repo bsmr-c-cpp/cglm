@@ -98,6 +98,19 @@ static char* test_perspective() {
     return NULL;
 }
 
+static char* test_ortho() {
+    mresult = (Mat4) {
+        0.100000,  0.000000,  0.000000, 0.000000,
+        0.000000,  0.100000,  0.000000, 0.000000,
+        0.000000,  0.000000, -0.020000, 0.000000,
+       -0.000000, -0.000000, -1.000000, 1.000000
+    };
+    mcompare = ortho(-10,10,-10,10,0,100);
+    mu_run_test(compare_matrix);
+
+    return NULL;
+}
+
 static char* test_mat4() {
 
     float diag;
@@ -385,7 +398,8 @@ static char* cglm_test(char* test_name) {
         mu_run_test(test_lookAt);
     else if (strcmp(test_name, "multMat4") == 0)
         mu_run_test(test_multMat4);
-
+    else if (strcmp(test_name, "ortho") == 0)
+        mu_run_test(test_ortho);
     return NULL;
 
 }
