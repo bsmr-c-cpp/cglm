@@ -6,6 +6,13 @@
 
 int tests_run = 0;
 
+static char* compare_vec3(Vec3 a, Vec3 b)
+{
+    mu_assert("x not match", a.x == b.x);
+    mu_assert("y not match", a.y == b.y);
+    mu_assert("z not match", a.z == b.z);
+}
+
 static char* compare_matrix(Mat4 a, Mat4 b)
 {
     mu_assert("compare error on a0", a.a0 == b.a0);
@@ -74,7 +81,32 @@ static char* test_mat4() {
 }
 
 static char* test_normalize() {
-    mu_assert("no tests", 0 == 1);
+    Vec3 vec_test_orig;
+    Vec3 vec_test_comp;
+    Vec3 vec_test_targ;
+
+    // 
+    vec_test_comp = (Vec3) {0,0,0};
+
+    vec_test_orig = (Vec3) {0,0,0};
+    vec_test_targ = normalize(vec_test_orig);
+    compare_vec3(vec_test_targ, vec_test_comp);
+
+
+    //
+    vec_test_comp = (Vec3) {0,0,1};
+
+    vec_test_orig = (Vec3) {0,0,2};
+    vec_test_targ = normalize(vec_test_orig);
+    compare_vec3(vec_test_targ, vec_test_comp);
+
+    //
+    vec_test_comp = (Vec3) {0,0,1};
+
+    vec_test_orig = (Vec3) {0,0,-2};
+    vec_test_targ = normalize(vec_test_orig);
+    compare_vec3(vec_test_targ, vec_test_comp);
+
     return NULL;
 }
 
