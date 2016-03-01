@@ -217,12 +217,12 @@ Mat4 frustum(
 {
 
     Mat4 result = mat4(0);
-    result.a0 = ((float) 2 * zNear) / (right - left);
-    result.b1 = ((float) 2 * zNear)  / (top - bottom);
-    result.c0 = (right + left) / (right - left);
-    result.c1 = (top + bottom) / (top - bottom);
+    result.a0 =   ((float) 2 * zNear) / (right - left);
+    result.b1 =   ((float) 2 * zNear)  / (top - bottom);
+    result.c0 =   (right + left) / (right - left);
+    result.c1 =   (top + bottom) / (top - bottom);
     result.c2 = - (zFar + zNear) / (zFar - zNear);
-    result.c3 = (float) -1;
+    result.c3 =   (float) -1;
     result.d2 = - ((float) 2 * zFar * zNear) / (zFar - zNear);
 
     return result;
