@@ -3,36 +3,80 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <cglm.h>
+#include <math.h>
 
 int tests_run = 0;
 
-static char* compare_vec3(Vec3 a, Vec3 b)
+static Vec3 roundVec3(Vec3 a)
 {
-    mu_assert("x not match", a.x == b.x);
-    mu_assert("y not match", a.y == b.y);
-    mu_assert("z not match", a.z == b.z);
+    Vec3 ret;
+    ret.x = round(a.x * 1000) / 1000;
+    ret.y = round(a.y * 1000) / 1000;
+    ret.z = round(a.z * 1000) / 1000;
+    return ret;
 }
 
-static char* compare_matrix(Mat4 a, Mat4 b)
+static Mat4 roundMat4(Mat4 mat)
 {
-    mu_assert("compare error on a0", a.a0 == b.a0);
-    mu_assert("compare error on a1", a.a1 == b.a1);
-    mu_assert("compare error on a2", a.a2 == b.a2);
-    mu_assert("compare error on a3", a.a3 == b.a3);
-    mu_assert("compare error on b0", a.b0 == b.b0);
-    mu_assert("compare error on b1", a.b1 == b.b1);
-    mu_assert("compare error on b2", a.b2 == b.b2);
-    mu_assert("compare error on b3", a.b3 == b.b3);
-    mu_assert("compare error on c0", a.c0 == b.c0);
-    mu_assert("compare error on c1", a.c1 == b.c1);
-    mu_assert("compare error on c2", a.c2 == b.c2);
-    mu_assert("compare error on c3", a.c3 == b.c3);
-    mu_assert("compare error on d0", a.d0 == b.d0);
-    mu_assert("compare error on d1", a.d1 == b.d1);
-    mu_assert("compare error on d2", a.d2 == b.d2);
-    mu_assert("compare error on d3", a.d3 == b.d3);
+    Mat4 ret;
+    ret.a0 = round(mat.a0 * 1000) / 1000;
+    ret.a1 = round(mat.a1 * 1000) / 1000;
+    ret.a2 = round(mat.a2 * 1000) / 1000;
+    ret.a3 = round(mat.a3 * 1000) / 1000;
+
+    ret.b0 = round(mat.b0 * 1000) / 1000;
+    ret.b1 = round(mat.b1 * 1000) / 1000;
+    ret.b2 = round(mat.b2 * 1000) / 1000;
+    ret.b3 = round(mat.b3 * 1000) / 1000;
+
+    ret.c0 = round(mat.c0 * 1000) / 1000;
+    ret.c1 = round(mat.c1 * 1000) / 1000;
+    ret.c2 = round(mat.c2 * 1000) / 1000;
+    ret.c3 = round(mat.c3 * 1000) / 1000;
+
+    ret.d0 = round(mat.d0 * 1000) / 1000;
+    ret.d1 = round(mat.d1 * 1000) / 1000;
+    ret.d2 = round(mat.d2 * 1000) / 1000;
+    ret.d3 = round(mat.d3 * 1000) / 1000;
+    return ret;
+}
+
+
+Vec3 vcompare;
+Vec3 vresult;
+static char* compare_vec3()
+{
+    Vec3 vc = roundVec3(vcompare);
+    mu_assert("x not match", vc.x == vresult.x);
+    mu_assert("y not match", vc.y == vresult.y);
+    mu_assert("z not match", vc.z == vresult.z);
     return NULL;
 }
+
+Mat4 mcompare;
+Mat4 mresult;
+static char* compare_matrix()
+{
+    Mat4 mc = roundMat4(mcompare);
+    mu_assert("compare error on a0", mc.a0 == mresult.a0);
+    mu_assert("compare error on a1", mc.a1 == mresult.a1);
+    mu_assert("compare error on a2", mc.a2 == mresult.a2);
+    mu_assert("compare error on a3", mc.a3 == mresult.a3);
+    mu_assert("compare error on b0", mc.b0 == mresult.b0);
+    mu_assert("compare error on b1", mc.b1 == mresult.b1);
+    mu_assert("compare error on b2", mc.b2 == mresult.b2);
+    mu_assert("compare error on b3", mc.b3 == mresult.b3);
+    mu_assert("compare error on c0", mc.c0 == mresult.c0);
+    mu_assert("compare error on c1", mc.c1 == mresult.c1);
+    mu_assert("compare error on c2", mc.c2 == mresult.c2);
+    mu_assert("compare error on c3", mc.c3 == mresult.c3);
+    mu_assert("compare error on d0", mc.d0 == mresult.d0);
+    mu_assert("compare error on d1", mc.d1 == mresult.d1);
+    mu_assert("compare error on d2", mc.d2 == mresult.d2);
+    mu_assert("compare error on d3", mc.d3 == mresult.d3);
+    return NULL;
+}
+
 
 static char* test_perspective() {
     mu_assert("no tests", 0 == 1);
@@ -40,72 +84,69 @@ static char* test_perspective() {
 }
 
 static char* test_mat4() {
-    Mat4 mat_test1;
-    Mat4 mat_test2;
 
     float diag;
     diag = (float) 1;
-    mat_test1 = (Mat4) {
+    mresult = (Mat4) {
         diag,0,0,0,
         0,diag,0,0,
         0,0,diag,0,
         0,0,0,diag
     };
 
-    mat_test2 = mat4(diag);
-    compare_matrix(mat_test1, mat_test2);
+    mcompare = mat4(diag);
+    mu_run_test(compare_matrix);
 
     diag = (float) 0;
-    mat_test1 = (Mat4) {
+    mresult = (Mat4) {
         diag,0,0,0,
         0,diag,0,0,
         0,0,diag,0,
         0,0,0,diag
     };
 
-    mat_test2 = mat4(diag);
-    compare_matrix(mat_test1, mat_test2);
+    mcompare = mat4(diag);
+    mu_run_test(compare_matrix);
 
     diag = (float) 0.4;
-    mat_test1 = (Mat4) {
+    mresult = (Mat4) {
         diag,0,0,0,
         0,diag,0,0,
         0,0,diag,0,
         0,0,0,diag
     };
 
-    mat_test2 = mat4(diag);
-    compare_matrix(mat_test1, mat_test2);
+    mcompare = mat4(diag);
+    mu_run_test(compare_matrix);
 
     return NULL;
 }
 
 static char* test_normalize() {
-    Vec3 vec_test_orig;
-    Vec3 vec_test_comp;
-    Vec3 vec_test_targ;
+    Vec3 a;
 
     // 
-    vec_test_comp = (Vec3) {0,0,0};
+    vresult = (Vec3) {1,0,0};
+    a = (Vec3) {1,0,0};
+    vcompare = normalize(a);
+    mu_run_test(compare_vec3);
 
-    vec_test_orig = (Vec3) {0,0,0};
-    vec_test_targ = normalize(vec_test_orig);
-    compare_vec3(vec_test_targ, vec_test_comp);
+    //
+    vresult = (Vec3) {0,0,1};
+
+    a = (Vec3) {0,0,2};
+    vcompare = normalize(a);
+    mu_run_test(compare_vec3);
 
 
     //
-    vec_test_comp = (Vec3) {0,0,1};
+    vresult = (Vec3) {0,0,-1};
 
-    vec_test_orig = (Vec3) {0,0,2};
-    vec_test_targ = normalize(vec_test_orig);
-    compare_vec3(vec_test_targ, vec_test_comp);
-
-    //
-    vec_test_comp = (Vec3) {0,0,1};
-
-    vec_test_orig = (Vec3) {0,0,-2};
-    vec_test_targ = normalize(vec_test_orig);
-    compare_vec3(vec_test_targ, vec_test_comp);
+    a = (Vec3) {0,0,-2};
+    vcompare = normalize(a);
+    mu_run_test(compare_vec3);
+    /*
+    */
 
     return NULL;
 }
@@ -114,51 +155,71 @@ static char* test_normalize() {
 static char* test_cross() {
     Vec3 a;
     Vec3 b;
-    Vec3 compare1;
-    Vec3 compare2;
 
 
     // 
-    compare1 = (Vec3) {0,0,0};
+    vresult = (Vec3) {0,0,0};
     a = (Vec3) {1,1,1};
     b = (Vec3) {1,1,1};
-    compare2 = cross(a,b);
-    compare_vec3(a,b);
+    vcompare = cross(a,b);
+    mu_run_test(compare_vec3);
 
     //
-    compare1 = (Vec3) {0,0,0};
+    vresult = (Vec3) {0,0,0};
     a = (Vec3) {0,0,0};
     b = (Vec3) {1,1,1};
-    compare2 = cross(a,b);
-    compare_vec3(a,b);
+    vcompare = cross(a,b);
+    mu_run_test(compare_vec3);
 
     //
-    compare1 = (Vec3) {0,0,0};
+    vresult = (Vec3) {0,0,0};
     a = (Vec3) {0,0,0};
     b = (Vec3) {1,1,1};
-    compare2 = cross(a,b);
-    compare_vec3(a,b);
+    vcompare = cross(a,b);
+    mu_run_test(compare_vec3);
 
     //
-    compare1 = (Vec3) {-2.5,-3,-3.5};
+    vresult = (Vec3) {-2.5,-3,-3.5};
     a = (Vec3) {-1,2,-1};
     b = (Vec3) {1,1.5,-2};
-    compare2 = cross(a,b);
-    compare_vec3(a,b);
-
-    //
-    compare1 = (Vec3) {2.5,-0.7,-1.1};
-    a = (Vec3) {-1,-2,-1};
-    b = (Vec3) {-1.3,1.5,-2};
-    compare2 = cross(a,b);
-    compare_vec3(a,b);
-
+    vcompare = cross(a,b);
+    mu_run_test(compare_vec3);
 
     return NULL;
 }
 
 static char* test_subsVec3() {
-    mu_assert("no tests", 0 == 1);
+    Vec3 a;
+    Vec3 b;
+
+    // 
+    vresult = (Vec3) {0,0,0};
+    a = (Vec3) {1,1,1};
+    b = (Vec3) {1,1,1};
+    vcompare = subsVec3(a,b);
+    mu_run_test(compare_vec3);
+
+    //
+    vresult = (Vec3) {-1,-1,-1};
+    a = (Vec3) {0,0,0};
+    b = (Vec3) {1,1,1};
+    vcompare = subsVec3(a,b);
+    mu_run_test(compare_vec3);
+
+    //
+    vresult = (Vec3) {1,1,1};
+    a = (Vec3) {1,1,1};
+    b = (Vec3) {0,0,0};
+    vcompare = subsVec3(a,b);
+    mu_run_test(compare_vec3);
+
+    //
+    vresult = (Vec3) {-2,0.5,1};
+    a = (Vec3) {-1,2,-1};
+    b = (Vec3) {1,1.5,-2};
+    vcompare = subsVec3(a,b);
+    mu_run_test(compare_vec3);
+
     return NULL;
 }
 
