@@ -70,11 +70,18 @@ Mat4 lookAt(
 float f_sqrt(float number);
 
 /**
+ * @fn debugMat4(Mat4 matrix, char* info)
  * @brief for debugging purpose
  */
 void debugMat4(
     Mat4 matrix,
     char* info);
+
+/**
+ * @fn debugVec3(Vec3 v)
+ * @brief for debugging purpose
+ */
+
 void debugVec3(Vec3 vec);
 
 
