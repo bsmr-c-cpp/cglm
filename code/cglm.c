@@ -43,7 +43,7 @@ CGLMvec3 cglmCross(
 }
 
 
-CGLMvec3 cglmSubsCGLMvec3(
+CGLMvec3 cglmSubsVec3(
     CGLMvec3 a,
     CGLMvec3 b)
 {
@@ -58,7 +58,7 @@ CGLMvec3 cglmSubsCGLMvec3(
 }
 
 
-CGLMvec3 cglmAddCGLMvec3(
+CGLMvec3 cglmAddVec3(
     CGLMvec3 a,
     CGLMvec3 b)
 {
@@ -89,11 +89,11 @@ CGLMmat4 cglmLookAt(
     CGLMvec3 up)
 {
 
-    const CGLMvec3 f = cglmNormalize(cglmSubsCGLMvec3(center, eye));
+    const CGLMvec3 f = cglmNormalize(cglmSubsVec3(center, eye));
     const CGLMvec3 s = cglmNormalize(cglmCross(f, up));
     const CGLMvec3 u = cglmCross(s, f);
 
-    CGLMmat4 result = cglmCGLMmat4(1);
+    CGLMmat4 result = cglmMat4(1);
     result.a0 = s.x;
     result.b0 = s.y;
     result.c0 = s.z;
@@ -112,7 +112,7 @@ CGLMmat4 cglmLookAt(
 }
 
 
-CGLMmat4 cglmMultCGLMmat4(
+CGLMmat4 cglmMultMat4(
     CGLMmat4 m2,
     CGLMmat4 m1)
 {
@@ -150,7 +150,7 @@ static const CGLMmat4 empty_matrix_4 = {
     0,0,0,0,
     0,0,0,0
 };
-CGLMmat4 cglmCGLMmat4(float num)
+CGLMmat4 cglmMat4(float num)
 {
 
     CGLMmat4 result = empty_matrix_4;
@@ -174,7 +174,7 @@ CGLMmat4 cglmPerspective(
 
     float tanHalfFovy = (float) tan(fovy / (float) 2);
 
-    CGLMmat4 result = cglmCGLMmat4(0);
+    CGLMmat4 result = cglmMat4(0);
     result.a0 =   (float) 1 / (aspect * tanHalfFovy);
     result.b1 =   (float) 1 / (tanHalfFovy);
     result.c2 = - (zFar + zNear) / (zFar - zNear);
@@ -195,7 +195,7 @@ CGLMmat4 cglmOrtho(
     float zFar)
 {
 
-    CGLMmat4 result = cglmCGLMmat4(1);
+    CGLMmat4 result = cglmMat4(1);
     result.a0 =   (float) 2 / (right - left);
     result.b1 =   (float) 2 / (top - bottom);
     result.c2 = - (float) 2 / (zFar - zNear);
@@ -216,7 +216,7 @@ CGLMmat4 cglmFrustum(
     float zFar)
 {
 
-    CGLMmat4 result = cglmCGLMmat4(0);
+    CGLMmat4 result = cglmMat4(0);
     result.a0 =   ((float) 2 * zNear) / (right - left);
     result.b1 =   ((float) 2 * zNear)  / (top - bottom);
     result.c0 =   (right + left) / (right - left);

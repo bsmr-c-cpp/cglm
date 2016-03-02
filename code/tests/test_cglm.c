@@ -135,7 +135,7 @@ static char* test_mat4() {
         0,0,0,diag
     };
 
-    mcompare = cglmCGLMmat4(diag);
+    mcompare = cglmMat4(diag);
     mu_run_test(compare_matrix);
 
     diag = (float) 0;
@@ -146,7 +146,7 @@ static char* test_mat4() {
         0,0,0,diag
     };
 
-    mcompare = cglmCGLMmat4(diag);
+    mcompare = cglmMat4(diag);
     mu_run_test(compare_matrix);
 
     diag = (float) 0.4;
@@ -157,7 +157,7 @@ static char* test_mat4() {
         0,0,0,diag
     };
 
-    mcompare = cglmCGLMmat4(diag);
+    mcompare = cglmMat4(diag);
     mu_run_test(compare_matrix);
 
     return NULL;
@@ -235,28 +235,28 @@ static char* test_subsVec3() {
     vresult = (CGLMvec3) {0,0,0};
     a = (CGLMvec3) {1,1,1};
     b = (CGLMvec3) {1,1,1};
-    vcompare = cglmSubsCGLMvec3(a,b);
+    vcompare = cglmSubsVec3(a,b);
     mu_run_test(compare_vec3);
 
     //
     vresult = (CGLMvec3) {-1,-1,-1};
     a = (CGLMvec3) {0,0,0};
     b = (CGLMvec3) {1,1,1};
-    vcompare = cglmSubsCGLMvec3(a,b);
+    vcompare = cglmSubsVec3(a,b);
     mu_run_test(compare_vec3);
 
     //
     vresult = (CGLMvec3) {1,1,1};
     a = (CGLMvec3) {1,1,1};
     b = (CGLMvec3) {0,0,0};
-    vcompare = cglmSubsCGLMvec3(a,b);
+    vcompare = cglmSubsVec3(a,b);
     mu_run_test(compare_vec3);
 
     //
     vresult = (CGLMvec3) {-2,0.5,1};
     a = (CGLMvec3) {-1,2,-1};
     b = (CGLMvec3) {1,1.5,-2};
-    vcompare = cglmSubsCGLMvec3(a,b);
+    vcompare = cglmSubsVec3(a,b);
     mu_run_test(compare_vec3);
 
     return NULL;
@@ -270,7 +270,7 @@ static char* test_addVec3() {
     vresult = (CGLMvec3) {0,0,0};
     a = (CGLMvec3) {0,0,0};
     b = (CGLMvec3) {0,0,0};
-    vcompare = cglmAddCGLMvec3(a,b);
+    vcompare = cglmAddVec3(a,b);
     mu_run_test(compare_vec3);
 
 
@@ -278,14 +278,14 @@ static char* test_addVec3() {
     vresult = (CGLMvec3) {0,0,0};
     a = (CGLMvec3) {1,1,1};
     b = (CGLMvec3) {-1,-1,-1};
-    vcompare = cglmAddCGLMvec3(a,b);
+    vcompare = cglmAddVec3(a,b);
     mu_run_test(compare_vec3);
 
     //
     vresult = (CGLMvec3) {0.5,-0.82,0.12};
     a = (CGLMvec3) {1.5,-1.32,1.32};
     b = (CGLMvec3) {-1,0.5,-1.2};
-    vcompare = cglmAddCGLMvec3(a,b);
+    vcompare = cglmAddVec3(a,b);
     mu_run_test(compare_vec3);
 
     return NULL;
@@ -362,7 +362,7 @@ static char* test_multMat4() {
         0.000000, 0.000000, -0.200200,  0.000000};
 
 
-    mcompare = cglmMultCGLMmat4(cglmMultCGLMmat4(mult1, mult2), mult3);
+    mcompare = cglmMultMat4(cglmMultMat4(mult1, mult2), mult3);
     mu_run_test(compare_matrix);
 
     return NULL;

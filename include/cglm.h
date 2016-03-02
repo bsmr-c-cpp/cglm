@@ -51,7 +51,7 @@ CGLMmat4 cglmFrustum(
     float zNear,
     float zFar);
 
-CGLMmat4 cglmCGLMmat4(float num);
+CGLMmat4 cglmMat4(float num);
 
 CGLMvec3 cglmNormalize(CGLMvec3 vector);
 
@@ -63,15 +63,15 @@ float cglmDot(
     CGLMvec3 a,
     CGLMvec3 b);
 
-CGLMvec3 cglmSubsCGLMvec3(
+CGLMvec3 cglmSubsVec3(
     CGLMvec3 a,
     CGLMvec3 b);
 
-CGLMvec3 cglmAddCGLMvec3(
+CGLMvec3 cglmAddVec3(
     CGLMvec3 a,
     CGLMvec3 b);
 
-CGLMmat4 cglmMultCGLMmat4(
+CGLMmat4 cglmMultMat4(
     CGLMmat4 m1,
     CGLMmat4 m2);
 
