@@ -10,7 +10,7 @@
 #endif
 
 
-Vec3 normalize(Vec3 vector)
+CGLMvec3 cglmNormalize(CGLMvec3 vector)
 {
 
     float x = vector.x * vector.x;
@@ -18,7 +18,7 @@ Vec3 normalize(Vec3 vector)
     float z = vector.z * vector.z;
     float all = (float) SQRT(x + y + z);
 
-    Vec3 result;
+    CGLMvec3 result;
     result.x = vector.x / all;
     result.y = vector.y / all;
     result.z = vector.z / all;
@@ -28,12 +28,12 @@ Vec3 normalize(Vec3 vector)
 }
 
 
-Vec3 cross(
-    Vec3 x,
-    Vec3 y)
+CGLMvec3 cglmCross(
+    CGLMvec3 x,
+    CGLMvec3 y)
 {
 
-    Vec3 result;
+    CGLMvec3 result;
     result.x = x.y * y.z - y.y * x.z;
     result.y = x.z * y.x - y.z * x.x;
     result.z = x.x * y.y - y.x * x.y;
@@ -43,12 +43,12 @@ Vec3 cross(
 }
 
 
-Vec3 subsVec3(
-    Vec3 a,
-    Vec3 b)
+CGLMvec3 cglmSubsCGLMvec3(
+    CGLMvec3 a,
+    CGLMvec3 b)
 {
 
-    Vec3 result;
+    CGLMvec3 result;
     result.x = a.x + (-b.x);
     result.y = a.y + (-b.y);
     result.z = a.z + (-b.z);
@@ -58,12 +58,12 @@ Vec3 subsVec3(
 }
 
 
-Vec3 addVec3(
-    Vec3 a,
-    Vec3 b)
+CGLMvec3 cglmAddCGLMvec3(
+    CGLMvec3 a,
+    CGLMvec3 b)
 {
 
-    Vec3 result;
+    CGLMvec3 result;
     result.x = a.x + b.x;
     result.y = a.y + b.y;
     result.z = a.z + b.z;
@@ -73,9 +73,9 @@ Vec3 addVec3(
 }
 
 
-float dot(
-    Vec3 a,
-    Vec3 b)
+float cglmDot(
+    CGLMvec3 a,
+    CGLMvec3 b)
 {
 
     return a.x * b.x + a.y * b.y + a.z * b.z;
@@ -83,17 +83,17 @@ float dot(
 }
 
 
-Mat4 lookAt(
-    Vec3 eye,
-    Vec3 center,
-    Vec3 up)
+CGLMmat4 cglmLookAt(
+    CGLMvec3 eye,
+    CGLMvec3 center,
+    CGLMvec3 up)
 {
 
-    const Vec3 f = normalize(subsVec3(center, eye));
-    const Vec3 s = normalize(cross(f, up));
-    const Vec3 u = cross(s, f);
+    const CGLMvec3 f = cglmNormalize(cglmSubsCGLMvec3(center, eye));
+    const CGLMvec3 s = cglmNormalize(cglmCross(f, up));
+    const CGLMvec3 u = cglmCross(s, f);
 
-    Mat4 result = mat4(1);
+    CGLMmat4 result = cglmCGLMmat4(1);
     result.a0 = s.x;
     result.b0 = s.y;
     result.c0 = s.z;
@@ -103,21 +103,21 @@ Mat4 lookAt(
                                     result.a2 = -f.x;
                                     result.b2 = -f.y;
                                     result.c2 = -f.z;
-    result.d0 = -dot(s, eye);
-                    result.d1 = -dot(u, eye);
-                                    result.d2 = dot(f, eye);
+    result.d0 = -cglmDot(s, eye);
+                    result.d1 = -cglmDot(u, eye);
+                                    result.d2 = cglmDot(f, eye);
 
     return result;
 
 }
 
 
-Mat4 multMat4(
-    Mat4 m2,
-    Mat4 m1)
+CGLMmat4 cglmMultCGLMmat4(
+    CGLMmat4 m2,
+    CGLMmat4 m1)
 {
 
-    Mat4 result = {
+    CGLMmat4 result = {
         m1.a0*m2.a0 + m1.a1*m2.b0 + m1.a2*m2.c0 + m1.a3*m2.d0, // = a0
         m1.a0*m2.a1 + m1.a1*m2.b1 + m1.a2*m2.c1 + m1.a3*m2.d1, // = a1
         m1.a0*m2.a2 + m1.a1*m2.b2 + m1.a2*m2.c2 + m1.a3*m2.d2, // = a2
@@ -144,16 +144,16 @@ Mat4 multMat4(
 }
 
 
-static const Mat4 empty_matrix_4 = {
+static const CGLMmat4 empty_matrix_4 = {
     0,0,0,0,
     0,0,0,0,
     0,0,0,0,
     0,0,0,0
 };
-Mat4 mat4(float num)
+CGLMmat4 cglmCGLMmat4(float num)
 {
 
-    Mat4 result = empty_matrix_4;
+    CGLMmat4 result = empty_matrix_4;
 
     result.a0 = num;
                     result.b1 = num;
@@ -165,7 +165,7 @@ Mat4 mat4(float num)
 }
 
 
-Mat4 perspective(
+CGLMmat4 cglmPerspective(
     float fovy,
     float aspect,
     float zNear,
@@ -174,7 +174,7 @@ Mat4 perspective(
 
     float tanHalfFovy = (float) tan(fovy / (float) 2);
 
-    Mat4 result = mat4(0);
+    CGLMmat4 result = cglmCGLMmat4(0);
     result.a0 =   (float) 1 / (aspect * tanHalfFovy);
     result.b1 =   (float) 1 / (tanHalfFovy);
     result.c2 = - (zFar + zNear) / (zFar - zNear);
@@ -186,7 +186,7 @@ Mat4 perspective(
 }
 
 
-Mat4 ortho(
+CGLMmat4 cglmOrtho(
     float left,
     float right,
     float bottom,
@@ -195,7 +195,7 @@ Mat4 ortho(
     float zFar)
 {
 
-    Mat4 result = mat4(1);
+    CGLMmat4 result = cglmCGLMmat4(1);
     result.a0 =   (float) 2 / (right - left);
     result.b1 =   (float) 2 / (top - bottom);
     result.c2 = - (float) 2 / (zFar - zNear);
@@ -207,7 +207,7 @@ Mat4 ortho(
 
 }
 
-Mat4 frustum(
+CGLMmat4 cglmFrustum(
     float left,
     float right,
     float bottom,
@@ -216,13 +216,13 @@ Mat4 frustum(
     float zFar)
 {
 
-    Mat4 result = mat4(0);
+    CGLMmat4 result = cglmCGLMmat4(0);
     result.a0 =   ((float) 2 * zNear) / (right - left);
     result.b1 =   ((float) 2 * zNear)  / (top - bottom);
     result.c0 =   (right + left) / (right - left);
     result.c1 =   (top + bottom) / (top - bottom);
     result.c2 = - (zFar + zNear) / (zFar - zNear);
-    result.c3 =   (float) -1;
+    result.c3 = - (float) 1;
     result.d2 = - ((float) 2 * zFar * zNear) / (zFar - zNear);
 
     return result;
@@ -263,8 +263,8 @@ float f_sqrt(float number)
 }
 
 
-void debugMat4(
-    Mat4  matrix,
+void debugmat4(
+    CGLMmat4  matrix,
     char* info)
 {
 
@@ -276,7 +276,7 @@ void debugMat4(
 }
 
 
-void debugVec3(Vec3 vec)
+void debugvec3(CGLMvec3 vec)
 {
     printf("%f %f %f\n", vec.x, vec.y, vec.z);
 }
