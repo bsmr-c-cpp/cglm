@@ -29,3 +29,19 @@ add_test (NAME LookAt        COMMAND test_cglm lookAt)
 add_test (NAME MultMat4      COMMAND test_cglm multMat4)
 add_test (NAME Ortho         COMMAND test_cglm ortho)
 add_test (NAME Frustum       COMMAND test_cglm frustum)
+
+# doc
+find_package (Doxygen)
+
+if (DOXYGEN_FOUND)
+
+  configure_file (
+    ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.in
+    ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile @ONLY)
+
+  add_custom_target (doc
+    ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile
+    WORKING DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+    COMMENT "Generating API documentation with Doxygen" VERBATIM)
+
+endif (DOXYGEN_FOUND)
