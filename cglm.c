@@ -241,15 +241,13 @@ CGLMmat4 cglmFrustum(
 }
 
 
-void debugmat4(
-    CGLMmat4  matrix,
-    char* info)
+void debugmat4(CGLMmat4  matrix)
 {
 
-    printf("%s: %f %f %f %f\n", info, matrix.a0, matrix.a1, matrix.a2, matrix.a3);
-    printf("%s: %f %f %f %f\n", info, matrix.b0, matrix.b1, matrix.b2, matrix.b3);
-    printf("%s: %f %f %f %f\n", info, matrix.c0, matrix.c1, matrix.c2, matrix.c3);
-    printf("%s: %f %f %f %f\n", info, matrix.d0, matrix.d1, matrix.d2, matrix.d3);
+    printf("%f %f %f %f\n", matrix.a0, matrix.a1, matrix.a2, matrix.a3);
+    printf("%f %f %f %f\n", matrix.b0, matrix.b1, matrix.b2, matrix.b3);
+    printf("%f %f %f %f\n", matrix.c0, matrix.c1, matrix.c2, matrix.c3);
+    printf("%f %f %f %f\n", matrix.d0, matrix.d1, matrix.d2, matrix.d3);
 
 }
 

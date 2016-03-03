@@ -27,8 +27,14 @@
 
 // Minunit include BEGIN
 /* Copyright (C) 2002 John Brewer */
-#define mu_assert(message, test) do { if (!(test)) return message; } while (0)
-#define mu_run_test(test) do { char *message = test(); tests_run++; if (message) return message; } while (0)
+#define mu_assert(message, test) do { \
+    if (!(test)) return message; \
+} while (0)
+#define mu_run_test(test) do { \
+    char *message = test(); \
+    tests_run++; \
+    if (message) return message; \
+} while (0)
 int tests_run = 0;
 // Minunit include END
 
@@ -78,17 +84,30 @@ CGLMvec3 vcompare;
 CGLMvec3 vresult;
 static char* compare_vec3()
 {
+
+    printf("\nExpected vec3: \n");
+    debugvec3(vresult);
+    printf("Compared vec3: \n");
+    debugvec3(vcompare);
+
     CGLMvec3 vc = roundVec3(vcompare);
     mu_assert("x not match", vc.x == vresult.x);
     mu_assert("y not match", vc.y == vresult.y);
     mu_assert("z not match", vc.z == vresult.z);
     return NULL;
+
 }
 
 CGLMmat4 mcompare;
 CGLMmat4 mresult;
 static char* compare_matrix()
 {
+
+    printf("\nExpected mat4: \n");
+    debugmat4(mresult);
+    printf("Compared mat4: \n");
+    debugmat4(mcompare);
+
     CGLMmat4 mc = roundMat4(mcompare);
     mu_assert("compare error on a0", mc.a0 == mresult.a0);
     mu_assert("compare error on a1", mc.a1 == mresult.a1);
@@ -415,8 +434,7 @@ static char* test_lookAt() {
 
 static char* cglm_test(char* test_name) {
 
-    if (!test_name) return NULL;
-
+    if (!test_name) return "no shuch test";
 
     if (strcmp(test_name, "Perspective") == 0)
         mu_run_test(test_perspective);
@@ -440,8 +458,10 @@ static char* cglm_test(char* test_name) {
         mu_run_test(test_ortho);
     else if (strcmp(test_name, "Frustum") == 0)
         mu_run_test(test_frustum);
-    return NULL;
+    else
+        return "no such test";
 
+    return NULL;
 }
 
 int main(int argc, char* argv[])

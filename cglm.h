@@ -165,9 +165,7 @@ CGLMmat4 cglmMultMat4(
 /**
  * @brief for debugging purpose
  */
-void debugmat4(
-    CGLMmat4 matrix,
-    char* info);
+void debugmat4(CGLMmat4 matrix);
 
 /**
  * @brief for debugging purpose
