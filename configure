@@ -13,10 +13,10 @@ all:
 
 # cleanup build dir if exist
 rm -rf build
-mkdir  build && 
 
 # create Unix Makefiles project
-cd build && cmake ..
+mkdir build && cd build && cmake ..
 
-echo "\nYou can now run \"cd build && make all && make test ARGS=-V\"\n"
+echo "\nYou can now run \"make && make test\"\n"
+echo "\nNote that there is no \"install target\""
 

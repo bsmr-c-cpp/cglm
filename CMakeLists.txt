@@ -1,15 +1,15 @@
 cmake_minimum_required (VERSION 2.6)
 project (CGLM)
 
-include_directories (include/)
-add_library (cglm code/cglm.c include/cglm.h)
+include_directories (.)
+add_library (cglm cglm.c cglm.h)
 
 
 # Tests
 add_executable (test_cglm
-  code/tests/test_cglm.c
-  code/cglm.c
-  include/cglm.h)
+  test_cglm.c
+  cglm.c
+  cglm.h)
 
 target_link_libraries (test_cglm cglm)
 
