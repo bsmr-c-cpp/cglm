@@ -2,7 +2,7 @@
 
 # easy makefile
 echo '
-.PHONY: all
+.PHONY: all clean_all
 
 all:
 	make -C build all
