@@ -5,5 +5,5 @@ CGLM
 [![Appveyor Build Status](https://ci.appveyor.com/api/projects/status/github/ssbx/cglm?branch=master&svg=true)](https://ci.appveyor.com/project/ssbx/cglm)
 
 Basic OpenGL math library written in C.
-Most of CGLM code and documentation is a COPY/PASTE C version of the C++ CGLM library. (http://http://glm.g-truc.net).
+Most of CGLM code and documentation is a COPY/PASTE C version of the C++ CGLM library. (http://glm.g-truc.net).
 
