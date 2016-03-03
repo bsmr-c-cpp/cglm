@@ -162,8 +162,6 @@ CGLMmat4 cglmMultMat4(
     CGLMmat4 m2);
 
 
-float f_sqrt(float number);
-
 /**
  * @brief for debugging purpose
  */

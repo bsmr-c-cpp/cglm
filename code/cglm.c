@@ -20,12 +20,6 @@
 #include <stdarg.h>
 #include <math.h>
 
-#ifdef CGLM_FAST
-#define SQRT f_sqrt
-#else
-#define SQRT sqrt
-#endif
-
 
 CGLMvec3 cglmNormalize(CGLMvec3 vector)
 {
@@ -33,7 +27,7 @@ CGLMvec3 cglmNormalize(CGLMvec3 vector)
     float x = vector.x * vector.x;
     float y = vector.y * vector.y;
     float z = vector.z * vector.z;
-    float all = (float) SQRT(x + y + z);
+    float all = (float) sqrt(x + y + z);
 
     CGLMvec3 result;
     result.x = vector.x / all;
@@ -130,30 +124,30 @@ CGLMmat4 cglmLookAt(
 
 
 CGLMmat4 cglmMultMat4(
-    CGLMmat4 m2,
-    CGLMmat4 m1)
+    CGLMmat4 m1,
+    CGLMmat4 m2)
 {
 
     CGLMmat4 result = {
-        m1.a0*m2.a0 + m1.a1*m2.b0 + m1.a2*m2.c0 + m1.a3*m2.d0, // = a0
-        m1.a0*m2.a1 + m1.a1*m2.b1 + m1.a2*m2.c1 + m1.a3*m2.d1, // = a1
-        m1.a0*m2.a2 + m1.a1*m2.b2 + m1.a2*m2.c2 + m1.a3*m2.d2, // = a2
-        m1.a0*m2.a3 + m1.a1*m2.b3 + m1.a2*m2.c3 + m1.a3*m2.d3, // = a3
+        m2.a0*m1.a0 + m2.a1*m1.b0 + m2.a2*m1.c0 + m2.a3*m1.d0, // = a0
+        m2.a0*m1.a1 + m2.a1*m1.b1 + m2.a2*m1.c1 + m2.a3*m1.d1, // = a1
+        m2.a0*m1.a2 + m2.a1*m1.b2 + m2.a2*m1.c2 + m2.a3*m1.d2, // = a2
+        m2.a0*m1.a3 + m2.a1*m1.b3 + m2.a2*m1.c3 + m2.a3*m1.d3, // = a3
 
-        m1.b0*m2.a0 + m1.b1*m2.b0 + m1.b2*m2.c0 + m1.b3*m2.d0, // = b0
-        m1.b0*m2.a1 + m1.b1*m2.b1 + m1.b2*m2.c1 + m1.b3*m2.d1, // = b1
-        m1.b0*m2.a2 + m1.b1*m2.b2 + m1.b2*m2.c2 + m1.b3*m2.d2, // = b2
-        m1.b0*m2.a3 + m1.b1*m2.b3 + m1.b2*m2.c3 + m1.b3*m2.d3, // = b3
+        m2.b0*m1.a0 + m2.b1*m1.b0 + m2.b2*m1.c0 + m2.b3*m1.d0, // = b0
+        m2.b0*m1.a1 + m2.b1*m1.b1 + m2.b2*m1.c1 + m2.b3*m1.d1, // = b1
+        m2.b0*m1.a2 + m2.b1*m1.b2 + m2.b2*m1.c2 + m2.b3*m1.d2, // = b2
+        m2.b0*m1.a3 + m2.b1*m1.b3 + m2.b2*m1.c3 + m2.b3*m1.d3, // = b3
 
-        m1.c0*m2.a0 + m1.c1*m2.b0 + m1.c2*m2.c0 + m1.c3*m2.d0, // = c0
-        m1.c0*m2.a1 + m1.c1*m2.b1 + m1.c2*m2.c1 + m1.c3*m2.d1, // = c1
-        m1.c0*m2.a2 + m1.c1*m2.b2 + m1.c2*m2.c2 + m1.c3*m2.d2, // = c2
-        m1.c0*m2.a3 + m1.c1*m2.b3 + m1.c2*m2.c3 + m1.c3*m2.d3, // = c3
+        m2.c0*m1.a0 + m2.c1*m1.b0 + m2.c2*m1.c0 + m2.c3*m1.d0, // = c0
+        m2.c0*m1.a1 + m2.c1*m1.b1 + m2.c2*m1.c1 + m2.c3*m1.d1, // = c1
+        m2.c0*m1.a2 + m2.c1*m1.b2 + m2.c2*m1.c2 + m2.c3*m1.d2, // = c2
+        m2.c0*m1.a3 + m2.c1*m1.b3 + m2.c2*m1.c3 + m2.c3*m1.d3, // = c3
 
-        m1.d0*m2.a0 + m1.d1*m2.b0 + m1.d2*m2.c0 + m1.d3*m2.d0, // = d0
-        m1.d0*m2.a1 + m1.d1*m2.b1 + m1.d2*m2.c1 + m1.d3*m2.d1, // = d1
-        m1.d0*m2.a2 + m1.d1*m2.b2 + m1.d2*m2.c2 + m1.d3*m2.d2, // = d2
-        m1.d0*m2.a3 + m1.d1*m2.b3 + m1.d2*m2.c3 + m1.d3*m2.d3, // = d3
+        m2.d0*m1.a0 + m2.d1*m1.b0 + m2.d2*m1.c0 + m2.d3*m1.d0, // = d0
+        m2.d0*m1.a1 + m2.d1*m1.b1 + m2.d2*m1.c1 + m2.d3*m1.d1, // = d1
+        m2.d0*m1.a2 + m2.d1*m1.b2 + m2.d2*m1.c2 + m2.d3*m1.d2, // = d2
+        m2.d0*m1.a3 + m2.d1*m1.b3 + m2.d2*m1.c3 + m2.d3*m1.d3, // = d3
     };
 
     return result;
@@ -243,39 +237,6 @@ CGLMmat4 cglmFrustum(
     result.d2 = - ((float) 2 * zFar * zNear) / (zFar - zNear);
 
     return result;
-
-}
-
-float f_sqrt(float number)
-{
-
-    /*
-     * Copyed from https://en.wikipedia.org/wiki/Fast_inverse_square_root
-     */
-
-    long  i;
-    float x2;
-    float y;
-    const float threehalfs = 1.5F;
-
-    x2 = number * 0.5F;
-    y  = number;
-
-    // evil floating point bit level hacking
-    i  = *(long*) &y;
-
-    // what the fuck?
-    i  = 0x5f3759df - (i >> 1);
-
-    y  = * (float*) &i;
-
-    // 1st iteration
-    y  = y * (threehalfs - (x2 * y * y));
-
-    // 2nd iteration, this can be removed
-    // y  = y * (threehalfs - (x2 * y * y));
-
-    return y;
 
 }
 
