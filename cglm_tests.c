@@ -42,7 +42,7 @@ int tests_run = 0;
 static const float ROUND = 10000;
 float roundFloat(float f)
 {
-    return round(f * ROUND) / ROUND;
+    return round(f * (float) ROUND) / (float) ROUND;
 }
 
 static CGLMvec3 roundVec3(CGLMvec3 a)
@@ -131,10 +131,10 @@ static char* compare_matrix()
 
 static char* test_perspective() {
     mresult = (CGLMmat4) {
-        1.344400, 0.000000,  0.000000,  0.000000,
-        0.000000, 1.792600,  0.000000,  0.000000,
-        0.000000, 0.000000, -1.002000, -1.000000,
-        0.000000, 0.000000, -0.200200,  0.000000
+        (float) 1.344400, (float) 0.000000, (float)  0.000000, (float)  0.000000,
+        (float) 0.000000, (float) 1.792600, (float)  0.000000, (float)  0.000000,
+        (float) 0.000000, (float) 0.000000, (float) -1.002000, (float) -1.000000,
+        (float) 0.000000, (float) 0.000000, (float) -0.200200, (float)  0.000000
     };
     mcompare = cglmPerspective((float) 45, (float) 4/3, (float) 0.1, (float) 100);
     mu_run_test(compare_matrix);
@@ -144,10 +144,10 @@ static char* test_perspective() {
 
 static char* test_ortho() {
     mresult = (CGLMmat4) {
-        0.100000,  0.000000,  0.000000, 0.000000,
-        0.000000,  0.100000,  0.000000, 0.000000,
-        0.000000,  0.000000, -0.020000, 0.000000,
-       -0.000000, -0.000000, -1.000000, 1.000000
+        (float)  0.100000, (float)  0.000000, (float)  0.000000, (float) 0.000000,
+        (float)  0.000000, (float)  0.100000, (float)  0.000000, (float) 0.000000,
+        (float)  0.000000, (float)  0.000000, (float) -0.020000, (float) 0.000000,
+        (float) -0.000000, (float) -0.000000, (float) -1.000000, (float) 1.000000
     };
     mcompare = cglmOrtho(-10,10,-10,10,0,100);
     mu_run_test(compare_matrix);
@@ -157,10 +157,10 @@ static char* test_ortho() {
 
 static char* test_frustum() {
     mresult = (CGLMmat4) {
-        0.000000,  0.000000,  0.000000,  0.000000,
-        0.000000,  0.000000,  0.000000,  0.000000,
-        0.000000,  0.000000, -1.000000, -1.000000,
-        0.000000,  0.000000, -0.000000,  0.000000
+        (float) 0.000000, (float) 0.000000, (float)  0.000000, (float)  0.000000,
+        (float) 0.000000, (float) 0.000000, (float)  0.000000, (float)  0.000000,
+        (float) 0.000000, (float) 0.000000, (float) -1.000000, (float) -1.000000,
+        (float) 0.000000, (float) 0.000000, (float) -0.000000, (float)  0.000000
     };
     mcompare = cglmFrustum(-10,10,-10,10,0,100);
     mu_run_test(compare_matrix);
@@ -311,24 +311,24 @@ static char* test_addVec3() {
     CGLMvec3 b;
 
     //
-    vresult = (CGLMvec3) {0,0,0};
-    a = (CGLMvec3) {0,0,0};
-    b = (CGLMvec3) {0,0,0};
+    vresult = (CGLMvec3) {(float) 0,(float) 0,(float) 0};
+    a = (CGLMvec3) {(float) 0,(float) 0,(float) 0};
+    b = (CGLMvec3) {(float) 0,(float) 0,(float) 0};
     vcompare = cglmAddVec3(a,b);
     mu_run_test(compare_vec3);
 
 
     //
-    vresult = (CGLMvec3) {0,0,0};
-    a = (CGLMvec3) {1,1,1};
-    b = (CGLMvec3) {-1,-1,-1};
+    vresult = (CGLMvec3) {(float) 0,(float) 0,(float) 0};
+    a = (CGLMvec3) {(float) 1,(float) 1,(float) 1};
+    b = (CGLMvec3) {(float) -1,(float) -1,(float) -1};
     vcompare = cglmAddVec3(a,b);
     mu_run_test(compare_vec3);
 
     //
-    vresult = (CGLMvec3) {0.5,-0.82,0.12};
-    a = (CGLMvec3) {1.5,-1.32,1.32};
-    b = (CGLMvec3) {-1,0.5,-1.2};
+    vresult = (CGLMvec3) {(float) 0.5,(float) -0.82,(float) 0.12};
+    a = (CGLMvec3) {(float) 1.5,(float) -1.32,(float) 1.32};
+    b = (CGLMvec3) {(float) -1,(float) 0.5,(float) -1.2};
     vcompare = cglmAddVec3(a,b);
     mu_run_test(compare_vec3);
 
