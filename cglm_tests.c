@@ -39,7 +39,7 @@ int tests_run = 0;
 // Minunit include END
 
 
-static const int ROUND = 10000;
+static const float ROUND = 10000;
 float roundFloat(float f)
 {
     return round(f * ROUND) / ROUND;
@@ -136,7 +136,7 @@ static char* test_perspective() {
         0.000000, 0.000000, -1.002000, -1.000000,
         0.000000, 0.000000, -0.200200,  0.000000
     };
-    mcompare = cglmPerspective(45, (float) 4/3, 0.1, 100);
+    mcompare = cglmPerspective((float) 45, (float) 4/3, (float) 0.1, (float) 100);
     mu_run_test(compare_matrix);
 
     return NULL;
@@ -342,14 +342,14 @@ static char* test_dot() {
     float fcompare;
 
     //
-    fresult = -3.744;
+    fresult = (float) -3.744;
     a = (CGLMvec3) {1.5,-1.32,1.32};
     b = (CGLMvec3) {-1,0.5,-1.2};
     fcompare = roundFloat(cglmDot(a,b));
     mu_assert("compare on dot float", fcompare == fresult);
 
     //
-    fresult = 3;
+    fresult = (float) 3;
     a = (CGLMvec3) {1,1,1};
     b = (CGLMvec3) {1,1,1};
     fcompare = roundFloat(cglmDot(a,b));
@@ -357,7 +357,7 @@ static char* test_dot() {
 
 
     //
-    fresult = 0;
+    fresult = (float) 0;
     a = (CGLMvec3) {0,0,0};
     b = (CGLMvec3) {1,1,1};
     fcompare = roundFloat(cglmDot(a,b));
@@ -365,14 +365,14 @@ static char* test_dot() {
 
 
     //
-    fresult = -0.5;
+    fresult = (float) -0.5;
     a = (CGLMvec3) {-1,1.5,-1};
     b = (CGLMvec3) {1,1,1};
     fcompare = roundFloat(cglmDot(a,b));
     mu_assert("compare on dot float", fcompare == fresult);
 
     //
-    fresult = -3.2;
+    fresult = (float) -3.2;
     a = (CGLMvec3) {-1,1.5,-1};
     b = (CGLMvec3) {1,-0.8,1};
     fcompare = roundFloat(cglmDot(a,b));
