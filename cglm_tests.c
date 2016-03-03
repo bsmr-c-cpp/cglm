@@ -1,12 +1,19 @@
-#include "minunit.h"
-
 #include <stdlib.h>
 #include <stdio.h>
 #include <cglm.h>
 #include <math.h>
 
-// vesult, mresult and fresult values have been computed the C++ glm library.
+
+/*
+ * vesult, mresult and fresult values have been computed the C++ glm library.
+ */
+
+// Minunit include BEGIN
+#define mu_assert(message, test) do { if (!(test)) return message; } while (0)
+#define mu_run_test(test) do { char *message = test(); tests_run++; if (message) return message; } while (0)
 int tests_run = 0;
+// Minunit include END
+
 
 static const int ROUND = 10000;
 float roundFloat(float f)
