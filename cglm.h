@@ -23,6 +23,12 @@
 #ifndef CGLM_H
 #define CGLM_H
 
+
+#ifdef __cplusplus
+extern "C" {
+#endif // __cplusplus
+
+
 /**
  * @brief represent a 4x4 matrix.
  *
@@ -35,7 +41,7 @@
  *       d0   d1  d2   d3 <br>
  *
  */
-typedef struct t_mat4 {
+typedef struct {
     float a0, a1, a2, a3,
           b0 ,b1, b2, b3,
           c0, c1, c2, c3,
@@ -46,7 +52,7 @@ typedef struct t_mat4 {
 /**
  * @brief represent a 3 dimention vertex.
  */
-typedef struct t_vec3 {
+typedef struct {
     float x, y, z;
 } CGLMvec3;
 
@@ -174,4 +180,9 @@ void debugmat4(CGLMmat4 matrix);
 void debugvec3(CGLMvec3 vec);
 
 
-#endif
+#ifdef __cplusplus
+}
+#endif // __cplusplus
+
+#endif // CGLM_H
+
