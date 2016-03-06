@@ -19,6 +19,7 @@
 #include <stdio.h>
 #include <cglm.h>
 #include <math.h>
+#include <string.h>
 
 
 /*
