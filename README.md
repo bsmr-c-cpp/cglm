@@ -8,3 +8,9 @@ Basic linear math library written in C.
 
 Most of CGLM code and documentation is a COPY/PASTE C version of the C++ GLM library (http://glm.g-truc.net).
 
+Build
+-----
+```sh
+$ ./configure
+$ cd build && make all && make test && make cglm_doc
+```
