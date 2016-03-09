@@ -14,3 +14,4 @@ Build
 $ ./configure
 $ cd build && make all && make test && make cglm_doc
 ```
+... or use bare CMake on windows/*nix to include it in your project.
