@@ -12,6 +12,13 @@ Build
 -----
 ```sh
 $ ./configure
-$ cd build && make all && make test && make cglm_doc
+$ cd build && make all && make test
 ```
-... or use bare CMake on windows/*nix to include it in your project.
+or use bare CMake on windows/*nix to include it in your project.
+
+Doc
+---
+Depends on Doxygen:
+```sh
+ && make cglm_doc
+```
