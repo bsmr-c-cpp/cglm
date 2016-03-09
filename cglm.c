@@ -14,8 +14,6 @@
  * under the License.
  */
 #include "cglm.h"
-#include <stdio.h>
-#include <stdarg.h>
 #include <math.h>
 
 
@@ -239,6 +237,7 @@ CGLMmat4 cglmFrustum(
 }
 
 
+#include <stdio.h>
 void debugmat4(CGLMmat4  matrix)
 {
 

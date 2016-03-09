@@ -166,15 +166,7 @@ CGLMmat4 cglmMultMat4(
     CGLMmat4 m2);
 
 
-/**
- * @brief for debugging purpose
- */
 void debugmat4(CGLMmat4 matrix);
-
-/**
- * @brief for debugging purpose
- */
-
 void debugvec3(CGLMvec3 vec);
 
 
