@@ -54,18 +54,26 @@ typedef struct {
     float x, y, z;
 } CGLMvec3;
 
+
 /**
- * @brief Creates a matrix for a symetric perspective-view frustum based on the default handedness.
- * @param fovy Specifies the field of view angle in the y direction. Expressed in radians.
- * @param aspect Specifies the aspect ratio that determines the field of view in the x direction. The aspect ratio is the ratio of x (width) to y (height).
- * @param near Specifies the distance from the viewer to the near clipping plane (always positive).
- * @param far Specifies the distance from the viewer to the far clipping plane (always positive).
+ * @brief Creates a matrix for a symetric perspective-view frustum based on
+ *        the default handedness.
+ * @param fovy Specifies the field of view angle in the y direction.
+ *             Expressed in radians.
+ * @param aspect Specifies the aspect ratio that determines the field of view
+ *               in the x direction. The aspect ratio is the ratio of
+ *               x (width) to y (height).
+ * @param near Specifies the distance from the viewer to the near clipping
+ *             plane (always positive).
+ * @param far Specifies the distance from the viewer to the far clipping
+ *            plane (always positive).
  */
 CGLMmat4 cglmPerspective(
     float fovy,
     float aspect,
     float zNear,
     float zFar);
+
 
 /**
  * @brief Creates a matrix for an orthographic parallel viewing volume.
@@ -75,7 +83,6 @@ CGLMmat4 cglmPerspective(
  * @param top 
  * @param zNear 
  * @param zFar 
- * @return GCLMmat4
  */
 CGLMmat4 cglmOrtho(
     float left,
@@ -84,6 +91,7 @@ CGLMmat4 cglmOrtho(
     float top,
     float zNear,
     float zFar);
+
 
 /**
  * @brief Creates a frustum matrix.
@@ -102,16 +110,19 @@ CGLMmat4 cglmFrustum(
     float zNear,
     float zFar);
 
+
 /**
  * @brief Build a look at view matrix based on the default handedness.
  * @param eye Position of the camera
  * @param center Position where the camera is looking at
- * @param up Normalized up vector, how the camera is oriented. Typically (0, 0, 1)
+ * @param up Normalized up vector, how the camera is oriented.
+ *           Typically (0, 0, 1)
  */
 CGLMmat4 cglmLookAt(
     CGLMvec3 eye,
     CGLMvec3 center,
     CGLMvec3 up);
+
 
 /**
  * @brief create a 4x4 matrix
@@ -119,11 +130,13 @@ CGLMmat4 cglmLookAt(
  */
 CGLMmat4 cglmMat4(float num);
 
+
 /**
  * @brief Normalize a vector.
  * @return normalized GLMvec3
  */
 CGLMvec3 cglmNormalize(CGLMvec3 vector);
+
 
 /**
  * @brief Cross two vectors
@@ -133,6 +146,7 @@ CGLMvec3 cglmCross(
     CGLMvec3 x,
     CGLMvec3 y);
 
+
 /**
  * @brief compute the dot value of two vectors.
  * @return the dot value
@@ -140,6 +154,7 @@ CGLMvec3 cglmCross(
 float cglmDot(
     CGLMvec3 a,
     CGLMvec3 b);
+
 
 /**
  * @brief subsctract vector b from vector a.
@@ -149,6 +164,7 @@ CGLMvec3 cglmSubsVec3(
     CGLMvec3 a,
     CGLMvec3 b);
 
+
 /**
  * @brief add vectors
  * @return a vector
@@ -156,6 +172,7 @@ CGLMvec3 cglmSubsVec3(
 CGLMvec3 cglmAddVec3(
     CGLMvec3 a,
     CGLMvec3 b);
+
 
 /**
  * @brief multiply matrix m1 by matrix M2
