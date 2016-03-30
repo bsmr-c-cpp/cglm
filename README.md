@@ -1,8 +1,7 @@
 CGLM
 ====
-
-[![Build Status](https://travis-ci.org/ssbx/cglm.svg?branch=master)](https://travis-ci.org/ssbx/cglm)
-[![Appveyor Build Status](https://ci.appveyor.com/api/projects/status/github/ssbx/cglm?branch=master&svg=true)](https://ci.appveyor.com/project/ssbx/cglm)
+[![Build Status](https://travis-ci.org/libgame/cglm.svg?branch=master)](https://travis-ci.org/libgame/cglm)
+[![Build status](https://ci.appveyor.com/api/projects/status/0f3gkua2ayap568m/branch/master?svg=true)](https://ci.appveyor.com/project/ssbx/cglm-ff0tb/branch/master)
 
 Basic linear math library written in C.
 
