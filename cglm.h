@@ -71,11 +71,11 @@ static const CGLMmat4 empty_matrix_4 = {
     0,0,0,0,
     0,0,0,0,
     0,0,0,0};
-inline CGLMmat4 cglmMat4(float num);
-inline CGLMvec3 cglmNormalize(CGLMvec3 vector);
-inline CGLMvec3 cglmSubsVec3(CGLMvec3 a, CGLMvec3 b);
-inline CGLMvec3 cglmCross(CGLMvec3 x, CGLMvec3 y);
-inline float cglmDot(CGLMvec3 a, CGLMvec3 b);
+static inline CGLMmat4 cglmMat4(float num);
+static inline CGLMvec3 cglmNormalize(CGLMvec3 vector);
+static inline CGLMvec3 cglmSubsVec3(CGLMvec3 a, CGLMvec3 b);
+static inline CGLMvec3 cglmCross(CGLMvec3 x, CGLMvec3 y);
+static inline float cglmDot(CGLMvec3 a, CGLMvec3 b);
 
 
 /**
@@ -91,7 +91,7 @@ inline float cglmDot(CGLMvec3 a, CGLMvec3 b);
  * @param far Specifies the distance from the viewer to the far clipping
  *            plane (always positive).
  */
-inline CGLMmat4 cglmPerspective(
+static inline CGLMmat4 cglmPerspective(
     float fovy,
     float aspect,
     float zNear,
@@ -121,7 +121,7 @@ inline CGLMmat4 cglmPerspective(
  * @param zNear 
  * @param zFar 
  */
-inline CGLMmat4 cglmOrtho(
+static inline CGLMmat4 cglmOrtho(
     float left,
     float right,
     float bottom,
@@ -152,7 +152,7 @@ inline CGLMmat4 cglmOrtho(
  * @param near 
  * @param far 
  */
-inline CGLMmat4 cglmFrustum(
+static inline CGLMmat4 cglmFrustum(
     float left,
     float right,
     float bottom,
@@ -182,7 +182,7 @@ inline CGLMmat4 cglmFrustum(
  * @param up Normalized up vector, how the camera is oriented.
  *           Typically (0, 0, 1)
  */
-inline CGLMmat4 cglmLookAt(
+static inline CGLMmat4 cglmLookAt(
     CGLMvec3 eye,
     CGLMvec3 center,
     CGLMvec3 up)
@@ -215,7 +215,7 @@ inline CGLMmat4 cglmLookAt(
  * @brief create a 4x4 matrix
  * @return CLGMmat4
  */
-inline CGLMmat4 cglmMat4(float num)
+static inline CGLMmat4 cglmMat4(float num)
 {
 
     CGLMmat4 result = empty_matrix_4;
@@ -234,7 +234,7 @@ inline CGLMmat4 cglmMat4(float num)
  * @brief Normalize a vector.
  * @return normalized GLMvec3
  */
-inline CGLMvec3 cglmNormalize(CGLMvec3 vector)
+static inline CGLMvec3 cglmNormalize(CGLMvec3 vector)
 {
 
     float x = vector.x * vector.x;
@@ -256,7 +256,7 @@ inline CGLMvec3 cglmNormalize(CGLMvec3 vector)
  * @brief Cross two vectors
  * @return the resulting vector
  */
-inline CGLMvec3 cglmCross(
+static inline CGLMvec3 cglmCross(
     CGLMvec3 x,
     CGLMvec3 y)
 {
@@ -275,7 +275,7 @@ inline CGLMvec3 cglmCross(
  * @brief compute the dot value of two vectors.
  * @return the dot value
  */
-inline float cglmDot(
+static inline float cglmDot(
     CGLMvec3 a,
     CGLMvec3 b)
 {
@@ -289,7 +289,7 @@ inline float cglmDot(
  * @brief subsctract vector b from vector a.
  * @return the resulting vector
  */
-inline CGLMvec3 cglmSubsVec3(
+static inline CGLMvec3 cglmSubsVec3(
     CGLMvec3 a,
     CGLMvec3 b)
 {
@@ -308,7 +308,7 @@ inline CGLMvec3 cglmSubsVec3(
  * @brief add vectors
  * @return a vector
  */
-inline CGLMvec3 cglmAddVec3(
+static inline CGLMvec3 cglmAddVec3(
     CGLMvec3 a,
     CGLMvec3 b)
 {
@@ -327,7 +327,7 @@ inline CGLMvec3 cglmAddVec3(
  * @brief multiply matrix m1 by matrix M2
  * @return a matrix
  */
-inline CGLMmat4 cglmMultMat4(
+static inline CGLMmat4 cglmMultMat4(
     CGLMmat4 m1,
     CGLMmat4 m2)
 {
@@ -360,7 +360,7 @@ inline CGLMmat4 cglmMultMat4(
 
 
 #include <stdio.h>
-inline void debugmat4(CGLMmat4  matrix)
+static inline void debugmat4(CGLMmat4  matrix)
 {
 
     printf("%f %f %f %f\n", matrix.a0, matrix.a1, matrix.a2, matrix.a3);
@@ -371,7 +371,7 @@ inline void debugmat4(CGLMmat4  matrix)
 }
 
 
-inline void debugvec3(CGLMvec3 vec)
+static inline void debugvec3(CGLMvec3 vec)
 {
     printf("%f %f %f\n", vec.x, vec.y, vec.z);
 }
