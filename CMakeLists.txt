@@ -2,16 +2,11 @@ cmake_minimum_required (VERSION 2.6)
 project (CGLM)
 
 include_directories (.)
-add_library (cglm cglm.c cglm.h)
-
 
 # Tests
 add_executable (cglm_tests
   cglm_tests.c
-  cglm.c
   cglm.h)
-
-target_link_libraries (cglm_tests cglm)
 
 if ("${CMAKE_SYSTEM}" MATCHES "Linux")
     target_link_libraries (cglm_tests -lm)

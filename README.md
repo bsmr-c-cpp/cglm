@@ -7,9 +7,13 @@ Basic linear math library written in C.
 
 Most of CGLM code and documentation is a COPY/PASTE C version of the C++ GLM library (http://glm.g-truc.net).
 
+Use
+---
+CGLM is only one header file. Include cglm.h and it is ok.
+
 Build
 -----
-CGLM is build with CMake for all platforms.
+CGLM test suite is build with CMake for all platforms.
 
 You can also use the fake configure script provided to set it up on unix:
 ```sh
