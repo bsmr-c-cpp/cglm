@@ -23,6 +23,11 @@
  */
 
 /**
+ * @mainpage
+ * All CGLM documentation is included ini the main cglm.h file.
+ */
+
+/**
  * @file cglm.h
  * @brief Cglm
  */
@@ -71,11 +76,97 @@ static const CGLMmat4 empty_matrix_4 = {
     0,0,0,0,
     0,0,0,0,
     0,0,0,0};
-static inline CGLMmat4 cglmMat4(float num);
-static inline CGLMvec3 cglmNormalize(CGLMvec3 vector);
-static inline CGLMvec3 cglmSubsVec3(CGLMvec3 a, CGLMvec3 b);
-static inline CGLMvec3 cglmCross(CGLMvec3 x, CGLMvec3 y);
-static inline float cglmDot(CGLMvec3 a, CGLMvec3 b);
+/**
+ * @brief create a 4x4 matrix
+ * @return CLGMmat4
+ */
+static CGLMmat4 cglmMat4(float num)
+{
+
+    CGLMmat4 result = empty_matrix_4;
+
+    result.a0 = num;
+                    result.b1 = num;
+                                    result.c2 = num;
+                                                    result.d3 = num;
+
+    return result;
+
+}
+
+
+/**
+ * @brief Normalize a vector.
+ * @return normalized GLMvec3
+ */
+static CGLMvec3 cglmNormalize(CGLMvec3 vector)
+{
+
+    float x = vector.x * vector.x;
+    float y = vector.y * vector.y;
+    float z = vector.z * vector.z;
+    float all = (float) sqrt(x + y + z);
+
+    CGLMvec3 result;
+    result.x = vector.x / all;
+    result.y = vector.y / all;
+    result.z = vector.z / all;
+
+    return result;
+
+}
+
+
+/**
+ * @brief subsctract vector b from vector a.
+ * @return the resulting vector
+ */
+static CGLMvec3 cglmSubsVec3(
+    CGLMvec3 a,
+    CGLMvec3 b)
+{
+
+    CGLMvec3 result;
+    result.x = a.x + (-b.x);
+    result.y = a.y + (-b.y);
+    result.z = a.z + (-b.z);
+
+    return result;
+
+}
+
+
+/**
+ * @brief Cross two vectors
+ * @return the resulting vector
+ */
+static CGLMvec3 cglmCross(
+    CGLMvec3 x,
+    CGLMvec3 y)
+{
+
+    CGLMvec3 result;
+    result.x = x.y * y.z - y.y * x.z;
+    result.y = x.z * y.x - y.z * x.x;
+    result.z = x.x * y.y - y.x * x.y;
+
+    return result;
+
+}
+
+
+/**
+ * @brief compute the dot value of two vectors.
+ * @return the dot value
+ */
+static float cglmDot(
+    CGLMvec3 a,
+    CGLMvec3 b)
+{
+    
+    return a.x * b.x + a.y * b.y + a.z * b.z;
+
+}
 
 
 /**
@@ -91,7 +182,7 @@ static inline float cglmDot(CGLMvec3 a, CGLMvec3 b);
  * @param far Specifies the distance from the viewer to the far clipping
  *            plane (always positive).
  */
-static inline CGLMmat4 cglmPerspective(
+static CGLMmat4 cglmPerspective(
     float fovy,
     float aspect,
     float zNear,
@@ -121,7 +212,7 @@ static inline CGLMmat4 cglmPerspective(
  * @param zNear 
  * @param zFar 
  */
-static inline CGLMmat4 cglmOrtho(
+static CGLMmat4 cglmOrtho(
     float left,
     float right,
     float bottom,
@@ -152,7 +243,7 @@ static inline CGLMmat4 cglmOrtho(
  * @param near 
  * @param far 
  */
-static inline CGLMmat4 cglmFrustum(
+static CGLMmat4 cglmFrustum(
     float left,
     float right,
     float bottom,
@@ -182,7 +273,7 @@ static inline CGLMmat4 cglmFrustum(
  * @param up Normalized up vector, how the camera is oriented.
  *           Typically (0, 0, 1)
  */
-static inline CGLMmat4 cglmLookAt(
+static CGLMmat4 cglmLookAt(
     CGLMvec3 eye,
     CGLMvec3 center,
     CGLMvec3 up)
@@ -212,103 +303,10 @@ static inline CGLMmat4 cglmLookAt(
 
 
 /**
- * @brief create a 4x4 matrix
- * @return CLGMmat4
- */
-static inline CGLMmat4 cglmMat4(float num)
-{
-
-    CGLMmat4 result = empty_matrix_4;
-
-    result.a0 = num;
-                    result.b1 = num;
-                                    result.c2 = num;
-                                                    result.d3 = num;
-
-    return result;
-
-}
-
-
-/**
- * @brief Normalize a vector.
- * @return normalized GLMvec3
- */
-static inline CGLMvec3 cglmNormalize(CGLMvec3 vector)
-{
-
-    float x = vector.x * vector.x;
-    float y = vector.y * vector.y;
-    float z = vector.z * vector.z;
-    float all = (float) sqrt(x + y + z);
-
-    CGLMvec3 result;
-    result.x = vector.x / all;
-    result.y = vector.y / all;
-    result.z = vector.z / all;
-
-    return result;
-
-}
-
-
-/**
- * @brief Cross two vectors
- * @return the resulting vector
- */
-static inline CGLMvec3 cglmCross(
-    CGLMvec3 x,
-    CGLMvec3 y)
-{
-
-    CGLMvec3 result;
-    result.x = x.y * y.z - y.y * x.z;
-    result.y = x.z * y.x - y.z * x.x;
-    result.z = x.x * y.y - y.x * x.y;
-
-    return result;
-
-}
-
-
-/**
- * @brief compute the dot value of two vectors.
- * @return the dot value
- */
-static inline float cglmDot(
-    CGLMvec3 a,
-    CGLMvec3 b)
-{
-    
-    return a.x * b.x + a.y * b.y + a.z * b.z;
-
-}
-
-
-/**
- * @brief subsctract vector b from vector a.
- * @return the resulting vector
- */
-static inline CGLMvec3 cglmSubsVec3(
-    CGLMvec3 a,
-    CGLMvec3 b)
-{
-
-    CGLMvec3 result;
-    result.x = a.x + (-b.x);
-    result.y = a.y + (-b.y);
-    result.z = a.z + (-b.z);
-
-    return result;
-
-}
-
-
-/**
  * @brief add vectors
  * @return a vector
  */
-static inline CGLMvec3 cglmAddVec3(
+static CGLMvec3 cglmAddVec3(
     CGLMvec3 a,
     CGLMvec3 b)
 {
@@ -327,7 +325,7 @@ static inline CGLMvec3 cglmAddVec3(
  * @brief multiply matrix m1 by matrix M2
  * @return a matrix
  */
-static inline CGLMmat4 cglmMultMat4(
+static CGLMmat4 cglmMultMat4(
     CGLMmat4 m1,
     CGLMmat4 m2)
 {
@@ -360,7 +358,7 @@ static inline CGLMmat4 cglmMultMat4(
 
 
 #include <stdio.h>
-static inline void debugmat4(CGLMmat4  matrix)
+static void debugmat4(CGLMmat4  matrix)
 {
 
     printf("%f %f %f %f\n", matrix.a0, matrix.a1, matrix.a2, matrix.a3);
@@ -371,7 +369,7 @@ static inline void debugmat4(CGLMmat4  matrix)
 }
 
 
-static inline void debugvec3(CGLMvec3 vec)
+static void debugvec3(CGLMvec3 vec)
 {
     printf("%f %f %f\n", vec.x, vec.y, vec.z);
 }
