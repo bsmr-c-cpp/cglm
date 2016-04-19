@@ -35,11 +35,7 @@
 #define CGLM_H
 
 #include <math.h>
-
-#ifdef __cplusplus
-extern "C" {
-#endif // __cplusplus
-
+#include <stdio.h>
 
 /**
  * @brief represent a 4x4 matrix.
@@ -76,6 +72,12 @@ static const CGLMmat4 empty_matrix_4 = {
     0,0,0,0,
     0,0,0,0,
     0,0,0,0};
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif // __cplusplus
+
 /**
  * @brief create a 4x4 matrix
  * @return CLGMmat4
@@ -357,7 +359,6 @@ static CGLMmat4 cglmMultMat4(
 }
 
 
-#include <stdio.h>
 static void debugmat4(CGLMmat4  matrix)
 {
 
