@@ -9,7 +9,7 @@ Most of CGLM code and documentation is a COPY/PASTE C version of the C++ GLM lib
 
 Use
 ---
-CGLM is only one header file. Include cglm.h and it is ok.
+Just include cglm.h to your project.
 
 Build
 -----
