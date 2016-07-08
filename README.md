@@ -3,9 +3,7 @@ CGLM
 [![Build Status](https://travis-ci.org/funlibs/cglm.svg?branch=master)](https://travis-ci.org/funlibs/cglm)
 [![Build status](https://ci.appveyor.com/api/projects/status/j7h4kdur2cxami3f/branch/master?svg=true)](https://ci.appveyor.com/project/ssbx/cglm-f7i2h/branch/master)
 
-Basic linear math library written in C.
-
-Most of CGLM code and documentation is a COPY/PASTE C version of the C++ GLM library (http://glm.g-truc.net).
+Basic linear math library written in C inspired by the C++ GLM library (http://glm.g-truc.net).
 
 Use
 ---
