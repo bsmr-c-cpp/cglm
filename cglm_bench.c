@@ -4,8 +4,6 @@
 int main(int argc, char** argv)
 {
 
-    double elapsed;
-
     if (argc < 2)
         return 1;
 
@@ -26,7 +24,6 @@ int main(int argc, char** argv)
         view = cglmLookAt(position, direction, up);
         MVP = cglmMultMat4(cglmMultMat4(proj, view), model);
     }
-
 
     return 0;
 }
