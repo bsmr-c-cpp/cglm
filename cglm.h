@@ -12,7 +12,7 @@
  *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- 
+
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -36,6 +36,7 @@
 
 #include <math.h>
 #include <stdio.h>
+#include <GL/gl.h>
 
 /**
  * @brief represent a 4x4 matrix.
@@ -50,10 +51,10 @@
  *
  */
 typedef struct {
-    float a0, a1, a2, a3,
-          b0 ,b1, b2, b3,
-          c0, c1, c2, c3,
-          d0, d1, d2, d3;
+    GLfloat a0, a1, a2, a3,
+            b0 ,b1, b2, b3,
+            c0, c1, c2, c3,
+            d0, d1, d2, d3;
 } CGLMmat4;
 
 
@@ -63,7 +64,7 @@ typedef struct {
  * @brief represent a 3 dimention vertex.
  */
 typedef struct {
-    float x, y, z;
+    GLfloat x, y, z;
 } CGLMvec3;
 
 
@@ -85,7 +86,7 @@ extern "C" {
  * @return CLGMmat4
  */
 static CGLMmat4
-cglmMat4(float num)
+cglmMat4(GLfloat num)
 {
     CGLMmat4 result = empty_matrix_4;
     result.a0 = num;
@@ -102,10 +103,10 @@ cglmMat4(float num)
 static CGLMvec3
 cglmNormalize(CGLMvec3 vector)
 {
-    float x = vector.x * vector.x;
-    float y = vector.y * vector.y;
-    float z = vector.z * vector.z;
-    float all = (float) sqrt(x + y + z);
+    GLfloat x = vector.x * vector.x;
+    GLfloat y = vector.y * vector.y;
+    GLfloat z = vector.z * vector.z;
+    GLfloat all = (GLfloat) sqrt(x + y + z);
 
     CGLMvec3 result;
     result.x = vector.x / all;
@@ -119,7 +120,7 @@ cglmNormalize(CGLMvec3 vector)
  * @brief subsctract vector b from vector a.
  * @return the resulting vector
  */
-static CGLMvec3 
+static CGLMvec3
 cglmSubsVec3(
         CGLMvec3 a,
         CGLMvec3 b)
@@ -138,7 +139,7 @@ cglmSubsVec3(
  */
 static CGLMvec3
 cglmCross(
-        CGLMvec3 x, 
+        CGLMvec3 x,
         CGLMvec3 y)
 {
     CGLMvec3 result;
@@ -153,7 +154,7 @@ cglmCross(
  * @brief compute the dot value of two vectors.
  * @return the dot value
  */
-static float 
+static GLfloat
 cglmDot(CGLMvec3 a, CGLMvec3 b)
 {
     return a.x * b.x + a.y * b.y + a.z * b.z;
@@ -174,45 +175,45 @@ cglmDot(CGLMvec3 a, CGLMvec3 b)
  */
 static CGLMmat4
 cglmPerspective(
-        float fovy,
-        float aspect,
-        float zNear,
-        float zFar)
+        GLfloat fovy,
+        GLfloat aspect,
+        GLfloat zNear,
+        GLfloat zFar)
 {
-    float tanHalfFovy = (float) tan(fovy / (float) 2);
+    GLfloat tanHalfFovy = (GLfloat) tan(fovy / (GLfloat) 2);
 
     CGLMmat4 result = cglmMat4(0);
-    result.a0 =   (float) 1 / (aspect * tanHalfFovy);
-    result.b1 =   (float) 1 / (tanHalfFovy);
+    result.a0 =   (GLfloat) 1 / (aspect * tanHalfFovy);
+    result.b1 =   (GLfloat) 1 / (tanHalfFovy);
     result.c2 = - (zFar + zNear) / (zFar - zNear);
-    result.c3 = - (float) 1;
-    result.d2 = - ((float) 2 * zFar * zNear) / (zFar - zNear);
+    result.c3 = - (GLfloat) 1;
+    result.d2 = - ((GLfloat) 2 * zFar * zNear) / (zFar - zNear);
 
     return result;
 }
 
 /**
  * @brief Creates a matrix for an orthographic parallel viewing volume.
- * @param left 
- * @param right 
- * @param bottom 
- * @param top 
- * @param zNear 
- * @param zFar 
+ * @param left
+ * @param right
+ * @param bottom
+ * @param top
+ * @param zNear
+ * @param zFar
  */
-static CGLMmat4 
+static CGLMmat4
 cglmOrtho(
-        float left,
-        float right,
-        float bottom,
-        float top,
-        float zNear,
-        float zFar)
+        GLfloat left,
+        GLfloat right,
+        GLfloat bottom,
+        GLfloat top,
+        GLfloat zNear,
+        GLfloat zFar)
 {
     CGLMmat4 result = cglmMat4(1);
-    result.a0 =   (float) 2 / (right - left);
-    result.b1 =   (float) 2 / (top - bottom);
-    result.c2 = - (float) 2 / (zFar - zNear);
+    result.a0 =   (GLfloat) 2 / (right - left);
+    result.b1 =   (GLfloat) 2 / (top - bottom);
+    result.c2 = - (GLfloat) 2 / (zFar - zNear);
     result.d0 = - (right + left) / (right - left);
     result.d1 = - (top + bottom) / (top - bottom);
     result.d2 = - (zFar + zNear) / (zFar - zNear);
@@ -222,30 +223,30 @@ cglmOrtho(
 
 /**
  * @brief Creates a frustum matrix.
- * @param left 
- * @param right 
- * @param bottom 
- * @param top 
- * @param near 
- * @param far 
+ * @param left
+ * @param right
+ * @param bottom
+ * @param top
+ * @param near
+ * @param far
  */
-static CGLMmat4 
+static CGLMmat4
 cglmFrustum(
-        float left,
-        float right,
-        float bottom,
-        float top,
-        float zNear,
-        float zFar)
+        GLfloat left,
+        GLfloat right,
+        GLfloat bottom,
+        GLfloat top,
+        GLfloat zNear,
+        GLfloat zFar)
 {
     CGLMmat4 result = cglmMat4(0);
-    result.a0 =   ((float) 2 * zNear) / (right - left);
-    result.b1 =   ((float) 2 * zNear)  / (top - bottom);
+    result.a0 =   ((GLfloat) 2 * zNear) / (right - left);
+    result.b1 =   ((GLfloat) 2 * zNear)  / (top - bottom);
     result.c0 =   (right + left) / (right - left);
     result.c1 =   (top + bottom) / (top - bottom);
     result.c2 = - (zFar + zNear) / (zFar - zNear);
-    result.c3 = - (float) 1;
-    result.d2 = - ((float) 2 * zFar * zNear) / (zFar - zNear);
+    result.c3 = - (GLfloat) 1;
+    result.d2 = - ((GLfloat) 2 * zFar * zNear) / (zFar - zNear);
 
     return result;
 }
@@ -257,7 +258,7 @@ cglmFrustum(
  * @param up Normalized up vector, how the camera is oriented.
  *           Typically (0, 0, 1)
  */
-static CGLMmat4 
+static CGLMmat4
 cglmLookAt(
         CGLMvec3 eye,
         CGLMvec3 center,
@@ -288,7 +289,7 @@ cglmLookAt(
  * @brief add vectors
  * @return a vector
  */
-static CGLMvec3 
+static CGLMvec3
 cglmAddVec3(
         CGLMvec3 a,
         CGLMvec3 b)
@@ -305,7 +306,7 @@ cglmAddVec3(
  * @brief multiply matrix m1 by matrix M2
  * @return a matrix
  */
-static CGLMmat4 
+static CGLMmat4
 cglmMultMat4(
         CGLMmat4 m1,
         CGLMmat4 m2)
@@ -344,7 +345,7 @@ debugmat4(CGLMmat4  matrix)
     printf("%f %f %f %f\n", matrix.d0, matrix.d1, matrix.d2, matrix.d3);
 }
 
-static void 
+static void
 debugvec3(CGLMvec3 vec)
 {
     printf("%f %f %f\n", vec.x, vec.y, vec.z);

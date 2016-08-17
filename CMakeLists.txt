@@ -3,7 +3,14 @@ project (Cglm)
 
 include_directories (.)
 
+#
+# Only for GL/gl.h
+#
+find_package(OpenGL REQUIRED)
+
+#
 # Tests
+#
 add_executable (cglm_tests
   cglm_tests.c
   cglm.h)
@@ -25,7 +32,9 @@ add_test (NAME Ortho         COMMAND cglm_tests Ortho)
 add_test (NAME Perspective   COMMAND cglm_tests Perspective)
 add_test (NAME Frustum       COMMAND cglm_tests Frustum)
 
+#
 # Benchmark
+#
 add_executable (cglm_bench
   cglm_bench.c
   cglm.h)
@@ -34,7 +43,9 @@ if ("${CMAKE_SYSTEM}" MATCHES "Linux")
     target_link_libraries (cglm_bench -lm)
 endif()
 
+#
 # doc
+#
 find_package (Doxygen)
 
 if (DOXYGEN_FOUND)
