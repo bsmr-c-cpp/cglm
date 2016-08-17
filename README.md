@@ -7,7 +7,7 @@ Basic linear math library written in C inspired by the C++ GLM library (http://g
 
 Use
 ---
-Just include cglm.h to your project.
+Include cglm.h after GL/gl.h or the library you are using to create your OpenGL context.
 
 Build
 -----
