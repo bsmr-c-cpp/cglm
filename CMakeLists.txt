@@ -7,6 +7,7 @@ include_directories (.)
 # Only for GL/gl.h
 #
 find_package(OpenGL REQUIRED)
+include_directories(${OPENGL_INCLUDE_DIR})
 
 #
 # Tests
