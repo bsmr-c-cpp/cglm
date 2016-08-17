@@ -30,7 +30,7 @@
     #include <OpenGL/gl.h>
 #elif _WIN32
     #include <windows.h>
-    #include <OpenGL/gl.h>
+    #include <GL/gl.h>
 #else
     #include <GL/gl.h>
 #endif
