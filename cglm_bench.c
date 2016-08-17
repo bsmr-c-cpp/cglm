@@ -20,6 +20,7 @@ int main(int argc, char** argv)
     int iterate_count = atoi(argv[1]);
 
     CGLMmat4 view, proj, model, MVP;
+    model = cglmMat4(0.0f);
     proj = cglmPerspective(45.0f, 4.0f/3.0f, 0.1f, 100.0f);
 
     CGLMvec3 position, direction, up;
