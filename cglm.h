@@ -36,7 +36,6 @@
 
 #include <math.h>
 #include <stdio.h>
-#include <GL/gl.h>
 
 /**
  * @brief represent a 4x4 matrix.

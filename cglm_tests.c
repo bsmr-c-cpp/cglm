@@ -12,7 +12,7 @@
  *
  * The above copyright notice and this permission notice shall be included in all
  * copies or substantial portions of the Software.
- 
+
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -23,9 +23,10 @@
  */
 #include <stdlib.h>
 #include <stdio.h>
-#include <cglm.h>
 #include <math.h>
 #include <string.h>
+#include <GL/gl.h>
+#include <cglm.h>
 
 
 /*
@@ -217,7 +218,7 @@ static char* test_mat4() {
 static char* test_normalize() {
     CGLMvec3 a;
 
-    // 
+    //
     vresult = (CGLMvec3) {1,0,0};
     a = (CGLMvec3) {1,0,0};
     vcompare = cglmNormalize(a);
@@ -247,7 +248,7 @@ static char* test_cross() {
     CGLMvec3 b;
 
 
-    // 
+    //
     vresult = (CGLMvec3) {0,0,0};
     a = (CGLMvec3) {1,1,1};
     b = (CGLMvec3) {1,1,1};
@@ -282,7 +283,7 @@ static char* test_subsVec3() {
     CGLMvec3 a;
     CGLMvec3 b;
 
-    // 
+    //
     vresult = (CGLMvec3) {0,0,0};
     a = (CGLMvec3) {1,1,1};
     b = (CGLMvec3) {1,1,1};
@@ -435,7 +436,7 @@ static char* test_lookAt() {
     c = (CGLMvec3) {(float) 0,(float) 1,(float) 0};
     mcompare = cglmLookAt(a,b,c);
     mu_run_test(compare_matrix);
-    
+
     return NULL;
 }
 

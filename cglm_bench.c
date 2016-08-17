@@ -1,3 +1,4 @@
+#include <GL/gl.h>
 #include <cglm.h>
 #include <stdio.h>
 
