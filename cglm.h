@@ -35,7 +35,10 @@
 #define CGLM_H
 
 #include <math.h>
-#include <stdio.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif // __cplusplus
 
 /**
  * @brief represent a 4x4 matrix.
@@ -56,16 +59,12 @@ typedef struct {
             d0, d1, d2, d3;
 } CGLMmat4;
 
-
-
-
 /**
  * @brief represent a 3 dimention vertex.
  */
 typedef struct {
     GLfloat x, y, z;
 } CGLMvec3;
-
 
 static const CGLMmat4
 empty_matrix_4 = {
@@ -74,11 +73,6 @@ empty_matrix_4 = {
     0,0,0,0,
     0,0,0,0
 };
-
-
-#ifdef __cplusplus
-extern "C" {
-#endif // __cplusplus
 
 /**
  * @brief create a 4x4 matrix
@@ -333,21 +327,6 @@ cglmMultMat4(
     };
 
     return result;
-}
-
-static void
-debugmat4(CGLMmat4  matrix)
-{
-    printf("%f %f %f %f\n", matrix.a0, matrix.a1, matrix.a2, matrix.a3);
-    printf("%f %f %f %f\n", matrix.b0, matrix.b1, matrix.b2, matrix.b3);
-    printf("%f %f %f %f\n", matrix.c0, matrix.c1, matrix.c2, matrix.c3);
-    printf("%f %f %f %f\n", matrix.d0, matrix.d1, matrix.d2, matrix.d3);
-}
-
-static void
-debugvec3(CGLMvec3 vec)
-{
-    printf("%f %f %f\n", vec.x, vec.y, vec.z);
 }
 
 #ifdef __cplusplus

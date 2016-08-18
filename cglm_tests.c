@@ -36,6 +36,7 @@
 #endif
 
 #include <cglm.h>
+#include <cglm_debug.h>
 
 
 /*
@@ -57,12 +58,15 @@ int tests_run = 0;
 
 
 static const float ROUND = 10000;
-float roundFloat(float f)
+
+float
+roundFloat(float f)
 {
     return (float) round(f * ROUND) / ROUND;
 }
 
-static CGLMvec3 roundVec3(CGLMvec3 a)
+static CGLMvec3
+roundVec3(CGLMvec3 a)
 {
     CGLMvec3 ret;
     ret.x = roundFloat(a.x);
@@ -71,7 +75,8 @@ static CGLMvec3 roundVec3(CGLMvec3 a)
     return ret;
 }
 
-static CGLMmat4 roundMat4(CGLMmat4 mat)
+static CGLMmat4
+roundMat4(CGLMmat4 mat)
 {
     CGLMmat4 ret;
     ret.a0 = roundFloat(mat.a0);
@@ -96,12 +101,12 @@ static CGLMmat4 roundMat4(CGLMmat4 mat)
     return ret;
 }
 
-
 CGLMvec3 vcompare;
 CGLMvec3 vresult;
-static char* compare_vec3()
-{
 
+static char*
+compare_vec3()
+{
     printf("\nExpected vec3: \n");
     debugvec3(vresult);
     printf("Compared vec3: \n");
@@ -112,14 +117,14 @@ static char* compare_vec3()
     mu_assert("y not match", vc.y == vresult.y);
     mu_assert("z not match", vc.z == vresult.z);
     return NULL;
-
 }
 
 CGLMmat4 mcompare;
 CGLMmat4 mresult;
-static char* compare_matrix()
-{
 
+static char*
+compare_matrix()
+{
     printf("\nExpected mat4: \n");
     debugmat4(mresult);
     printf("Compared mat4: \n");
@@ -146,7 +151,8 @@ static char* compare_matrix()
 }
 
 
-static char* test_perspective() {
+static char*
+test_perspective() {
     mresult = (CGLMmat4) {
         (float) 1.344400, (float) 0.000000, (float)  0.000000, (float)  0.000000,
         (float) 0.000000, (float) 1.792600, (float)  0.000000, (float)  0.000000,
@@ -159,7 +165,8 @@ static char* test_perspective() {
     return NULL;
 }
 
-static char* test_ortho() {
+static char*
+test_ortho() {
     mresult = (CGLMmat4) {
         (float)  0.100000, (float)  0.000000, (float)  0.000000, (float) 0.000000,
         (float)  0.000000, (float)  0.100000, (float)  0.000000, (float) 0.000000,
@@ -172,7 +179,8 @@ static char* test_ortho() {
     return NULL;
 }
 
-static char* test_frustum() {
+static char*
+test_frustum() {
     mresult = (CGLMmat4) {
         (float) 0.000000, (float) 0.000000, (float)  0.000000, (float)  0.000000,
         (float) 0.000000, (float) 0.000000, (float)  0.000000, (float)  0.000000,
@@ -185,8 +193,8 @@ static char* test_frustum() {
     return NULL;
 }
 
-static char* test_mat4() {
-
+static char*
+test_mat4() {
     float diag;
     diag = (float) 1;
     mresult = (CGLMmat4) {
@@ -224,7 +232,8 @@ static char* test_mat4() {
     return NULL;
 }
 
-static char* test_normalize() {
+static char*
+test_normalize() {
     CGLMvec3 a;
 
     //
@@ -251,11 +260,10 @@ static char* test_normalize() {
     return NULL;
 }
 
-
-static char* test_cross() {
+static char*
+test_cross() {
     CGLMvec3 a;
     CGLMvec3 b;
-
 
     //
     vresult = (CGLMvec3) {0,0,0};
@@ -288,7 +296,8 @@ static char* test_cross() {
     return NULL;
 }
 
-static char* test_subsVec3() {
+static char*
+test_subsVec3() {
     CGLMvec3 a;
     CGLMvec3 b;
 
@@ -323,7 +332,8 @@ static char* test_subsVec3() {
     return NULL;
 }
 
-static char* test_addVec3() {
+static char*
+test_addVec3() {
     CGLMvec3 a;
     CGLMvec3 b;
 
@@ -352,7 +362,8 @@ static char* test_addVec3() {
     return NULL;
 }
 
-static char* test_dot() {
+static char*
+test_dot() {
     CGLMvec3 a;
     CGLMvec3 b;
     float fresult;
@@ -398,7 +409,8 @@ static char* test_dot() {
     return NULL;
 }
 
-static char* test_multMat4() {
+static char*
+test_multMat4() {
     mresult = (CGLMmat4) {
         (float) 1.446000, (float) -0.991900, (float) -0.924100, (float) -0.922300,
         (float) 0.000000, (float)  2.755500, (float) -0.924100, (float) -0.922300,
@@ -429,7 +441,8 @@ static char* test_multMat4() {
     return NULL;
 }
 
-static char* test_lookAt() {
+static char*
+test_lookAt() {
     CGLMvec3 a;
     CGLMvec3 b;
     CGLMvec3 c;
@@ -449,7 +462,8 @@ static char* test_lookAt() {
     return NULL;
 }
 
-static char* cglm_test(char* test_name) {
+static char*
+cglm_test(char* test_name) {
 
     if (!test_name) return "no shuch test";
 
@@ -481,15 +495,14 @@ static char* cglm_test(char* test_name) {
     return NULL;
 }
 
-int main(int argc, char* argv[])
+int
+main(int argc, char* argv[])
 {
-
     char* result = cglm_test(argv[1]);
 
     if (result != 0)
         printf("%s\n", result);
 
     return result != NULL;
-
 }
 
