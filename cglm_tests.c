@@ -25,6 +25,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <string.h>
+#include <float.h>
 
 #ifdef __APPLE__
     #include <OpenGL/gl.h>
@@ -107,15 +108,17 @@ CGLMvec3 vresult;
 static char*
 compare_vec3()
 {
+    CGLMvec3 vc;
+
     printf("\nExpected vec3: \n");
     debugvec3(vresult);
     printf("Compared vec3: \n");
     debugvec3(vcompare);
 
-    CGLMvec3 vc = roundVec3(vcompare);
-    mu_assert("x not match", vc.x == vresult.x);
-    mu_assert("y not match", vc.y == vresult.y);
-    mu_assert("z not match", vc.z == vresult.z);
+    vc = roundVec3(vcompare);
+    mu_assert("x not match", fabs(vc.x - vresult.x) < FLT_EPSILON);
+    mu_assert("y not match", fabs(vc.y - vresult.y) < FLT_EPSILON);
+    mu_assert("z not match", fabs(vc.z - vresult.z) < FLT_EPSILON);
     return NULL;
 }
 
@@ -125,28 +128,30 @@ CGLMmat4 mresult;
 static char*
 compare_matrix()
 {
+    CGLMmat4 mc;
+
     printf("\nExpected mat4: \n");
     debugmat4(mresult);
     printf("Compared mat4: \n");
     debugmat4(mcompare);
 
-    CGLMmat4 mc = roundMat4(mcompare);
-    mu_assert("compare error on a0", mc.a0 == mresult.a0);
-    mu_assert("compare error on a1", mc.a1 == mresult.a1);
-    mu_assert("compare error on a2", mc.a2 == mresult.a2);
-    mu_assert("compare error on a3", mc.a3 == mresult.a3);
-    mu_assert("compare error on b0", mc.b0 == mresult.b0);
-    mu_assert("compare error on b1", mc.b1 == mresult.b1);
-    mu_assert("compare error on b2", mc.b2 == mresult.b2);
-    mu_assert("compare error on b3", mc.b3 == mresult.b3);
-    mu_assert("compare error on c0", mc.c0 == mresult.c0);
-    mu_assert("compare error on c1", mc.c1 == mresult.c1);
-    mu_assert("compare error on c2", mc.c2 == mresult.c2);
-    mu_assert("compare error on c3", mc.c3 == mresult.c3);
-    mu_assert("compare error on d0", mc.d0 == mresult.d0);
-    mu_assert("compare error on d1", mc.d1 == mresult.d1);
-    mu_assert("compare error on d2", mc.d2 == mresult.d2);
-    mu_assert("compare error on d3", mc.d3 == mresult.d3);
+    mc = roundMat4(mcompare);
+    mu_assert("compare error on a0", fabs(mc.a0 - mresult.a0) < FLT_EPSILON);
+    mu_assert("compare error on a1", fabs(mc.a1 - mresult.a1) < FLT_EPSILON);
+    mu_assert("compare error on a2", fabs(mc.a2 - mresult.a2) < FLT_EPSILON);
+    mu_assert("compare error on a3", fabs(mc.a3 - mresult.a3) < FLT_EPSILON);
+    mu_assert("compare error on b0", fabs(mc.b0 - mresult.b0) < FLT_EPSILON);
+    mu_assert("compare error on b1", fabs(mc.b1 - mresult.b1) < FLT_EPSILON);
+    mu_assert("compare error on b2", fabs(mc.b2 - mresult.b2) < FLT_EPSILON);
+    mu_assert("compare error on b3", fabs(mc.b3 - mresult.b3) < FLT_EPSILON);
+    mu_assert("compare error on c0", fabs(mc.c0 - mresult.c0) < FLT_EPSILON);
+    mu_assert("compare error on c1", fabs(mc.c1 - mresult.c1) < FLT_EPSILON);
+    mu_assert("compare error on c2", fabs(mc.c2 - mresult.c2) < FLT_EPSILON);
+    mu_assert("compare error on c3", fabs(mc.c3 - mresult.c3) < FLT_EPSILON);
+    mu_assert("compare error on d0", fabs(mc.d0 - mresult.d0) < FLT_EPSILON);
+    mu_assert("compare error on d1", fabs(mc.d1 - mresult.d1) < FLT_EPSILON);
+    mu_assert("compare error on d2", fabs(mc.d2 - mresult.d2) < FLT_EPSILON);
+    mu_assert("compare error on d3", fabs(mc.d3 - mresult.d3) < FLT_EPSILON);
     return NULL;
 }
 
@@ -173,7 +178,7 @@ test_ortho() {
         (float)  0.000000, (float)  0.000000, (float) -0.020000, (float) 0.000000,
         (float) -0.000000, (float) -0.000000, (float) -1.000000, (float) 1.000000
     };
-    mcompare = cglmOrtho(-10,10,-10,10,0,100);
+    mcompare = cglmOrtho(-10.0f,10.0f,-10.0f,10.0f,0.0f,100.0f);
     mu_run_test(compare_matrix);
 
     return NULL;
@@ -374,14 +379,14 @@ test_dot() {
     a = (CGLMvec3) {(float) 1.5,(float) -1.32,(float) 1.32};
     b = (CGLMvec3) {(float) -1,(float) 0.5,(float) -1.2};
     fcompare = roundFloat(cglmDot(a,b));
-    mu_assert("compare on dot float", fcompare == fresult);
+    mu_assert("compare on dot float", fabs(fcompare - fresult) < FLT_EPSILON);
 
     //
     fresult = (float) 3;
     a = (CGLMvec3) {(float) 1,(float) 1,(float) 1};
     b = (CGLMvec3) {(float) 1,(float) 1,(float) 1};
     fcompare = roundFloat(cglmDot(a,b));
-    mu_assert("compare on dot float", fcompare == fresult);
+    mu_assert("compare on dot float", fabs(fcompare - fresult) < FLT_EPSILON);
 
 
     //
@@ -389,7 +394,7 @@ test_dot() {
     a = (CGLMvec3) {(float) 0,(float) 0,(float) 0};
     b = (CGLMvec3) {(float) 1,(float) 1,(float) 1};
     fcompare = roundFloat(cglmDot(a,b));
-    mu_assert("compare on dot float", fcompare == fresult);
+    mu_assert("compare on dot float", fabs(fcompare - fresult) < FLT_EPSILON);
 
 
     //
@@ -397,43 +402,43 @@ test_dot() {
     a = (CGLMvec3) {(float) -1,(float) 1.5,(float) -1};
     b = (CGLMvec3) {(float) 1,(float) 1,(float) 1};
     fcompare = roundFloat(cglmDot(a,b));
-    mu_assert("compare on dot float", fcompare == fresult);
+    mu_assert("compare on dot float", fabs(fcompare - fresult) < FLT_EPSILON);
 
     //
     fresult = (float) -3.2;
     a = (CGLMvec3) {(float) -1,(float) 1.5,(float) -1};
     b = (CGLMvec3) {(float) 1,(float) -0.8,(float) 1};
     fcompare = roundFloat(cglmDot(a,b));
-    mu_assert("compare on dot float", fcompare == fresult);
+    mu_assert("compare on dot float", fabs(fcompare - fresult) < FLT_EPSILON);
 
     return NULL;
 }
 
 static char*
 test_multMat4() {
+    CGLMmat4 mult1, mult2, mult3;
+
     mresult = (CGLMmat4) {
         (float) 1.446000, (float) -0.991900, (float) -0.924100, (float) -0.922300,
         (float) 0.000000, (float)  2.755500, (float) -0.924100, (float) -0.922300,
         (float) 1.436900, (float)  0.554500, (float) -5.125900, (float) -5.315500,
-        (float) 0.287100, (float)  0.110800, (float)  0.103200, (float)  0.103000
-    };
+        (float) 0.287100, (float)  0.110800, (float)  0.103200, (float)  0.103000};
 
-    CGLMmat4 mult1 = (CGLMmat4) {
+    mult1 = (CGLMmat4) {
         (float) 1.792600, (float) 0.000000, (float)  0.000000, (float)  0.000000,
         (float) 0.000000, (float) 1.792600, (float)  0.000000, (float)  0.000000,
         (float) 0.000000, (float) 0.000000, (float) -1.002000, (float) -1.000000,
         (float) 0.000000, (float) 0.000000, (float) -0.200200, (float)  0.000000};
-    CGLMmat4 mult2 = (CGLMmat4) {
+    mult2 = (CGLMmat4) {
         (float)  0.600000, (float) -0.411600, (float)  0.686000, (float) 0.000000,
         (float)  0.000000, (float)  0.857500, (float)  0.514500, (float) 0.000000,
         (float) -0.800000, (float) -0.308700, (float)  0.514500, (float) 0.000000,
         (float) -0.000000, (float) -0.000000, (float) -5.831000, (float) 1.000000};
-    CGLMmat4 mult3 = (CGLMmat4) {
+    mult3 = (CGLMmat4) {
         (float) 1.344400, (float) 0.000000, (float)  0.000000, (float)  0.000000,
         (float) 0.000000, (float) 1.792600, (float)  0.000000, (float)  0.000000,
         (float) 0.000000, (float) 0.000000, (float) -1.002000, (float) -1.000000,
         (float) 0.000000, (float) 0.000000, (float) -0.200200, (float)  0.000000};
-
 
     mcompare = cglmMultMat4(cglmMultMat4(mult1, mult2), mult3);
     mu_run_test(compare_matrix);

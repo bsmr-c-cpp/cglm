@@ -68,10 +68,10 @@ typedef struct {
 
 static const CGLMmat4
 empty_matrix_4 = {
-    0,0,0,0,
-    0,0,0,0,
-    0,0,0,0,
-    0,0,0,0
+    0.0f ,0.0f, 0.0f, 0.0f,
+    0.0f ,0.0f, 0.0f, 0.0f,
+    0.0f ,0.0f, 0.0f, 0.0f,
+    0.0f ,0.0f, 0.0f, 0.0f
 };
 
 /**
@@ -175,7 +175,7 @@ cglmPerspective(
 {
     GLfloat tanHalfFovy = (GLfloat) tan(fovy / (GLfloat) 2);
 
-    CGLMmat4 result = cglmMat4(0);
+    CGLMmat4 result = cglmMat4(0.0f);
     result.a0 =   (GLfloat) 1 / (aspect * tanHalfFovy);
     result.b1 =   (GLfloat) 1 / (tanHalfFovy);
     result.c2 = - (zFar + zNear) / (zFar - zNear);
@@ -203,7 +203,7 @@ cglmOrtho(
         GLfloat zNear,
         GLfloat zFar)
 {
-    CGLMmat4 result = cglmMat4(1);
+    CGLMmat4 result = cglmMat4(1.0f);
     result.a0 =   (GLfloat) 2 / (right - left);
     result.b1 =   (GLfloat) 2 / (top - bottom);
     result.c2 = - (GLfloat) 2 / (zFar - zNear);
@@ -232,7 +232,7 @@ cglmFrustum(
         GLfloat zNear,
         GLfloat zFar)
 {
-    CGLMmat4 result = cglmMat4(0);
+    CGLMmat4 result = cglmMat4(0.0f);
     result.a0 =   ((GLfloat) 2 * zNear) / (right - left);
     result.b1 =   ((GLfloat) 2 * zNear)  / (top - bottom);
     result.c0 =   (right + left) / (right - left);
@@ -261,7 +261,7 @@ cglmLookAt(
     const CGLMvec3 s = cglmNormalize(cglmCross(f, up));
     const CGLMvec3 u = cglmCross(s, f);
 
-    CGLMmat4 result = cglmMat4(1);
+    CGLMmat4 result = cglmMat4(1.0f);
     result.a0 = s.x;
     result.b0 = s.y;
     result.c0 = s.z;

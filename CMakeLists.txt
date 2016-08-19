@@ -45,6 +45,14 @@ if ("${CMAKE_SYSTEM}" MATCHES "Linux")
 endif()
 
 #
+# Linter
+#
+add_custom_target(lint
+    splint cglm_tests.c -I . -fcnuse -usedef -compdef
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+    COMMENT "Check code with C linter" VERBATIM)
+
+#
 # doc
 #
 find_package (Doxygen)
@@ -57,7 +65,7 @@ if (DOXYGEN_FOUND)
 
   add_custom_target (cglm_doc
     ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile
-    WORKING DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
     COMMENT "Generating API documentation with Doxygen" VERBATIM)
 
 endif (DOXYGEN_FOUND)
