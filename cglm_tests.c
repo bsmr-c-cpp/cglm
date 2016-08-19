@@ -58,49 +58,10 @@ int tests_run = 0;
 // Minunit include END
 
 
-static const float ROUND = 10000;
-
-float
-roundFloat(float f)
-{
-    return (float) round(f * ROUND) / ROUND;
-}
-
-static CGLMvec3
-roundVec3(CGLMvec3 a)
-{
-    CGLMvec3 ret;
-    ret.x = roundFloat(a.x);
-    ret.y = roundFloat(a.y);
-    ret.z = roundFloat(a.z);
-    return ret;
-}
-
-static CGLMmat4
-roundMat4(CGLMmat4 mat)
-{
-    CGLMmat4 ret;
-    ret.a0 = roundFloat(mat.a0);
-    ret.a1 = roundFloat(mat.a1);
-    ret.a2 = roundFloat(mat.a2);
-    ret.a3 = roundFloat(mat.a3);
-
-    ret.b0 = roundFloat(mat.b0);
-    ret.b1 = roundFloat(mat.b1);
-    ret.b2 = roundFloat(mat.b2);
-    ret.b3 = roundFloat(mat.b3);
-
-    ret.c0 = roundFloat(mat.c0);
-    ret.c1 = roundFloat(mat.c1);
-    ret.c2 = roundFloat(mat.c2);
-    ret.c3 = roundFloat(mat.c3);
-
-    ret.d0 = roundFloat(mat.d0);
-    ret.d1 = roundFloat(mat.d1);
-    ret.d2 = roundFloat(mat.d2);
-    ret.d3 = roundFloat(mat.d3);
-    return ret;
-}
+/*
+ * TODO get results from GLM and compare to FLT_EPSILON
+ */
+static const float LARGE_ROUND = FLT_EPSILON * 1000;
 
 CGLMvec3 vcompare;
 CGLMvec3 vresult;
@@ -108,17 +69,13 @@ CGLMvec3 vresult;
 static char*
 compare_vec3()
 {
-    CGLMvec3 vc;
-
     printf("\nExpected vec3: \n");
-    debugvec3(vresult);
-    printf("Compared vec3: \n");
+    debugvec3(vresult); printf("Compared vec3: \n");
     debugvec3(vcompare);
 
-    vc = roundVec3(vcompare);
-    mu_assert("x not match", fabs(vc.x - vresult.x) < FLT_EPSILON);
-    mu_assert("y not match", fabs(vc.y - vresult.y) < FLT_EPSILON);
-    mu_assert("z not match", fabs(vc.z - vresult.z) < FLT_EPSILON);
+    mu_assert("x not match", fabs(vcompare.x - vresult.x) < LARGE_ROUND);
+    mu_assert("y not match", fabs(vcompare.y - vresult.y) < LARGE_ROUND);
+    mu_assert("z not match", fabs(vcompare.z - vresult.z) < LARGE_ROUND);
     return NULL;
 }
 
@@ -128,30 +85,43 @@ CGLMmat4 mresult;
 static char*
 compare_matrix()
 {
-    CGLMmat4 mc;
-
     printf("\nExpected mat4: \n");
     debugmat4(mresult);
     printf("Compared mat4: \n");
     debugmat4(mcompare);
 
-    mc = roundMat4(mcompare);
-    mu_assert("compare error on a0", fabs(mc.a0 - mresult.a0) < FLT_EPSILON);
-    mu_assert("compare error on a1", fabs(mc.a1 - mresult.a1) < FLT_EPSILON);
-    mu_assert("compare error on a2", fabs(mc.a2 - mresult.a2) < FLT_EPSILON);
-    mu_assert("compare error on a3", fabs(mc.a3 - mresult.a3) < FLT_EPSILON);
-    mu_assert("compare error on b0", fabs(mc.b0 - mresult.b0) < FLT_EPSILON);
-    mu_assert("compare error on b1", fabs(mc.b1 - mresult.b1) < FLT_EPSILON);
-    mu_assert("compare error on b2", fabs(mc.b2 - mresult.b2) < FLT_EPSILON);
-    mu_assert("compare error on b3", fabs(mc.b3 - mresult.b3) < FLT_EPSILON);
-    mu_assert("compare error on c0", fabs(mc.c0 - mresult.c0) < FLT_EPSILON);
-    mu_assert("compare error on c1", fabs(mc.c1 - mresult.c1) < FLT_EPSILON);
-    mu_assert("compare error on c2", fabs(mc.c2 - mresult.c2) < FLT_EPSILON);
-    mu_assert("compare error on c3", fabs(mc.c3 - mresult.c3) < FLT_EPSILON);
-    mu_assert("compare error on d0", fabs(mc.d0 - mresult.d0) < FLT_EPSILON);
-    mu_assert("compare error on d1", fabs(mc.d1 - mresult.d1) < FLT_EPSILON);
-    mu_assert("compare error on d2", fabs(mc.d2 - mresult.d2) < FLT_EPSILON);
-    mu_assert("compare error on d3", fabs(mc.d3 - mresult.d3) < FLT_EPSILON);
+    mu_assert("compare error on a0",
+            fabs(mcompare.a0 - mresult.a0) < LARGE_ROUND);
+    mu_assert("compare error on a1",
+            fabs(mcompare.a1 - mresult.a1) < LARGE_ROUND);
+    mu_assert("compare error on a2",
+            fabs(mcompare.a2 - mresult.a2) < LARGE_ROUND);
+    mu_assert("compare error on a3",
+            fabs(mcompare.a3 - mresult.a3) < LARGE_ROUND);
+    mu_assert("compare error on b0",
+            fabs(mcompare.b0 - mresult.b0) < LARGE_ROUND);
+    mu_assert("compare error on b1",
+            fabs(mcompare.b1 - mresult.b1) < LARGE_ROUND);
+    mu_assert("compare error on b2",
+            fabs(mcompare.b2 - mresult.b2) < LARGE_ROUND);
+    mu_assert("compare error on b3",
+            fabs(mcompare.b3 - mresult.b3) < LARGE_ROUND);
+    mu_assert("compare error on c0",
+            fabs(mcompare.c0 - mresult.c0) < LARGE_ROUND);
+    mu_assert("compare error on c1",
+            fabs(mcompare.c1 - mresult.c1) < LARGE_ROUND);
+    mu_assert("compare error on c2",
+            fabs(mcompare.c2 - mresult.c2) < LARGE_ROUND);
+    mu_assert("compare error on c3",
+            fabs(mcompare.c3 - mresult.c3) < LARGE_ROUND);
+    mu_assert("compare error on d0",
+            fabs(mcompare.d0 - mresult.d0) < LARGE_ROUND);
+    mu_assert("compare error on d1",
+            fabs(mcompare.d1 - mresult.d1) < LARGE_ROUND);
+    mu_assert("compare error on d2",
+            fabs(mcompare.d2 - mresult.d2) < LARGE_ROUND);
+    mu_assert("compare error on d3",
+            fabs(mcompare.d3 - mresult.d3) < LARGE_ROUND);
     return NULL;
 }
 
@@ -159,12 +129,12 @@ compare_matrix()
 static char*
 test_perspective() {
     mresult = (CGLMmat4) {
-        (float) 1.344400, (float) 0.000000, (float)  0.000000, (float)  0.000000,
-        (float) 0.000000, (float) 1.792600, (float)  0.000000, (float)  0.000000,
-        (float) 0.000000, (float) 0.000000, (float) -1.002000, (float) -1.000000,
-        (float) 0.000000, (float) 0.000000, (float) -0.200200, (float)  0.000000
+        1.344400f, 0.000000f,  0.000000f,  0.000000f,
+        0.000000f, 1.792600f,  0.000000f,  0.000000f,
+        0.000000f, 0.000000f, -1.002000f, -1.000000f,
+        0.000000f, 0.000000f, -0.200200f,  0.000000f
     };
-    mcompare = cglmPerspective((float) 45, (float) 4/3, (float) 0.1, (float) 100);
+    mcompare = cglmPerspective(45.0f, 4.0f/3.0f, 0.1f, 100.0f);
     mu_run_test(compare_matrix);
 
     return NULL;
@@ -192,7 +162,7 @@ test_frustum() {
         (float) 0.000000, (float) 0.000000, (float) -1.000000, (float) -1.000000,
         (float) 0.000000, (float) 0.000000, (float) -0.000000, (float)  0.000000
     };
-    mcompare = cglmFrustum(-10,10,-10,10,0,100);
+    mcompare = cglmFrustum(-10.0f, 10.0f, -10.0f, 10.0f, 0.0f, 100.0f);
     mu_run_test(compare_matrix);
 
     return NULL;
@@ -378,38 +348,38 @@ test_dot() {
     fresult = (float) -3.744;
     a = (CGLMvec3) {(float) 1.5,(float) -1.32,(float) 1.32};
     b = (CGLMvec3) {(float) -1,(float) 0.5,(float) -1.2};
-    fcompare = roundFloat(cglmDot(a,b));
-    mu_assert("compare on dot float", fabs(fcompare - fresult) < FLT_EPSILON);
+    fcompare = cglmDot(a,b);
+    mu_assert("compare on dot float", fabs(fcompare - fresult) < LARGE_ROUND);
 
     //
     fresult = (float) 3;
     a = (CGLMvec3) {(float) 1,(float) 1,(float) 1};
     b = (CGLMvec3) {(float) 1,(float) 1,(float) 1};
-    fcompare = roundFloat(cglmDot(a,b));
-    mu_assert("compare on dot float", fabs(fcompare - fresult) < FLT_EPSILON);
+    fcompare = cglmDot(a,b);
+    mu_assert("compare on dot float", fabs(fcompare - fresult) < LARGE_ROUND);
 
 
     //
     fresult = (float) 0;
     a = (CGLMvec3) {(float) 0,(float) 0,(float) 0};
     b = (CGLMvec3) {(float) 1,(float) 1,(float) 1};
-    fcompare = roundFloat(cglmDot(a,b));
-    mu_assert("compare on dot float", fabs(fcompare - fresult) < FLT_EPSILON);
+    fcompare = cglmDot(a,b);
+    mu_assert("compare on dot float", fabs(fcompare - fresult) < LARGE_ROUND);
 
 
     //
     fresult = (float) -0.5;
     a = (CGLMvec3) {(float) -1,(float) 1.5,(float) -1};
     b = (CGLMvec3) {(float) 1,(float) 1,(float) 1};
-    fcompare = roundFloat(cglmDot(a,b));
-    mu_assert("compare on dot float", fabs(fcompare - fresult) < FLT_EPSILON);
+    fcompare = cglmDot(a,b);
+    mu_assert("compare on dot float", fabs(fcompare - fresult) < LARGE_ROUND);
 
     //
     fresult = (float) -3.2;
     a = (CGLMvec3) {(float) -1,(float) 1.5,(float) -1};
     b = (CGLMvec3) {(float) 1,(float) -0.8,(float) 1};
-    fcompare = roundFloat(cglmDot(a,b));
-    mu_assert("compare on dot float", fabs(fcompare - fresult) < FLT_EPSILON);
+    fcompare = cglmDot(a,b);
+    mu_assert("compare on dot float", fabs(fcompare - fresult) < LARGE_ROUND);
 
     return NULL;
 }

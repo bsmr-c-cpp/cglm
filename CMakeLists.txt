@@ -45,14 +45,6 @@ if ("${CMAKE_SYSTEM}" MATCHES "Linux")
 endif()
 
 #
-# Linter
-#
-add_custom_target(lint
-    splint cglm_tests.c -I . -fcnuse -usedef -compdef
-    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-    COMMENT "Check code with C linter" VERBATIM)
-
-#
 # doc
 #
 find_package (Doxygen)
