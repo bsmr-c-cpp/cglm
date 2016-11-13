@@ -32,6 +32,8 @@ add_test (NAME LookAt        COMMAND cglm_tests LookAt)
 add_test (NAME Ortho         COMMAND cglm_tests Ortho)
 add_test (NAME Perspective   COMMAND cglm_tests Perspective)
 add_test (NAME Frustum       COMMAND cglm_tests Frustum)
+add_test (NAME ScalarMultMat4 COMMAND cglm_tests ScalarMultMat4)
+add_test (NAME ScalarMultVec3 COMMAND cglm_tests ScalarMultVec3)
 
 #
 # Benchmark

@@ -155,6 +155,63 @@ test_ortho() {
 }
 
 static char*
+test_scalarMultVec3() {
+    CGLMvec3 a;
+    a = (CGLMvec3) {(float) 1.0, (float) 1.0, (float) -1.0};
+
+    vresult = (CGLMvec3) {(float) 2.0, (float) 2.0, (float) -2.0};
+    vcompare = cglmScalarMultVec3(a, (float) 2.0);
+    mu_run_test(compare_vec3);
+
+    vresult = (CGLMvec3) {(float) -2.0, (float) -2.0, (float) 2.0};
+    vcompare = cglmScalarMultVec3(a, (float) -2.0);
+    mu_run_test(compare_vec3);
+
+    return NULL;
+}
+
+static char*
+test_scalarMultMat4() {
+    CGLMmat4 a;
+
+    mresult = (CGLMmat4) {
+        (float) 0.000000, (float) 2.000000, (float) -2.000000, (float)  0.000000,
+        (float) 0.000000, (float) 0.000000, (float)  0.000000, (float)  0.000000,
+        (float) 0.000000, (float) 0.000000, (float)  0.000000, (float)  0.000000,
+        (float) 0.000000, (float) 0.000000, (float)  0.000000, (float)  0.000000
+    };
+
+    a = (CGLMmat4) {
+        (float) 0.000000, (float) 1.000000, (float)  -1.000000, (float)  0.000000,
+        (float) 0.000000, (float) 0.000000, (float)  0.000000, (float)  0.000000,
+        (float) 0.000000, (float) 0.000000, (float)  0.000000, (float)  0.000000,
+        (float) 0.000000, (float) 0.000000, (float)  0.000000, (float)  0.000000
+    };
+
+    mcompare = cglmScalarMultMat4(a, (float) 2.0);
+    mu_run_test(compare_matrix);
+
+    mresult = (CGLMmat4) {
+        (float) 0.000000, (float) -2.000000, (float)  2.000000, (float)  0.000000,
+        (float) 0.000000, (float)  0.000000, (float)  0.000000, (float)  0.000000,
+        (float) 0.000000, (float)  0.000000, (float)  0.000000, (float)  0.000000,
+        (float) 0.000000, (float)  0.000000, (float)  0.000000, (float)  0.000000
+    };
+
+    a = (CGLMmat4) {
+        (float) 0.000000, (float) 1.000000, (float)  -1.000000, (float)  0.000000,
+        (float) 0.000000, (float) 0.000000, (float)  0.000000, (float)  0.000000,
+        (float) 0.000000, (float) 0.000000, (float)  0.000000, (float)  0.000000,
+        (float) 0.000000, (float) 0.000000, (float)  0.000000, (float)  0.000000
+    };
+
+    mcompare = cglmScalarMultMat4(a, (float) -2.0);
+    mu_run_test(compare_matrix);
+
+    return NULL;
+}
+
+static char*
 test_frustum() {
     mresult = (CGLMmat4) {
         (float) 0.000000, (float) 0.000000, (float)  0.000000, (float)  0.000000,
@@ -464,6 +521,10 @@ cglm_test(char* test_name) {
         mu_run_test(test_ortho);
     else if (strcmp(test_name, "Frustum") == 0)
         mu_run_test(test_frustum);
+    else if (strcmp(test_name, "ScalarMultMat4") == 0)
+        mu_run_test(test_scalarMultMat4);
+    else if (strcmp(test_name, "ScalarMultVec3") == 0)
+        mu_run_test(test_scalarMultVec3);
     else
         return "no such test";
 

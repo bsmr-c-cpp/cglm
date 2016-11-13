@@ -279,6 +279,42 @@ cglmLookAt(
 }
 
 /**
+ * @brief multiply vector by a scalar
+ * @return a vector
+ */
+static CGLMvec3
+cglmScalarMultVec3(
+        CGLMvec3 v,
+        float    s)
+{
+    CGLMvec3 result;
+    result.x = v.x * s;
+    result.y = v.y * s;
+    result.z = v.z * s;
+
+    return result;
+}
+
+/**
+ * @brief multiply matrice by a scalar
+ * @return a vector
+ */
+static CGLMmat4
+cglmScalarMultMat4(
+        CGLMmat4 m,
+        float    s)
+{
+    CGLMmat4 result = {
+        m.a0 * s, m.a1 * s, m.a2 * s, m.a3 * s,
+        m.b0 * s, m.b1 * s, m.b2 * s, m.b3 * s,
+        m.c0 * s, m.c1 * s, m.c2 * s, m.c3 * s,
+        m.d0 * s, m.d1 * s, m.d2 * s, m.d3 * s
+    };
+
+    return result;
+}
+
+/**
  * @brief add vectors
  * @return a vector
  */
