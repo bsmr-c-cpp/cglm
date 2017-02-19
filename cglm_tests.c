@@ -28,12 +28,12 @@
 #include <float.h>
 
 #ifdef __APPLE__
-    #include <OpenGL/gl.h>
+#include <OpenGL/gl.h>
 #elif _WIN32
-    #include <windows.h>
-    #include <GL/gl.h>
+#include <windows.h>
+#include <GL/gl.h>
 #else
-    #include <GL/gl.h>
+#include <GL/gl.h>
 #endif
 
 #include <cglm.h>
@@ -67,10 +67,10 @@ CGLMvec3 vcompare;
 CGLMvec3 vresult;
 
 static char*
-compare_vec3()
-{
+compare_vec3() {
     printf("\nExpected vec3: \n");
-    debugvec3(vresult); printf("Compared vec3: \n");
+    debugvec3(vresult);
+    printf("Compared vec3: \n");
     debugvec3(vcompare);
 
     mu_assert("x not match", fabs(vcompare.x - vresult.x) < LARGE_ROUND);
@@ -83,8 +83,7 @@ CGLMmat4 mcompare;
 CGLMmat4 mresult;
 
 static char*
-compare_matrix()
-{
+compare_matrix() {
     printf("\nExpected mat4: \n");
     debugmat4(mresult);
     printf("Compared mat4: \n");
@@ -125,16 +124,15 @@ compare_matrix()
     return NULL;
 }
 
-
 static char*
 test_perspective() {
-    mresult = (CGLMmat4) {
-        1.344400f, 0.000000f,  0.000000f,  0.000000f,
-        0.000000f, 1.792600f,  0.000000f,  0.000000f,
+    mresult = (CGLMmat4){
+        1.344400f, 0.000000f, 0.000000f, 0.000000f,
+        0.000000f, 1.792600f, 0.000000f, 0.000000f,
         0.000000f, 0.000000f, -1.002000f, -1.000000f,
-        0.000000f, 0.000000f, -0.200200f,  0.000000f
+        0.000000f, 0.000000f, -0.200200f, 0.000000f
     };
-    mcompare = cglmPerspective(45.0f, 4.0f/3.0f, 0.1f, 100.0f);
+    mcompare = cglmPerspective(45.0f, 4.0f / 3.0f, 0.1f, 100.0f);
     mu_run_test(compare_matrix);
 
     return NULL;
@@ -142,13 +140,13 @@ test_perspective() {
 
 static char*
 test_ortho() {
-    mresult = (CGLMmat4) {
-        (float)  0.100000, (float)  0.000000, (float)  0.000000, (float) 0.000000,
-        (float)  0.000000, (float)  0.100000, (float)  0.000000, (float) 0.000000,
-        (float)  0.000000, (float)  0.000000, (float) -0.020000, (float) 0.000000,
-        (float) -0.000000, (float) -0.000000, (float) -1.000000, (float) 1.000000
+    mresult = (CGLMmat4){
+        (float) 0.100000, (float) 0.000000, (float) 0.000000, (float) 0.000000,
+        (float) 0.000000, (float) 0.100000, (float) 0.000000, (float) 0.000000,
+        (float) 0.000000, (float) 0.000000, (float) - 0.020000, (float) 0.000000,
+        (float) - 0.000000, (float) - 0.000000, (float) - 1.000000, (float) 1.000000
     };
-    mcompare = cglmOrtho(-10.0f,10.0f,-10.0f,10.0f,0.0f,100.0f);
+    mcompare = cglmOrtho(-10.0f, 10.0f, -10.0f, 10.0f, 0.0f, 100.0f);
     mu_run_test(compare_matrix);
 
     return NULL;
@@ -157,14 +155,14 @@ test_ortho() {
 static char*
 test_scalarMultVec3() {
     CGLMvec3 a;
-    a = (CGLMvec3) {(float) 1.0, (float) 1.0, (float) -1.0};
+    a = (CGLMvec3){(float) 1.0, (float) 1.0, (float) - 1.0};
 
-    vresult = (CGLMvec3) {(float) 2.0, (float) 2.0, (float) -2.0};
+    vresult = (CGLMvec3){(float) 2.0, (float) 2.0, (float) - 2.0};
     vcompare = cglmScalarMultVec3(a, (float) 2.0);
     mu_run_test(compare_vec3);
 
-    vresult = (CGLMvec3) {(float) -2.0, (float) -2.0, (float) 2.0};
-    vcompare = cglmScalarMultVec3(a, (float) -2.0);
+    vresult = (CGLMvec3){(float) - 2.0, (float) - 2.0, (float) 2.0};
+    vcompare = cglmScalarMultVec3(a, (float) - 2.0);
     mu_run_test(compare_vec3);
 
     return NULL;
@@ -174,38 +172,38 @@ static char*
 test_scalarMultMat4() {
     CGLMmat4 a;
 
-    mresult = (CGLMmat4) {
-        (float) 0.000000, (float) 2.000000, (float) -2.000000, (float)  0.000000,
-        (float) 0.000000, (float) 0.000000, (float)  0.000000, (float)  0.000000,
-        (float) 0.000000, (float) 0.000000, (float)  0.000000, (float)  0.000000,
-        (float) 0.000000, (float) 0.000000, (float)  0.000000, (float)  0.000000
+    mresult = (CGLMmat4){
+        (float) 0.000000, (float) 2.000000, (float) - 2.000000, (float) 0.000000,
+        (float) 0.000000, (float) 0.000000, (float) 0.000000, (float) 0.000000,
+        (float) 0.000000, (float) 0.000000, (float) 0.000000, (float) 0.000000,
+        (float) 0.000000, (float) 0.000000, (float) 0.000000, (float) 0.000000
     };
 
-    a = (CGLMmat4) {
-        (float) 0.000000, (float) 1.000000, (float)  -1.000000, (float)  0.000000,
-        (float) 0.000000, (float) 0.000000, (float)  0.000000, (float)  0.000000,
-        (float) 0.000000, (float) 0.000000, (float)  0.000000, (float)  0.000000,
-        (float) 0.000000, (float) 0.000000, (float)  0.000000, (float)  0.000000
+    a = (CGLMmat4){
+        (float) 0.000000, (float) 1.000000, (float) - 1.000000, (float) 0.000000,
+        (float) 0.000000, (float) 0.000000, (float) 0.000000, (float) 0.000000,
+        (float) 0.000000, (float) 0.000000, (float) 0.000000, (float) 0.000000,
+        (float) 0.000000, (float) 0.000000, (float) 0.000000, (float) 0.000000
     };
 
     mcompare = cglmScalarMultMat4(a, (float) 2.0);
     mu_run_test(compare_matrix);
 
-    mresult = (CGLMmat4) {
-        (float) 0.000000, (float) -2.000000, (float)  2.000000, (float)  0.000000,
-        (float) 0.000000, (float)  0.000000, (float)  0.000000, (float)  0.000000,
-        (float) 0.000000, (float)  0.000000, (float)  0.000000, (float)  0.000000,
-        (float) 0.000000, (float)  0.000000, (float)  0.000000, (float)  0.000000
+    mresult = (CGLMmat4){
+        (float) 0.000000, (float) - 2.000000, (float) 2.000000, (float) 0.000000,
+        (float) 0.000000, (float) 0.000000, (float) 0.000000, (float) 0.000000,
+        (float) 0.000000, (float) 0.000000, (float) 0.000000, (float) 0.000000,
+        (float) 0.000000, (float) 0.000000, (float) 0.000000, (float) 0.000000
     };
 
-    a = (CGLMmat4) {
-        (float) 0.000000, (float) 1.000000, (float)  -1.000000, (float)  0.000000,
-        (float) 0.000000, (float) 0.000000, (float)  0.000000, (float)  0.000000,
-        (float) 0.000000, (float) 0.000000, (float)  0.000000, (float)  0.000000,
-        (float) 0.000000, (float) 0.000000, (float)  0.000000, (float)  0.000000
+    a = (CGLMmat4){
+        (float) 0.000000, (float) 1.000000, (float) - 1.000000, (float) 0.000000,
+        (float) 0.000000, (float) 0.000000, (float) 0.000000, (float) 0.000000,
+        (float) 0.000000, (float) 0.000000, (float) 0.000000, (float) 0.000000,
+        (float) 0.000000, (float) 0.000000, (float) 0.000000, (float) 0.000000
     };
 
-    mcompare = cglmScalarMultMat4(a, (float) -2.0);
+    mcompare = cglmScalarMultMat4(a, (float) - 2.0);
     mu_run_test(compare_matrix);
 
     return NULL;
@@ -213,11 +211,11 @@ test_scalarMultMat4() {
 
 static char*
 test_frustum() {
-    mresult = (CGLMmat4) {
-        (float) 0.000000, (float) 0.000000, (float)  0.000000, (float)  0.000000,
-        (float) 0.000000, (float) 0.000000, (float)  0.000000, (float)  0.000000,
-        (float) 0.000000, (float) 0.000000, (float) -1.000000, (float) -1.000000,
-        (float) 0.000000, (float) 0.000000, (float) -0.000000, (float)  0.000000
+    mresult = (CGLMmat4){
+        (float) 0.000000, (float) 0.000000, (float) 0.000000, (float) 0.000000,
+        (float) 0.000000, (float) 0.000000, (float) 0.000000, (float) 0.000000,
+        (float) 0.000000, (float) 0.000000, (float) - 1.000000, (float) - 1.000000,
+        (float) 0.000000, (float) 0.000000, (float) - 0.000000, (float) 0.000000
     };
     mcompare = cglmFrustum(-10.0f, 10.0f, -10.0f, 10.0f, 0.0f, 100.0f);
     mu_run_test(compare_matrix);
@@ -229,33 +227,33 @@ static char*
 test_mat4() {
     float diag;
     diag = (float) 1;
-    mresult = (CGLMmat4) {
-        diag,0,0,0,
-        0,diag,0,0,
-        0,0,diag,0,
-        0,0,0,diag
+    mresult = (CGLMmat4){
+        diag, 0, 0, 0,
+        0, diag, 0, 0,
+        0, 0, diag, 0,
+        0, 0, 0, diag
     };
 
     mcompare = cglmMat4(diag);
     mu_run_test(compare_matrix);
 
     diag = (float) 0;
-    mresult = (CGLMmat4) {
-        diag,0,0,0,
-        0,diag,0,0,
-        0,0,diag,0,
-        0,0,0,diag
+    mresult = (CGLMmat4){
+        diag, 0, 0, 0,
+        0, diag, 0, 0,
+        0, 0, diag, 0,
+        0, 0, 0, diag
     };
 
     mcompare = cglmMat4(diag);
     mu_run_test(compare_matrix);
 
     diag = (float) 0.4;
-    mresult = (CGLMmat4) {
-        diag,0,0,0,
-        0,diag,0,0,
-        0,0,diag,0,
-        0,0,0,diag
+    mresult = (CGLMmat4){
+        diag, 0, 0, 0,
+        0, diag, 0, 0,
+        0, 0, diag, 0,
+        0, 0, 0, diag
     };
 
     mcompare = cglmMat4(diag);
@@ -269,23 +267,23 @@ test_normalize() {
     CGLMvec3 a;
 
     //
-    vresult = (CGLMvec3) {1,0,0};
-    a = (CGLMvec3) {1,0,0};
+    vresult = (CGLMvec3){1, 0, 0};
+    a = (CGLMvec3){1, 0, 0};
     vcompare = cglmNormalize(a);
     mu_run_test(compare_vec3);
 
     //
-    vresult = (CGLMvec3) {0,0,1};
+    vresult = (CGLMvec3){0, 0, 1};
 
-    a = (CGLMvec3) {0,0,2};
+    a = (CGLMvec3){0, 0, 2};
     vcompare = cglmNormalize(a);
     mu_run_test(compare_vec3);
 
 
     //
-    vresult = (CGLMvec3) {0,0,-1};
+    vresult = (CGLMvec3){0, 0, -1};
 
-    a = (CGLMvec3) {0,0,-2};
+    a = (CGLMvec3){0, 0, -2};
     vcompare = cglmNormalize(a);
     mu_run_test(compare_vec3);
 
@@ -298,31 +296,31 @@ test_cross() {
     CGLMvec3 b;
 
     //
-    vresult = (CGLMvec3) {0,0,0};
-    a = (CGLMvec3) {1,1,1};
-    b = (CGLMvec3) {1,1,1};
-    vcompare = cglmCross(a,b);
+    vresult = (CGLMvec3){0, 0, 0};
+    a = (CGLMvec3){1, 1, 1};
+    b = (CGLMvec3){1, 1, 1};
+    vcompare = cglmCross(a, b);
     mu_run_test(compare_vec3);
 
     //
-    vresult = (CGLMvec3) {0,0,0};
-    a = (CGLMvec3) {0,0,0};
-    b = (CGLMvec3) {1,1,1};
-    vcompare = cglmCross(a,b);
+    vresult = (CGLMvec3){0, 0, 0};
+    a = (CGLMvec3){0, 0, 0};
+    b = (CGLMvec3){1, 1, 1};
+    vcompare = cglmCross(a, b);
     mu_run_test(compare_vec3);
 
     //
-    vresult = (CGLMvec3) {0,0,0};
-    a = (CGLMvec3) {0,0,0};
-    b = (CGLMvec3) {1,1,1};
-    vcompare = cglmCross(a,b);
+    vresult = (CGLMvec3){0, 0, 0};
+    a = (CGLMvec3){0, 0, 0};
+    b = (CGLMvec3){1, 1, 1};
+    vcompare = cglmCross(a, b);
     mu_run_test(compare_vec3);
 
     //
-    vresult = (CGLMvec3) {-2.5,-3,-3.5};
-    a = (CGLMvec3) {-1,2,-1};
-    b = (CGLMvec3) {1,1.5,-2};
-    vcompare = cglmCross(a,b);
+    vresult = (CGLMvec3){-2.5, -3, -3.5};
+    a = (CGLMvec3){-1, 2, -1};
+    b = (CGLMvec3){1, 1.5, -2};
+    vcompare = cglmCross(a, b);
     mu_run_test(compare_vec3);
 
     return NULL;
@@ -334,31 +332,31 @@ test_subsVec3() {
     CGLMvec3 b;
 
     //
-    vresult = (CGLMvec3) {0,0,0};
-    a = (CGLMvec3) {1,1,1};
-    b = (CGLMvec3) {1,1,1};
-    vcompare = cglmSubsVec3(a,b);
+    vresult = (CGLMvec3){0, 0, 0};
+    a = (CGLMvec3){1, 1, 1};
+    b = (CGLMvec3){1, 1, 1};
+    vcompare = cglmSubsVec3(a, b);
     mu_run_test(compare_vec3);
 
     //
-    vresult = (CGLMvec3) {-1,-1,-1};
-    a = (CGLMvec3) {0,0,0};
-    b = (CGLMvec3) {1,1,1};
-    vcompare = cglmSubsVec3(a,b);
+    vresult = (CGLMvec3){-1, -1, -1};
+    a = (CGLMvec3){0, 0, 0};
+    b = (CGLMvec3){1, 1, 1};
+    vcompare = cglmSubsVec3(a, b);
     mu_run_test(compare_vec3);
 
     //
-    vresult = (CGLMvec3) {1,1,1};
-    a = (CGLMvec3) {1,1,1};
-    b = (CGLMvec3) {0,0,0};
-    vcompare = cglmSubsVec3(a,b);
+    vresult = (CGLMvec3){1, 1, 1};
+    a = (CGLMvec3){1, 1, 1};
+    b = (CGLMvec3){0, 0, 0};
+    vcompare = cglmSubsVec3(a, b);
     mu_run_test(compare_vec3);
 
     //
-    vresult = (CGLMvec3) {-2,0.5,1};
-    a = (CGLMvec3) {-1,2,-1};
-    b = (CGLMvec3) {1,1.5,-2};
-    vcompare = cglmSubsVec3(a,b);
+    vresult = (CGLMvec3){-2, 0.5, 1};
+    a = (CGLMvec3){-1, 2, -1};
+    b = (CGLMvec3){1, 1.5, -2};
+    vcompare = cglmSubsVec3(a, b);
     mu_run_test(compare_vec3);
 
     return NULL;
@@ -370,25 +368,25 @@ test_addVec3() {
     CGLMvec3 b;
 
     //
-    vresult = (CGLMvec3) {(float) 0,(float) 0,(float) 0};
-    a = (CGLMvec3) {(float) 0,(float) 0,(float) 0};
-    b = (CGLMvec3) {(float) 0,(float) 0,(float) 0};
-    vcompare = cglmAddVec3(a,b);
+    vresult = (CGLMvec3){(float) 0, (float) 0, (float) 0};
+    a = (CGLMvec3){(float) 0, (float) 0, (float) 0};
+    b = (CGLMvec3){(float) 0, (float) 0, (float) 0};
+    vcompare = cglmAddVec3(a, b);
     mu_run_test(compare_vec3);
 
 
     //
-    vresult = (CGLMvec3) {(float) 0,(float) 0,(float) 0};
-    a = (CGLMvec3) {(float) 1,(float) 1,(float) 1};
-    b = (CGLMvec3) {(float) -1,(float) -1,(float) -1};
-    vcompare = cglmAddVec3(a,b);
+    vresult = (CGLMvec3){(float) 0, (float) 0, (float) 0};
+    a = (CGLMvec3){(float) 1, (float) 1, (float) 1};
+    b = (CGLMvec3){(float) - 1, (float) - 1, (float) - 1};
+    vcompare = cglmAddVec3(a, b);
     mu_run_test(compare_vec3);
 
     //
-    vresult = (CGLMvec3) {(float) 0.5,(float) -0.82,(float) 0.12};
-    a = (CGLMvec3) {(float) 1.5,(float) -1.32,(float) 1.32};
-    b = (CGLMvec3) {(float) -1,(float) 0.5,(float) -1.2};
-    vcompare = cglmAddVec3(a,b);
+    vresult = (CGLMvec3){(float) 0.5, (float) - 0.82, (float) 0.12};
+    a = (CGLMvec3){(float) 1.5, (float) - 1.32, (float) 1.32};
+    b = (CGLMvec3){(float) - 1, (float) 0.5, (float) - 1.2};
+    vcompare = cglmAddVec3(a, b);
     mu_run_test(compare_vec3);
 
     return NULL;
@@ -402,40 +400,40 @@ test_dot() {
     float fcompare;
 
     //
-    fresult = (float) -3.744;
-    a = (CGLMvec3) {(float) 1.5,(float) -1.32,(float) 1.32};
-    b = (CGLMvec3) {(float) -1,(float) 0.5,(float) -1.2};
-    fcompare = cglmDot(a,b);
+    fresult = (float) - 3.744;
+    a = (CGLMvec3){(float) 1.5, (float) - 1.32, (float) 1.32};
+    b = (CGLMvec3){(float) - 1, (float) 0.5, (float) - 1.2};
+    fcompare = cglmDot(a, b);
     mu_assert("compare on dot float", fabs(fcompare - fresult) < LARGE_ROUND);
 
     //
     fresult = (float) 3;
-    a = (CGLMvec3) {(float) 1,(float) 1,(float) 1};
-    b = (CGLMvec3) {(float) 1,(float) 1,(float) 1};
-    fcompare = cglmDot(a,b);
+    a = (CGLMvec3){(float) 1, (float) 1, (float) 1};
+    b = (CGLMvec3){(float) 1, (float) 1, (float) 1};
+    fcompare = cglmDot(a, b);
     mu_assert("compare on dot float", fabs(fcompare - fresult) < LARGE_ROUND);
 
 
     //
     fresult = (float) 0;
-    a = (CGLMvec3) {(float) 0,(float) 0,(float) 0};
-    b = (CGLMvec3) {(float) 1,(float) 1,(float) 1};
-    fcompare = cglmDot(a,b);
+    a = (CGLMvec3){(float) 0, (float) 0, (float) 0};
+    b = (CGLMvec3){(float) 1, (float) 1, (float) 1};
+    fcompare = cglmDot(a, b);
     mu_assert("compare on dot float", fabs(fcompare - fresult) < LARGE_ROUND);
 
 
     //
-    fresult = (float) -0.5;
-    a = (CGLMvec3) {(float) -1,(float) 1.5,(float) -1};
-    b = (CGLMvec3) {(float) 1,(float) 1,(float) 1};
-    fcompare = cglmDot(a,b);
+    fresult = (float) - 0.5;
+    a = (CGLMvec3){(float) - 1, (float) 1.5, (float) - 1};
+    b = (CGLMvec3){(float) 1, (float) 1, (float) 1};
+    fcompare = cglmDot(a, b);
     mu_assert("compare on dot float", fabs(fcompare - fresult) < LARGE_ROUND);
 
     //
-    fresult = (float) -3.2;
-    a = (CGLMvec3) {(float) -1,(float) 1.5,(float) -1};
-    b = (CGLMvec3) {(float) 1,(float) -0.8,(float) 1};
-    fcompare = cglmDot(a,b);
+    fresult = (float) - 3.2;
+    a = (CGLMvec3){(float) - 1, (float) 1.5, (float) - 1};
+    b = (CGLMvec3){(float) 1, (float) - 0.8, (float) 1};
+    fcompare = cglmDot(a, b);
     mu_assert("compare on dot float", fabs(fcompare - fresult) < LARGE_ROUND);
 
     return NULL;
@@ -445,27 +443,31 @@ static char*
 test_multMat4() {
     CGLMmat4 mult1, mult2, mult3;
 
-    mresult = (CGLMmat4) {
-        (float) 1.446000, (float) -0.991900, (float) -0.924100, (float) -0.922300,
-        (float) 0.000000, (float)  2.755500, (float) -0.924100, (float) -0.922300,
-        (float) 1.436900, (float)  0.554500, (float) -5.125900, (float) -5.315500,
-        (float) 0.287100, (float)  0.110800, (float)  0.103200, (float)  0.103000};
+    mresult = (CGLMmat4){
+        (float) 1.446000, (float) - 0.991900, (float) - 0.924100, (float) - 0.922300,
+        (float) 0.000000, (float) 2.755500, (float) - 0.924100, (float) - 0.922300,
+        (float) 1.436900, (float) 0.554500, (float) - 5.125900, (float) - 5.315500,
+        (float) 0.287100, (float) 0.110800, (float) 0.103200, (float) 0.103000
+    };
 
-    mult1 = (CGLMmat4) {
-        (float) 1.792600, (float) 0.000000, (float)  0.000000, (float)  0.000000,
-        (float) 0.000000, (float) 1.792600, (float)  0.000000, (float)  0.000000,
-        (float) 0.000000, (float) 0.000000, (float) -1.002000, (float) -1.000000,
-        (float) 0.000000, (float) 0.000000, (float) -0.200200, (float)  0.000000};
-    mult2 = (CGLMmat4) {
-        (float)  0.600000, (float) -0.411600, (float)  0.686000, (float) 0.000000,
-        (float)  0.000000, (float)  0.857500, (float)  0.514500, (float) 0.000000,
-        (float) -0.800000, (float) -0.308700, (float)  0.514500, (float) 0.000000,
-        (float) -0.000000, (float) -0.000000, (float) -5.831000, (float) 1.000000};
-    mult3 = (CGLMmat4) {
-        (float) 1.344400, (float) 0.000000, (float)  0.000000, (float)  0.000000,
-        (float) 0.000000, (float) 1.792600, (float)  0.000000, (float)  0.000000,
-        (float) 0.000000, (float) 0.000000, (float) -1.002000, (float) -1.000000,
-        (float) 0.000000, (float) 0.000000, (float) -0.200200, (float)  0.000000};
+    mult1 = (CGLMmat4){
+        (float) 1.792600, (float) 0.000000, (float) 0.000000, (float) 0.000000,
+        (float) 0.000000, (float) 1.792600, (float) 0.000000, (float) 0.000000,
+        (float) 0.000000, (float) 0.000000, (float) - 1.002000, (float) - 1.000000,
+        (float) 0.000000, (float) 0.000000, (float) - 0.200200, (float) 0.000000
+    };
+    mult2 = (CGLMmat4){
+        (float) 0.600000, (float) - 0.411600, (float) 0.686000, (float) 0.000000,
+        (float) 0.000000, (float) 0.857500, (float) 0.514500, (float) 0.000000,
+        (float) - 0.800000, (float) - 0.308700, (float) 0.514500, (float) 0.000000,
+        (float) - 0.000000, (float) - 0.000000, (float) - 5.831000, (float) 1.000000
+    };
+    mult3 = (CGLMmat4){
+        (float) 1.344400, (float) 0.000000, (float) 0.000000, (float) 0.000000,
+        (float) 0.000000, (float) 1.792600, (float) 0.000000, (float) 0.000000,
+        (float) 0.000000, (float) 0.000000, (float) - 1.002000, (float) - 1.000000,
+        (float) 0.000000, (float) 0.000000, (float) - 0.200200, (float) 0.000000
+    };
 
     mcompare = cglmMultMat4(cglmMultMat4(mult1, mult2), mult3);
     mu_run_test(compare_matrix);
@@ -479,16 +481,16 @@ test_lookAt() {
     CGLMvec3 b;
     CGLMvec3 c;
 
-    mresult = (CGLMmat4) {
-       (float)  0.600000, (float) -0.411600, (float)  0.686000, (float) 0.000000,
-       (float)  0.000000, (float)  0.857500, (float)  0.514500, (float) 0.000000,
-       (float) -0.800000, (float) -0.308700, (float)  0.514500, (float) 0.000000,
-       (float) -0.000000, (float) -0.000000, (float) -5.831000, (float) 1.000000
+    mresult = (CGLMmat4){
+        (float) 0.600000, (float) - 0.411600, (float) 0.686000, (float) 0.000000,
+        (float) 0.000000, (float) 0.857500, (float) 0.514500, (float) 0.000000,
+        (float) - 0.800000, (float) - 0.308700, (float) 0.514500, (float) 0.000000,
+        (float) - 0.000000, (float) - 0.000000, (float) - 5.831000, (float) 1.000000
     };
-    a = (CGLMvec3) {(float) 4,(float) 3,(float) 3};
-    b = (CGLMvec3) {(float) 0,(float) 0,(float) 0};
-    c = (CGLMvec3) {(float) 0,(float) 1,(float) 0};
-    mcompare = cglmLookAt(a,b,c);
+    a = (CGLMvec3){(float) 4, (float) 3, (float) 3};
+    b = (CGLMvec3){(float) 0, (float) 0, (float) 0};
+    c = (CGLMvec3){(float) 0, (float) 1, (float) 0};
+    mcompare = cglmLookAt(a, b, c);
     mu_run_test(compare_matrix);
 
     return NULL;
@@ -532,8 +534,7 @@ cglm_test(char* test_name) {
 }
 
 int
-main(int argc, char* argv[])
-{
+main(int argc, char* argv[]) {
     char* result = cglm_test(argv[1]);
 
     if (result != 0)

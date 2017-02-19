@@ -22,6 +22,7 @@
  * SOFTWARE.
  */
 
+
 /**
  * @file cglm_debug.h
  * @brief Used to debug cglm
@@ -36,26 +37,24 @@
 extern "C" {
 #endif // __cplusplus
 
-/**
- * @brief Print a GLMmat4 matrix to stdout.
- */
-static void
-debugmat4(CGLMmat4  matrix)
-{
-    printf("%f %f %f %f\n", matrix.a0, matrix.a1, matrix.a2, matrix.a3);
-    printf("%f %f %f %f\n", matrix.b0, matrix.b1, matrix.b2, matrix.b3);
-    printf("%f %f %f %f\n", matrix.c0, matrix.c1, matrix.c2, matrix.c3);
-    printf("%f %f %f %f\n", matrix.d0, matrix.d1, matrix.d2, matrix.d3);
-}
+    /**
+     * @brief Print a GLMmat4 matrix to stdout.
+     */
+    static void
+    debugmat4(CGLMmat4 matrix) {
+        printf("%f %f %f %f\n", matrix.a0, matrix.a1, matrix.a2, matrix.a3);
+        printf("%f %f %f %f\n", matrix.b0, matrix.b1, matrix.b2, matrix.b3);
+        printf("%f %f %f %f\n", matrix.c0, matrix.c1, matrix.c2, matrix.c3);
+        printf("%f %f %f %f\n", matrix.d0, matrix.d1, matrix.d2, matrix.d3);
+    }
 
-/**
- * @brief Print a GLMvec3 vector to stdout.
- */
-static void
-debugvec3(CGLMvec3 vec)
-{
-    printf("%f %f %f\n", vec.x, vec.y, vec.z);
-}
+    /**
+     * @brief Print a GLMvec3 vector to stdout.
+     */
+    static void
+    debugvec3(CGLMvec3 vec) {
+        printf("%f %f %f\n", vec.x, vec.y, vec.z);
+    }
 
 #ifdef __cplusplus
 }
