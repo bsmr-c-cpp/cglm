@@ -1,7 +1,9 @@
 cmake_minimum_required (VERSION 2.6)
 project (Cglm)
 
-include_directories (.)
+set (CGLM_INCLUDES ${CMAKE_CURRENT_SOURCE_DIR} CACHE STRING "cglm includes")
+
+include_directories (${CGLM_INCLUDES})
 
 #
 # Only for GL/gl.h
