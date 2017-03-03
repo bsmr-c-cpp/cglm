@@ -11,6 +11,6 @@ compiler:
    #- g++
     - clang
 
-script: 
+script:
     - ./configure
-    - cd build && make && make test ARGS=--output-on-failure
+    - cd _build && make && make test ARGS=--output-on-failure
