@@ -327,27 +327,27 @@ extern "C" {
     cglmMultMat4(
             CGLMmat4 m1,
             CGLMmat4 m2) {
-        CGLMmat4 result = {
-            m2.a0 * m1.a0 + m2.a1 * m1.b0 + m2.a2 * m1.c0 + m2.a3 * m1.d0, // = a0
-            m2.a0 * m1.a1 + m2.a1 * m1.b1 + m2.a2 * m1.c1 + m2.a3 * m1.d1, // = a1
-            m2.a0 * m1.a2 + m2.a1 * m1.b2 + m2.a2 * m1.c2 + m2.a3 * m1.d2, // = a2
-            m2.a0 * m1.a3 + m2.a1 * m1.b3 + m2.a2 * m1.c3 + m2.a3 * m1.d3, // = a3
+        CGLMmat4 result;
 
-            m2.b0 * m1.a0 + m2.b1 * m1.b0 + m2.b2 * m1.c0 + m2.b3 * m1.d0, // = b0
-            m2.b0 * m1.a1 + m2.b1 * m1.b1 + m2.b2 * m1.c1 + m2.b3 * m1.d1, // = b1
-            m2.b0 * m1.a2 + m2.b1 * m1.b2 + m2.b2 * m1.c2 + m2.b3 * m1.d2, // = b2
-            m2.b0 * m1.a3 + m2.b1 * m1.b3 + m2.b2 * m1.c3 + m2.b3 * m1.d3, // = b3
+        result.a0 = m2.a0 * m1.a0 + m2.a1 * m1.b0 + m2.a2 * m1.c0 + m2.a3 * m1.d0;
+        result.a1 = m2.a0 * m1.a1 + m2.a1 * m1.b1 + m2.a2 * m1.c1 + m2.a3 * m1.d1;
+        result.a2 = m2.a0 * m1.a2 + m2.a1 * m1.b2 + m2.a2 * m1.c2 + m2.a3 * m1.d2;
+        result.a3 = m2.a0 * m1.a3 + m2.a1 * m1.b3 + m2.a2 * m1.c3 + m2.a3 * m1.d3;
 
-            m2.c0 * m1.a0 + m2.c1 * m1.b0 + m2.c2 * m1.c0 + m2.c3 * m1.d0, // = c0
-            m2.c0 * m1.a1 + m2.c1 * m1.b1 + m2.c2 * m1.c1 + m2.c3 * m1.d1, // = c1
-            m2.c0 * m1.a2 + m2.c1 * m1.b2 + m2.c2 * m1.c2 + m2.c3 * m1.d2, // = c2
-            m2.c0 * m1.a3 + m2.c1 * m1.b3 + m2.c2 * m1.c3 + m2.c3 * m1.d3, // = c3
+        result.b0 = m2.b0 * m1.a0 + m2.b1 * m1.b0 + m2.b2 * m1.c0 + m2.b3 * m1.d0;
+        result.b1 = m2.b0 * m1.a1 + m2.b1 * m1.b1 + m2.b2 * m1.c1 + m2.b3 * m1.d1;
+        result.b2 = m2.b0 * m1.a2 + m2.b1 * m1.b2 + m2.b2 * m1.c2 + m2.b3 * m1.d2;
+        result.b3 = m2.b0 * m1.a3 + m2.b1 * m1.b3 + m2.b2 * m1.c3 + m2.b3 * m1.d3;
 
-            m2.d0 * m1.a0 + m2.d1 * m1.b0 + m2.d2 * m1.c0 + m2.d3 * m1.d0, // = d0
-            m2.d0 * m1.a1 + m2.d1 * m1.b1 + m2.d2 * m1.c1 + m2.d3 * m1.d1, // = d1
-            m2.d0 * m1.a2 + m2.d1 * m1.b2 + m2.d2 * m1.c2 + m2.d3 * m1.d2, // = d2
-            m2.d0 * m1.a3 + m2.d1 * m1.b3 + m2.d2 * m1.c3 + m2.d3 * m1.d3, // = d3
-        };
+        result.c0 = m2.c0 * m1.a0 + m2.c1 * m1.b0 + m2.c2 * m1.c0 + m2.c3 * m1.d0;
+        result.c1 = m2.c0 * m1.a1 + m2.c1 * m1.b1 + m2.c2 * m1.c1 + m2.c3 * m1.d1;
+        result.c2 = m2.c0 * m1.a2 + m2.c1 * m1.b2 + m2.c2 * m1.c2 + m2.c3 * m1.d2;
+        result.c3 = m2.c0 * m1.a3 + m2.c1 * m1.b3 + m2.c2 * m1.c3 + m2.c3 * m1.d3;
+
+        result.d0 = m2.d0 * m1.a0 + m2.d1 * m1.b0 + m2.d2 * m1.c0 + m2.d3 * m1.d0;
+        result.d1 = m2.d0 * m1.a1 + m2.d1 * m1.b1 + m2.d2 * m1.c1 + m2.d3 * m1.d1;
+        result.d2 = m2.d0 * m1.a2 + m2.d1 * m1.b2 + m2.d2 * m1.c2 + m2.d3 * m1.d2;
+        result.d3 = m2.d0 * m1.a3 + m2.d1 * m1.b3 + m2.d2 * m1.c3 + m2.d3 * m1.d3;
 
         return result;
     }

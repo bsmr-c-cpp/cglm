@@ -8,7 +8,7 @@ if [ -z "$COUNT" ]; then
 fi
 
 echo "Simulating $COUNT GL view updates"
-T=$(/usr/bin/time -f "%S %U" build/cglm_bench $COUNT 2>&1)
+T=$(/usr/bin/time -f "%S %U" _build/cglm_bench $COUNT 2>&1)
 
 T_USER=$(echo $T | awk '{ print $1 }')
 T_SYS=$(echo $T | awk '{ print $2 }')
