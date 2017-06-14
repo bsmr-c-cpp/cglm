@@ -97,7 +97,7 @@ extern "C" {
         result.d3 = num;
         return result;
     }
-    static void
+    void
     cglmMat42(GLfloat num, CGLMmat42* mat) {
         int i, j;
         for (i=0; i<4; i++) {
@@ -407,7 +407,7 @@ extern "C" {
         return result;
     }
 
-    static void
+    void
     cglmScalarMultMat42(
             CGLMmat42* mat,
             float s) {
@@ -469,7 +469,7 @@ extern "C" {
         return result;
     }
 
-    static void
+    void inline
     cglmMultMat42(
             CGLMmat42* __restrict__ m1,
             CGLMmat42* __restrict__ m2,
