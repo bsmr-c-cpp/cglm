@@ -3,7 +3,7 @@ project (Cglm)
 
 set (CGLM_INCLUDES ${CMAKE_CURRENT_SOURCE_DIR} CACHE STRING "cglm includes")
 
-#set (CMAKE_C_FLAGS "-O3 -ftree-vectorizer-verbose=1")
+set (CMAKE_C_FLAGS "-O3 -ftree-vectorizer-verbose=1")
 
 include_directories (${CGLM_INCLUDES})
 

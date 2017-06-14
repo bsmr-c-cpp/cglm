@@ -14,7 +14,7 @@
 int
 main(int argc, char** argv) {
     int iterate_count, i;
-    CGLMmat4 view, proj, model, MVP;
+    CGLMmat42 view, proj, model, MVP, r;
     CGLMvec3 position, direction, up;
 
     if (argc < 2)
@@ -22,8 +22,8 @@ main(int argc, char** argv) {
 
     iterate_count = atoi(argv[1]);
 
-    model = cglmMat4(0.0f);
-    proj = cglmPerspective(45.0f, 4.0f / 3.0f, 0.1f, 100.0f);
+    cglmMat42(0.0f, &model);
+    cglmPerspective2(45.0f, 4.0f / 3.0f, 0.1f, 100.0f, &model);
 
     position = (CGLMvec3){3.0f, 0.0f, 10.0f};
     direction = (CGLMvec3){0.0f, 0.0f, 0.0f};
@@ -31,8 +31,9 @@ main(int argc, char** argv) {
 
     for (i = 0; i < iterate_count; i++) {
         position.z -= 1;
-        view = cglmLookAt(position, direction, up);
-        MVP = cglmMultMat4(cglmMultMat4(proj, view), model);
+        cglmLookAt2(position, direction, up, &view);
+        cglmMultMat42(&proj, &view, &r);
+        cglmMultMat42(&r, &model, &MVP);
     }
 
     return 0;
