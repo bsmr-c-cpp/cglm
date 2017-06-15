@@ -81,58 +81,33 @@ compare_vec3() {
 
 CGLMmat4 mcompare;
 CGLMmat4 mresult;
-
 static char*
 compare_matrix() {
+    int i, j;
     printf("\nExpected mat4: \n");
-    debugmat4(mresult);
+    debugmat4(&mresult);
     printf("Compared mat4: \n");
-    debugmat4(mcompare);
+    debugmat4(&mcompare);
 
-    mu_assert("compare error on a0",
-            fabs(mcompare.a0 - mresult.a0) < LARGE_ROUND);
-    mu_assert("compare error on a1",
-            fabs(mcompare.a1 - mresult.a1) < LARGE_ROUND);
-    mu_assert("compare error on a2",
-            fabs(mcompare.a2 - mresult.a2) < LARGE_ROUND);
-    mu_assert("compare error on a3",
-            fabs(mcompare.a3 - mresult.a3) < LARGE_ROUND);
-    mu_assert("compare error on b0",
-            fabs(mcompare.b0 - mresult.b0) < LARGE_ROUND);
-    mu_assert("compare error on b1",
-            fabs(mcompare.b1 - mresult.b1) < LARGE_ROUND);
-    mu_assert("compare error on b2",
-            fabs(mcompare.b2 - mresult.b2) < LARGE_ROUND);
-    mu_assert("compare error on b3",
-            fabs(mcompare.b3 - mresult.b3) < LARGE_ROUND);
-    mu_assert("compare error on c0",
-            fabs(mcompare.c0 - mresult.c0) < LARGE_ROUND);
-    mu_assert("compare error on c1",
-            fabs(mcompare.c1 - mresult.c1) < LARGE_ROUND);
-    mu_assert("compare error on c2",
-            fabs(mcompare.c2 - mresult.c2) < LARGE_ROUND);
-    mu_assert("compare error on c3",
-            fabs(mcompare.c3 - mresult.c3) < LARGE_ROUND);
-    mu_assert("compare error on d0",
-            fabs(mcompare.d0 - mresult.d0) < LARGE_ROUND);
-    mu_assert("compare error on d1",
-            fabs(mcompare.d1 - mresult.d1) < LARGE_ROUND);
-    mu_assert("compare error on d2",
-            fabs(mcompare.d2 - mresult.d2) < LARGE_ROUND);
-    mu_assert("compare error on d3",
-            fabs(mcompare.d3 - mresult.d3) < LARGE_ROUND);
+    for (i=0; i<4; i++) {
+        for (j=0; j<4; j++) {
+            mu_assert("compare matrix error",
+                    fabs(mcompare.v[i][j] - mresult.v[i][j]) < LARGE_ROUND);
+        }
+    }
+
     return NULL;
 }
 
 static char*
 test_perspective() {
-    mresult = (CGLMmat4){
-        1.344400f, 0.000000f, 0.000000f, 0.000000f,
-        0.000000f, 1.792600f, 0.000000f, 0.000000f,
-        0.000000f, 0.000000f, -1.002000f, -1.000000f,
-        0.000000f, 0.000000f, -0.200200f, 0.000000f
-    };
-    mcompare = cglmPerspective(45.0f, 4.0f / 3.0f, 0.1f, 100.0f);
+    mresult = (CGLMmat4) {{
+        {1.344400f, 0.000000f, 0.000000f, 0.000000f},
+        {0.000000f, 1.792600f, 0.000000f, 0.000000f},
+        {0.000000f, 0.000000f, -1.002000f, -1.000000f},
+        {0.000000f, 0.000000f, -0.200200f, 0.000000f}
+    }};
+    cglmPerspective(45.0f, 4.0f / 3.0f, 0.1f, 100.0f, &mcompare);
     mu_run_test(compare_matrix);
 
     return NULL;
@@ -140,13 +115,13 @@ test_perspective() {
 
 static char*
 test_ortho() {
-    mresult = (CGLMmat4){
+    mresult = (CGLMmat4) {{
         (float) 0.100000, (float) 0.000000, (float) 0.000000, (float) 0.000000,
         (float) 0.000000, (float) 0.100000, (float) 0.000000, (float) 0.000000,
         (float) 0.000000, (float) 0.000000, (float) - 0.020000, (float) 0.000000,
         (float) - 0.000000, (float) - 0.000000, (float) - 1.000000, (float) 1.000000
-    };
-    mcompare = cglmOrtho(-10.0f, 10.0f, -10.0f, 10.0f, 0.0f, 100.0f);
+    }};
+    cglmOrtho(-10.0f, 10.0f, -10.0f, 10.0f, 0.0f, 100.0f, &mcompare);
     mu_run_test(compare_matrix);
 
     return NULL;
@@ -170,40 +145,23 @@ test_scalarMultVec3() {
 
 static char*
 test_scalarMultMat4() {
-    CGLMmat4 a;
+    CGLMmat4 m;
 
-    mresult = (CGLMmat4){
+    mresult = (CGLMmat4) {{
         (float) 0.000000, (float) 2.000000, (float) - 2.000000, (float) 0.000000,
         (float) 0.000000, (float) 0.000000, (float) 0.000000, (float) 0.000000,
         (float) 0.000000, (float) 0.000000, (float) 0.000000, (float) 0.000000,
         (float) 0.000000, (float) 0.000000, (float) 0.000000, (float) 0.000000
-    };
+    }};
 
-    a = (CGLMmat4){
+    m = (CGLMmat4){
         (float) 0.000000, (float) 1.000000, (float) - 1.000000, (float) 0.000000,
         (float) 0.000000, (float) 0.000000, (float) 0.000000, (float) 0.000000,
         (float) 0.000000, (float) 0.000000, (float) 0.000000, (float) 0.000000,
         (float) 0.000000, (float) 0.000000, (float) 0.000000, (float) 0.000000
     };
 
-    mcompare = cglmScalarMultMat4(a, (float) 2.0);
-    mu_run_test(compare_matrix);
-
-    mresult = (CGLMmat4){
-        (float) 0.000000, (float) - 2.000000, (float) 2.000000, (float) 0.000000,
-        (float) 0.000000, (float) 0.000000, (float) 0.000000, (float) 0.000000,
-        (float) 0.000000, (float) 0.000000, (float) 0.000000, (float) 0.000000,
-        (float) 0.000000, (float) 0.000000, (float) 0.000000, (float) 0.000000
-    };
-
-    a = (CGLMmat4){
-        (float) 0.000000, (float) 1.000000, (float) - 1.000000, (float) 0.000000,
-        (float) 0.000000, (float) 0.000000, (float) 0.000000, (float) 0.000000,
-        (float) 0.000000, (float) 0.000000, (float) 0.000000, (float) 0.000000,
-        (float) 0.000000, (float) 0.000000, (float) 0.000000, (float) 0.000000
-    };
-
-    mcompare = cglmScalarMultMat4(a, (float) - 2.0);
+    cglmScalarMultMat4(&m, (float) 2.0, &mcompare);
     mu_run_test(compare_matrix);
 
     return NULL;
@@ -211,13 +169,13 @@ test_scalarMultMat4() {
 
 static char*
 test_frustum() {
-    mresult = (CGLMmat4){
+    mresult = (CGLMmat4) {{
         (float) 0.000000, (float) 0.000000, (float) 0.000000, (float) 0.000000,
         (float) 0.000000, (float) 0.000000, (float) 0.000000, (float) 0.000000,
         (float) 0.000000, (float) 0.000000, (float) - 1.000000, (float) - 1.000000,
         (float) 0.000000, (float) 0.000000, (float) - 0.000000, (float) 0.000000
-    };
-    mcompare = cglmFrustum(-10.0f, 10.0f, -10.0f, 10.0f, 0.0f, 100.0f);
+    }};
+    cglmFrustum(-10.0f, 10.0f, -10.0f, 10.0f, 0.0f, 100.0f, &mcompare);
     mu_run_test(compare_matrix);
 
     return NULL;
@@ -225,38 +183,19 @@ test_frustum() {
 
 static char*
 test_mat4() {
+    int i, j;
     float diag;
-    diag = (float) 1;
-    mresult = (CGLMmat4){
-        diag, 0, 0, 0,
-        0, diag, 0, 0,
-        0, 0, diag, 0,
-        0, 0, 0, diag
-    };
+    diag = (float) 1.0f;
+    for (i=0; i<4; i++) {
+        for (j=0; j<4; j++) {
+            mresult.v[i][j] = 0;
+        }
+    }
+    for (i=0; i<4; i++) {
+        mresult.v[i][i] = diag;
+    }
 
-    mcompare = cglmMat4(diag);
-    mu_run_test(compare_matrix);
-
-    diag = (float) 0;
-    mresult = (CGLMmat4){
-        diag, 0, 0, 0,
-        0, diag, 0, 0,
-        0, 0, diag, 0,
-        0, 0, 0, diag
-    };
-
-    mcompare = cglmMat4(diag);
-    mu_run_test(compare_matrix);
-
-    diag = (float) 0.4;
-    mresult = (CGLMmat4){
-        diag, 0, 0, 0,
-        0, diag, 0, 0,
-        0, 0, diag, 0,
-        0, 0, 0, diag
-    };
-
-    mcompare = cglmMat4(diag);
+    cglmInitMat4(diag, &mcompare);
     mu_run_test(compare_matrix);
 
     return NULL;
@@ -441,37 +380,60 @@ test_dot() {
 
 static char*
 test_multMat4() {
-    CGLMmat4 mult1, mult2, mult3;
+    CGLMmat4 m1 = {{
+        {1.344443, 0.000000, 0.000000, 0.000000},
+        {0.000000, 1.792591, 0.000000, 0.000000},
+        {0.000000, 0.000000, -1.002002, -1.000000},
+        {0.000000, 0.000000, -0.200200, 0.000000}
+    }};
 
-    mresult = (CGLMmat4){
-        (float) 1.446000, (float) - 0.991900, (float) - 0.924100, (float) - 0.922300,
-        (float) 0.000000, (float) 2.755500, (float) - 0.924100, (float) - 0.922300,
-        (float) 1.436900, (float) 0.554500, (float) - 5.125900, (float) - 5.315500,
-        (float) 0.287100, (float) 0.110800, (float) 0.103200, (float) 0.103000
-    };
+    CGLMmat4 m2= {{
+        {0.600000, -0.411597, 0.685994, 0.000000},
+        {0.000000, 0.857493, 0.514496, 0.000000},
+        {-0.800000, -0.308697, 0.514496, 0.000000},
+        {-0.000000, -0.000000, -5.830953, 1.000000}
+    }};
 
-    mult1 = (CGLMmat4){
-        (float) 1.792600, (float) 0.000000, (float) 0.000000, (float) 0.000000,
-        (float) 0.000000, (float) 1.792600, (float) 0.000000, (float) 0.000000,
-        (float) 0.000000, (float) 0.000000, (float) - 1.002000, (float) - 1.000000,
-        (float) 0.000000, (float) 0.000000, (float) - 0.200200, (float) 0.000000
-    };
-    mult2 = (CGLMmat4){
-        (float) 0.600000, (float) - 0.411600, (float) 0.686000, (float) 0.000000,
-        (float) 0.000000, (float) 0.857500, (float) 0.514500, (float) 0.000000,
-        (float) - 0.800000, (float) - 0.308700, (float) 0.514500, (float) 0.000000,
-        (float) - 0.000000, (float) - 0.000000, (float) - 5.831000, (float) 1.000000
-    };
-    mult3 = (CGLMmat4){
-        (float) 1.344400, (float) 0.000000, (float) 0.000000, (float) 0.000000,
-        (float) 0.000000, (float) 1.792600, (float) 0.000000, (float) 0.000000,
-        (float) 0.000000, (float) 0.000000, (float) - 1.002000, (float) - 1.000000,
-        (float) 0.000000, (float) 0.000000, (float) - 0.200200, (float) 0.000000
-    };
+    mcompare = (CGLMmat4) {{
+        {0.806666, -0.737825, -0.687367, -0.685994},
+        {0.000000, 1.537134, -0.515526, -0.514496},
+        {-1.075554, -0.553367, -0.515526, -0.514496},
+        {0.000000, 0.000000, 5.642426, 5.830953}
+    }};
 
-    mcompare = cglmMultMat4(cglmMultMat4(mult1, mult2), mult3);
+    cglmMultMat4(&m1, &m2, &mresult);
     mu_run_test(compare_matrix);
 
+    mresult = (CGLMmat4) {{
+        {(float) 1.446000, (float) - 0.991900, (float) - 0.924100, (float) - 0.922300},
+        {(float) 0.000000, (float) 2.755500, (float) - 0.924100, (float) - 0.922300},
+        {(float) 1.436900, (float) 0.554500, (float) - 5.125900, (float) - 5.315500},
+        {(float) 0.287100, (float) 0.110800, (float) 0.103200, (float) 0.103000}
+    }};
+
+    m1 = (CGLMmat4) {{
+        {(float) 1.792600, (float) 0.000000, (float) 0.000000, (float) 0.000000},
+        {(float) 0.000000, (float) 1.792600, (float) 0.000000, (float) 0.000000},
+        {(float) 0.000000, (float) 0.000000, (float) - 1.002000, (float) - 1.000000},
+        {(float) 0.000000, (float) 0.000000, (float) - 0.200200, (float) 0.000000}
+    }};
+    m2 = (CGLMmat4) {{
+        {(float) 0.600000, (float) - 0.411600, (float) 0.686000, (float) 0.000000},
+        {(float) 0.000000, (float) 0.857500, (float) 0.514500, (float) 0.000000},
+        {(float) - 0.800000, (float) - 0.308700, (float) 0.514500, (float) 0.000000},
+        {(float) - 0.000000, (float) - 0.000000, (float) - 5.831000, (float) 1.000000}
+    }};
+    CGLMmat4 m3 = {{
+        {(float) 1.344400, (float) 0.000000, (float) 0.000000, (float) 0.000000},
+        {(float) 0.000000, (float) 1.792600, (float) 0.000000, (float) 0.000000},
+        {(float) 0.000000, (float) 0.000000, (float) - 1.002000, (float) - 1.000000},
+        {(float) 0.000000, (float) 0.000000, (float) - 0.200200, (float) 0.000000}
+    }};
+
+    CGLMmat4 inter;
+    cglmMultMat4(&m1,&m2,&inter);
+    cglmMultMat4(&inter,&m3,&mcompare);
+    mu_run_test(compare_matrix);
     return NULL;
 }
 
@@ -481,16 +443,17 @@ test_lookAt() {
     CGLMvec3 b;
     CGLMvec3 c;
 
-    mresult = (CGLMmat4){
+    mresult = (CGLMmat4) {{
         (float) 0.600000, (float) - 0.411600, (float) 0.686000, (float) 0.000000,
         (float) 0.000000, (float) 0.857500, (float) 0.514500, (float) 0.000000,
         (float) - 0.800000, (float) - 0.308700, (float) 0.514500, (float) 0.000000,
         (float) - 0.000000, (float) - 0.000000, (float) - 5.831000, (float) 1.000000
-    };
+    }};
+
     a = (CGLMvec3){(float) 4, (float) 3, (float) 3};
     b = (CGLMvec3){(float) 0, (float) 0, (float) 0};
     c = (CGLMvec3){(float) 0, (float) 1, (float) 0};
-    mcompare = cglmLookAt(a, b, c);
+    cglmLookAt(a, b, c, &mcompare);
     mu_run_test(compare_matrix);
 
     return NULL;
@@ -501,32 +464,32 @@ cglm_test(char* test_name) {
 
     if (!test_name) return "no shuch test";
 
-    if (strcmp(test_name, "Perspective") == 0)
-        mu_run_test(test_perspective);
-    else if (strcmp(test_name, "Mat4") == 0)
+    if (strcmp(test_name, "Mat4") == 0)
         mu_run_test(test_mat4);
-    else if (strcmp(test_name, "Normalize") == 0)
-        mu_run_test(test_normalize);
     else if (strcmp(test_name, "Cross") == 0)
         mu_run_test(test_cross);
+    else if (strcmp(test_name, "Dot") == 0)
+        mu_run_test(test_dot);
+    else if (strcmp(test_name, "Normalize") == 0)
+        mu_run_test(test_normalize);
     else if (strcmp(test_name, "SubsVec3") == 0)
         mu_run_test(test_subsVec3);
     else if (strcmp(test_name, "AddVec3") == 0)
         mu_run_test(test_addVec3);
-    else if (strcmp(test_name, "Dot") == 0)
-        mu_run_test(test_dot);
-    else if (strcmp(test_name, "LookAt") == 0)
-        mu_run_test(test_lookAt);
     else if (strcmp(test_name, "MultMat4") == 0)
         mu_run_test(test_multMat4);
+    else if (strcmp(test_name, "ScalarMultVec3") == 0)
+        mu_run_test(test_scalarMultVec3);
+    else if (strcmp(test_name, "LookAt") == 0)
+        mu_run_test(test_lookAt);
+    else if (strcmp(test_name, "ScalarMultMat4") == 0)
+        mu_run_test(test_scalarMultMat4);
+    else if (strcmp(test_name, "Perspective") == 0)
+        mu_run_test(test_perspective);
     else if (strcmp(test_name, "Ortho") == 0)
         mu_run_test(test_ortho);
     else if (strcmp(test_name, "Frustum") == 0)
         mu_run_test(test_frustum);
-    else if (strcmp(test_name, "ScalarMultMat4") == 0)
-        mu_run_test(test_scalarMultMat4);
-    else if (strcmp(test_name, "ScalarMultVec3") == 0)
-        mu_run_test(test_scalarMultVec3);
     else
         return "no such test";
 
