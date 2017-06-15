@@ -160,7 +160,6 @@ extern "C" {
         mat->v[3][2] = -((GLfloat) 2 * zFar * zNear) / (zFar - zNear);
     }
 
-
     /**
      * @brief Creates a matrix for an orthographic parallel viewing volume.
      * @param left
@@ -189,7 +188,6 @@ extern "C" {
         mat->v[3][2] = -(zFar + zNear) / (zFar - zNear);
     }
 
-
     /**
      * @brief Creates a frustum matrix.
      * @param left
@@ -217,7 +215,6 @@ extern "C" {
         mat->v[2][3] = -(GLfloat) 1;
         mat->v[3][2] = -((GLfloat) 2 * zFar * zNear) / (zFar - zNear);
     }
-
 
     /**
      * @brief Build a look at view matrix based on the default handedness.

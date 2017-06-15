@@ -57,10 +57,6 @@
 int tests_run = 0;
 // Minunit include END
 
-
-/*
- * TODO get results from GLM and compare to FLT_EPSILON
- */
 static const float LARGE_ROUND = FLT_EPSILON * 1000;
 
 CGLMvec3 vcompare;
@@ -68,8 +64,10 @@ CGLMvec3 vresult;
 
 static char*
 compare_vec3() {
+
     printf("\nExpected vec3: \n");
     debugvec3(vresult);
+
     printf("Compared vec3: \n");
     debugvec3(vcompare);
 
@@ -81,11 +79,14 @@ compare_vec3() {
 
 CGLMmat4 mcompare;
 CGLMmat4 mresult;
+
 static char*
 compare_matrix() {
     int i, j;
+
     printf("\nExpected mat4: \n");
     debugmat4(&mresult);
+
     printf("Compared mat4: \n");
     debugmat4(&mcompare);
 
@@ -101,12 +102,14 @@ compare_matrix() {
 
 static char*
 test_perspective() {
+
     mresult = (CGLMmat4) {{
         {1.344400f, 0.000000f, 0.000000f, 0.000000f},
         {0.000000f, 1.792600f, 0.000000f, 0.000000f},
         {0.000000f, 0.000000f, -1.002000f, -1.000000f},
         {0.000000f, 0.000000f, -0.200200f, 0.000000f}
     }};
+
     cglmPerspective(45.0f, 4.0f / 3.0f, 0.1f, 100.0f, &mcompare);
     mu_run_test(compare_matrix);
 
@@ -116,11 +119,12 @@ test_perspective() {
 static char*
 test_ortho() {
     mresult = (CGLMmat4) {{
-        (float) 0.100000, (float) 0.000000, (float) 0.000000, (float) 0.000000,
-        (float) 0.000000, (float) 0.100000, (float) 0.000000, (float) 0.000000,
-        (float) 0.000000, (float) 0.000000, (float) - 0.020000, (float) 0.000000,
-        (float) - 0.000000, (float) - 0.000000, (float) - 1.000000, (float) 1.000000
+        {0.100000f, 0.000000f, 0.000000f, 0.000000f},
+        {0.000000f, 0.100000f, 0.000000f, 0.000000f},
+        {0.000000f, 0.000000f, - 0.020000f, 0.000000f},
+        {- 0.000000f, - 0.000000f, - 1.000000f, 1.000000f}
     }};
+
     cglmOrtho(-10.0f, 10.0f, -10.0f, 10.0f, 0.0f, 100.0f, &mcompare);
     mu_run_test(compare_matrix);
 
@@ -130,6 +134,7 @@ test_ortho() {
 static char*
 test_scalarMultVec3() {
     CGLMvec3 a;
+
     a = (CGLMvec3){(float) 1.0, (float) 1.0, (float) - 1.0};
 
     vresult = (CGLMvec3){(float) 2.0, (float) 2.0, (float) - 2.0};
@@ -148,18 +153,18 @@ test_scalarMultMat4() {
     CGLMmat4 m;
 
     mresult = (CGLMmat4) {{
-        (float) 0.000000, (float) 2.000000, (float) - 2.000000, (float) 0.000000,
-        (float) 0.000000, (float) 0.000000, (float) 0.000000, (float) 0.000000,
-        (float) 0.000000, (float) 0.000000, (float) 0.000000, (float) 0.000000,
-        (float) 0.000000, (float) 0.000000, (float) 0.000000, (float) 0.000000
+        {0.000000f, 2.000000f, - 2.000000f, 0.000000f},
+        {0.000000f, 0.000000f, 0.000000f, 0.000000f},
+        {0.000000f, 0.000000f, 0.000000f, 0.000000f},
+        {0.000000f, 0.000000f, 0.000000f, 0.000000f}
     }};
 
-    m = (CGLMmat4){
-        (float) 0.000000, (float) 1.000000, (float) - 1.000000, (float) 0.000000,
-        (float) 0.000000, (float) 0.000000, (float) 0.000000, (float) 0.000000,
-        (float) 0.000000, (float) 0.000000, (float) 0.000000, (float) 0.000000,
-        (float) 0.000000, (float) 0.000000, (float) 0.000000, (float) 0.000000
-    };
+    m = (CGLMmat4) {{
+        {0.000000f, 1.000000f, - 1.000000f, 0.000000f},
+        {0.000000f, 0.000000f, 0.000000f, 0.000000f},
+        {0.000000f, 0.000000f, 0.000000f, 0.000000f},
+        {0.000000f, 0.000000f, 0.000000f, 0.000000f}
+    }};
 
     cglmScalarMultMat4(&m, (float) 2.0, &mcompare);
     mu_run_test(compare_matrix);
@@ -170,10 +175,10 @@ test_scalarMultMat4() {
 static char*
 test_frustum() {
     mresult = (CGLMmat4) {{
-        (float) 0.000000, (float) 0.000000, (float) 0.000000, (float) 0.000000,
-        (float) 0.000000, (float) 0.000000, (float) 0.000000, (float) 0.000000,
-        (float) 0.000000, (float) 0.000000, (float) - 1.000000, (float) - 1.000000,
-        (float) 0.000000, (float) 0.000000, (float) - 0.000000, (float) 0.000000
+        {0.000000f, 0.000000f, 0.000000f, 0.000000f},
+        {0.000000f, 0.000000f, 0.000000f, 0.000000f},
+        {0.000000f, 0.000000f, - 1.000000f, - 1.000000f},
+        {0.000000f, 0.000000f, - 0.000000f, 0.000000f}
     }};
     cglmFrustum(-10.0f, 10.0f, -10.0f, 10.0f, 0.0f, 100.0f, &mcompare);
     mu_run_test(compare_matrix);
@@ -405,29 +410,29 @@ test_multMat4() {
     mu_run_test(compare_matrix);
 
     mresult = (CGLMmat4) {{
-        {(float) 1.446000, (float) - 0.991900, (float) - 0.924100, (float) - 0.922300},
-        {(float) 0.000000, (float) 2.755500, (float) - 0.924100, (float) - 0.922300},
-        {(float) 1.436900, (float) 0.554500, (float) - 5.125900, (float) - 5.315500},
-        {(float) 0.287100, (float) 0.110800, (float) 0.103200, (float) 0.103000}
+        {1.446000f, - 0.991900f, - 0.924100f, - 0.922300f},
+        {0.000000f, 2.755500f, - 0.924100f, - 0.922300f},
+        {1.436900f, 0.554500f, - 5.125900f, - 5.315500f},
+        {0.287100f, 0.110800f, 0.103200f, 0.103000f}
     }};
 
     m1 = (CGLMmat4) {{
-        {(float) 1.792600, (float) 0.000000, (float) 0.000000, (float) 0.000000},
-        {(float) 0.000000, (float) 1.792600, (float) 0.000000, (float) 0.000000},
-        {(float) 0.000000, (float) 0.000000, (float) - 1.002000, (float) - 1.000000},
-        {(float) 0.000000, (float) 0.000000, (float) - 0.200200, (float) 0.000000}
+        {1.792600f, 0.000000f, 0.000000f, 0.000000f},
+        {0.000000f, 1.792600f, 0.000000f, 0.000000f},
+        {0.000000f, 0.000000f, - 1.002000f, - 1.000000f},
+        {0.000000f, 0.000000f, - 0.200200f, 0.000000f}
     }};
     m2 = (CGLMmat4) {{
-        {(float) 0.600000, (float) - 0.411600, (float) 0.686000, (float) 0.000000},
-        {(float) 0.000000, (float) 0.857500, (float) 0.514500, (float) 0.000000},
-        {(float) - 0.800000, (float) - 0.308700, (float) 0.514500, (float) 0.000000},
-        {(float) - 0.000000, (float) - 0.000000, (float) - 5.831000, (float) 1.000000}
+        {0.600000f, - 0.411600f, 0.686000f, 0.000000f},
+        {0.000000f, 0.857500f, 0.514500f, 0.000000f},
+        {- 0.800000f, - 0.308700f, 0.514500f, 0.000000f},
+        {- 0.000000f, - 0.000000f, - 5.831000f, 1.000000f}
     }};
     CGLMmat4 m3 = {{
-        {(float) 1.344400, (float) 0.000000, (float) 0.000000, (float) 0.000000},
-        {(float) 0.000000, (float) 1.792600, (float) 0.000000, (float) 0.000000},
-        {(float) 0.000000, (float) 0.000000, (float) - 1.002000, (float) - 1.000000},
-        {(float) 0.000000, (float) 0.000000, (float) - 0.200200, (float) 0.000000}
+        {1.344400f, 0.000000f, 0.000000f, 0.000000f},
+        {0.000000f, 1.792600f, 0.000000f, 0.000000f},
+        {0.000000f, 0.000000f, - 1.002000f, - 1.000000f},
+        {0.000000f, 0.000000f, - 0.200200f, 0.000000f}
     }};
 
     CGLMmat4 inter;
@@ -444,10 +449,10 @@ test_lookAt() {
     CGLMvec3 c;
 
     mresult = (CGLMmat4) {{
-        (float) 0.600000, (float) - 0.411600, (float) 0.686000, (float) 0.000000,
-        (float) 0.000000, (float) 0.857500, (float) 0.514500, (float) 0.000000,
-        (float) - 0.800000, (float) - 0.308700, (float) 0.514500, (float) 0.000000,
-        (float) - 0.000000, (float) - 0.000000, (float) - 5.831000, (float) 1.000000
+        {0.600000f, - 0.411600f, 0.686000f, 0.000000f},
+        {0.000000f, 0.857500f, 0.514500f, 0.000000f},
+        {- 0.800000f, - 0.308700f, 0.514500f, 0.000000f},
+        {- 0.000000f, - 0.000000f, - 5.831000f, 1.000000f}
     }};
 
     a = (CGLMvec3){(float) 4, (float) 3, (float) 3};

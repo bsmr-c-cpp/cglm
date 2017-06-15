@@ -25,9 +25,9 @@ main(int argc, char** argv) {
     cglmInitMat4(0.0f, &model);
     cglmPerspective(45.0f, 4.0f / 3.0f, 0.1f, 100.0f, &model);
 
-    position = (CGLMvec3){3.0f, 0.0f, 10.0f};
-    direction = (CGLMvec3){0.0f, 0.0f, 0.0f};
-    up = (CGLMvec3){0.0f, 1.0f, 0.0f};
+    position = (CGLMvec3) {3.0f, 0.0f, 10.0f};
+    direction = (CGLMvec3) {0.0f, 0.0f, 0.0f};
+    up = (CGLMvec3) {0.0f, 1.0f, 0.0f};
 
     for (i = 0; i < iterate_count; i++) {
         position.z -= 1;
