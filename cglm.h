@@ -42,22 +42,8 @@ extern "C" {
 
     /**
      * @brief represent a 4x4 matrix.
-     *
-     *       a0   a1  a2   a3 <br>
-     *
-     *       b0   b1  b2   b3 <br>
-     *
-     *       c0   c1  c2   c3 <br>
-     *
-     *       d0   d1  d2   d3 <br>
-     *
      */
-    typedef struct {
-        GLfloat a0, a1, a2, a3,
-        b0, b1, b2, b3,
-        c0, c1, c2, c3,
-        d0, d1, d2, d3;
-    } CGLMmat4;
+    typedef struct { float v[4][4]; } CGLMmat4;
 
     /**
      * @brief represent a 3 dimention vertex.
@@ -66,26 +52,21 @@ extern "C" {
         GLfloat x, y, z;
     } CGLMvec3;
 
-    static const CGLMmat4
-    empty_matrix_4 = {
-        0.0f, 0.0f, 0.0f, 0.0f,
-        0.0f, 0.0f, 0.0f, 0.0f,
-        0.0f, 0.0f, 0.0f, 0.0f,
-        0.0f, 0.0f, 0.0f, 0.0f
-    };
-
     /**
      * @brief create a 4x4 matrix
      * @return CLGMmat4
      */
-    static CGLMmat4
-    cglmMat4(GLfloat num) {
-        CGLMmat4 result = empty_matrix_4;
-        result.a0 = num;
-        result.b1 = num;
-        result.c2 = num;
-        result.d3 = num;
-        return result;
+    void
+    cglmInitMat4(GLfloat num, CGLMmat4* mat) {
+        int i, j;
+        for (i=0; i<4; i++) {
+            for (j=0; j<4; j++) {
+                mat->v[i][j] = 0.0f;
+            }
+        }
+        for (i=0; i<4; i++) {
+            mat->v[i][i] = num;
+        }
     }
 
     /**
@@ -160,24 +141,25 @@ extern "C" {
      *             plane (always positive).
      * @param far Specifies the distance from the viewer to the far clipping
      *            plane (always positive).
+     * @param mat the matrix
      */
-    static CGLMmat4
+    static void
     cglmPerspective(
             GLfloat fovy,
             GLfloat aspect,
             GLfloat zNear,
-            GLfloat zFar) {
+            GLfloat zFar,
+            CGLMmat4* mat) {
         GLfloat tanHalfFovy = (GLfloat) tan(fovy / (GLfloat) 2);
 
-        CGLMmat4 result = cglmMat4(0.0f);
-        result.a0 = (GLfloat) 1 / (aspect * tanHalfFovy);
-        result.b1 = (GLfloat) 1 / (tanHalfFovy);
-        result.c2 = -(zFar + zNear) / (zFar - zNear);
-        result.c3 = -(GLfloat) 1;
-        result.d2 = -((GLfloat) 2 * zFar * zNear) / (zFar - zNear);
-
-        return result;
+        cglmInitMat4(0.0f, mat);
+        mat->v[0][0] = (GLfloat) 1 / (aspect * tanHalfFovy);
+        mat->v[1][1] = (GLfloat) 1 / (tanHalfFovy);
+        mat->v[2][2] = -(zFar + zNear) / (zFar - zNear);
+        mat->v[2][3] = -(GLfloat) 1;
+        mat->v[3][2] = -((GLfloat) 2 * zFar * zNear) / (zFar - zNear);
     }
+
 
     /**
      * @brief Creates a matrix for an orthographic parallel viewing volume.
@@ -187,25 +169,26 @@ extern "C" {
      * @param top
      * @param zNear
      * @param zFar
+     * @param mat
      */
-    static CGLMmat4
+    static void
     cglmOrtho(
             GLfloat left,
             GLfloat right,
             GLfloat bottom,
             GLfloat top,
             GLfloat zNear,
-            GLfloat zFar) {
-        CGLMmat4 result = cglmMat4(1.0f);
-        result.a0 = (GLfloat) 2 / (right - left);
-        result.b1 = (GLfloat) 2 / (top - bottom);
-        result.c2 = -(GLfloat) 2 / (zFar - zNear);
-        result.d0 = -(right + left) / (right - left);
-        result.d1 = -(top + bottom) / (top - bottom);
-        result.d2 = -(zFar + zNear) / (zFar - zNear);
-
-        return result;
+            GLfloat zFar,
+            CGLMmat4* mat) {
+        cglmInitMat4(1.0f, mat);
+        mat->v[0][0] = (GLfloat) 2 / (right - left);
+        mat->v[1][1] = (GLfloat) 2 / (top - bottom);
+        mat->v[2][2] = -(GLfloat) 2 / (zFar - zNear);
+        mat->v[3][0] = -(right + left) / (right - left);
+        mat->v[3][1] = -(top + bottom) / (top - bottom);
+        mat->v[3][2] = -(zFar + zNear) / (zFar - zNear);
     }
+
 
     /**
      * @brief Creates a frustum matrix.
@@ -216,25 +199,25 @@ extern "C" {
      * @param near
      * @param far
      */
-    static CGLMmat4
+    static void
     cglmFrustum(
             GLfloat left,
             GLfloat right,
             GLfloat bottom,
             GLfloat top,
             GLfloat zNear,
-            GLfloat zFar) {
-        CGLMmat4 result = cglmMat4(0.0f);
-        result.a0 = ((GLfloat) 2 * zNear) / (right - left);
-        result.b1 = ((GLfloat) 2 * zNear) / (top - bottom);
-        result.c0 = (right + left) / (right - left);
-        result.c1 = (top + bottom) / (top - bottom);
-        result.c2 = -(zFar + zNear) / (zFar - zNear);
-        result.c3 = -(GLfloat) 1;
-        result.d2 = -((GLfloat) 2 * zFar * zNear) / (zFar - zNear);
-
-        return result;
+            GLfloat zFar,
+            CGLMmat4* mat) {
+        cglmInitMat4(0.0f, mat);
+        mat->v[0][0] = ((GLfloat) 2 * zNear) / (right - left);
+        mat->v[1][1] = ((GLfloat) 2 * zNear) / (top - bottom);
+        mat->v[2][0] = (right + left) / (right - left);
+        mat->v[2][1] = (top + bottom) / (top - bottom);
+        mat->v[2][2] = -(zFar + zNear) / (zFar - zNear);
+        mat->v[2][3] = -(GLfloat) 1;
+        mat->v[3][2] = -((GLfloat) 2 * zFar * zNear) / (zFar - zNear);
     }
+
 
     /**
      * @brief Build a look at view matrix based on the default handedness.
@@ -243,30 +226,29 @@ extern "C" {
      * @param up Normalized up vector, how the camera is oriented.
      *           Typically (0, 0, 1)
      */
-    static CGLMmat4
+    static void
     cglmLookAt(
             CGLMvec3 eye,
             CGLMvec3 center,
-            CGLMvec3 up) {
+            CGLMvec3 up,
+            CGLMmat4* mat) {
         const CGLMvec3 f = cglmNormalize(cglmSubsVec3(center, eye));
         const CGLMvec3 s = cglmNormalize(cglmCross(f, up));
         const CGLMvec3 u = cglmCross(s, f);
 
-        CGLMmat4 result = cglmMat4(1.0f);
-        result.a0 = s.x;
-        result.b0 = s.y;
-        result.c0 = s.z;
-        result.a1 = u.x;
-        result.b1 = u.y;
-        result.c1 = u.z;
-        result.a2 = -f.x;
-        result.b2 = -f.y;
-        result.c2 = -f.z;
-        result.d0 = -cglmDot(s, eye);
-        result.d1 = -cglmDot(u, eye);
-        result.d2 = cglmDot(f, eye);
-
-        return result;
+        cglmInitMat4(1.0f, mat);
+        mat->v[0][0] = s.x;
+        mat->v[1][0] = s.y;
+        mat->v[2][0] = s.z;
+        mat->v[0][1] = u.x;
+        mat->v[1][1] = u.y;
+        mat->v[2][1] = u.z;
+        mat->v[0][2] = -f.x;
+        mat->v[1][2] = -f.y;
+        mat->v[2][2] = -f.z;
+        mat->v[3][0] = -cglmDot(s, eye);
+        mat->v[3][1] = -cglmDot(u, eye);
+        mat->v[3][2] = cglmDot(f, eye);
     }
 
     /**
@@ -289,18 +271,17 @@ extern "C" {
      * @brief multiply matrice by a scalar
      * @return a vector
      */
-    static CGLMmat4
+    void
     cglmScalarMultMat4(
-            CGLMmat4 m,
-            float s) {
-        CGLMmat4 result = {
-            m.a0 * s, m.a1 * s, m.a2 * s, m.a3 * s,
-            m.b0 * s, m.b1 * s, m.b2 * s, m.b3 * s,
-            m.c0 * s, m.c1 * s, m.c2 * s, m.c3 * s,
-            m.d0 * s, m.d1 * s, m.d2 * s, m.d3 * s
-        };
-
-        return result;
+            CGLMmat4* __restrict__ mat,
+            float s,
+            CGLMmat4* __restrict__ res) {
+        int i, j;
+        for (i=0; i<4; i++) {
+            for (j=0; j<4; j++) {
+                res->v[i][j] = mat->v[i][j] * s;
+            }
+        }
     }
 
     /**
@@ -323,33 +304,21 @@ extern "C" {
      * @brief multiply matrix m1 by matrix M2
      * @return a matrix
      */
-    static CGLMmat4
+    void inline
     cglmMultMat4(
-            CGLMmat4 m1,
-            CGLMmat4 m2) {
-        CGLMmat4 result = {
-            m2.a0 * m1.a0 + m2.a1 * m1.b0 + m2.a2 * m1.c0 + m2.a3 * m1.d0, // = a0
-            m2.a0 * m1.a1 + m2.a1 * m1.b1 + m2.a2 * m1.c1 + m2.a3 * m1.d1, // = a1
-            m2.a0 * m1.a2 + m2.a1 * m1.b2 + m2.a2 * m1.c2 + m2.a3 * m1.d2, // = a2
-            m2.a0 * m1.a3 + m2.a1 * m1.b3 + m2.a2 * m1.c3 + m2.a3 * m1.d3, // = a3
+            CGLMmat4* __restrict__ m1,
+            CGLMmat4* __restrict__ m2,
+            CGLMmat4* __restrict__ m3) {
+        int i, j, k;
 
-            m2.b0 * m1.a0 + m2.b1 * m1.b0 + m2.b2 * m1.c0 + m2.b3 * m1.d0, // = b0
-            m2.b0 * m1.a1 + m2.b1 * m1.b1 + m2.b2 * m1.c1 + m2.b3 * m1.d1, // = b1
-            m2.b0 * m1.a2 + m2.b1 * m1.b2 + m2.b2 * m1.c2 + m2.b3 * m1.d2, // = b2
-            m2.b0 * m1.a3 + m2.b1 * m1.b3 + m2.b2 * m1.c3 + m2.b3 * m1.d3, // = b3
-
-            m2.c0 * m1.a0 + m2.c1 * m1.b0 + m2.c2 * m1.c0 + m2.c3 * m1.d0, // = c0
-            m2.c0 * m1.a1 + m2.c1 * m1.b1 + m2.c2 * m1.c1 + m2.c3 * m1.d1, // = c1
-            m2.c0 * m1.a2 + m2.c1 * m1.b2 + m2.c2 * m1.c2 + m2.c3 * m1.d2, // = c2
-            m2.c0 * m1.a3 + m2.c1 * m1.b3 + m2.c2 * m1.c3 + m2.c3 * m1.d3, // = c3
-
-            m2.d0 * m1.a0 + m2.d1 * m1.b0 + m2.d2 * m1.c0 + m2.d3 * m1.d0, // = d0
-            m2.d0 * m1.a1 + m2.d1 * m1.b1 + m2.d2 * m1.c1 + m2.d3 * m1.d1, // = d1
-            m2.d0 * m1.a2 + m2.d1 * m1.b2 + m2.d2 * m1.c2 + m2.d3 * m1.d2, // = d2
-            m2.d0 * m1.a3 + m2.d1 * m1.b3 + m2.d2 * m1.c3 + m2.d3 * m1.d3, // = d3
-        };
-
-        return result;
+        for (i=0; i<4; i++) {
+            for (j=0; j<4; j++) {
+                m3->v[i][j] = 0;
+                for (k=0; k<4; k++) {
+                    m3->v[i][j] += m1->v[k][j] * m2->v[i][k];
+                }
+            }
+        }
     }
 
 #ifdef __cplusplus

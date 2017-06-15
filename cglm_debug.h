@@ -41,11 +41,11 @@ extern "C" {
      * @brief Print a GLMmat4 matrix to stdout.
      */
     static void
-    debugmat4(CGLMmat4 matrix) {
-        printf("%f %f %f %f\n", matrix.a0, matrix.a1, matrix.a2, matrix.a3);
-        printf("%f %f %f %f\n", matrix.b0, matrix.b1, matrix.b2, matrix.b3);
-        printf("%f %f %f %f\n", matrix.c0, matrix.c1, matrix.c2, matrix.c3);
-        printf("%f %f %f %f\n", matrix.d0, matrix.d1, matrix.d2, matrix.d3);
+    debugmat4(CGLMmat4* matrix) {
+        int i, j;
+        for (i=0; i<4; i++) {
+            printf("%f %f %f %f\n", matrix->v[i][0], matrix->v[i][1], matrix->v[i][2], matrix->v[i][3]);
+        }
     }
 
     /**
